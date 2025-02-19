@@ -31,7 +31,7 @@ rules:
         match: ^(https:)
 
   entur-get-responses-validation:
-    message: "Invalid response code: {{property}}. GET responses must use one of these response codes: 200, 204, 401, 403, 404, 500, 503"
+    message: "Invalid response code: {{property}}. GET responses MUST use one of these response codes: 200, 204, 401, 403, 404, 500, 503"
     severity: error
     given: $.paths.*.get.responses.*~
     then:
@@ -40,7 +40,7 @@ rules:
         values: ["200", "204", "401", "403", "404", "500", "503"]
 
   entur-delete-responses-validation:
-    message: "Invalid response code: {{property}}. DELETE responses must use one of these response codes: 200, 204, 401, 403, 404, 500, 503"
+    message: "Invalid response code: {{property}}. DELETE responses MUST use one of these response codes: 200, 204, 401, 403, 404, 500, 503"
     severity: error
     given: $.paths.*.delete.responses.*~
     then:
@@ -49,7 +49,7 @@ rules:
         values: ["200", "204", "401", "403", "404", "500", "503"]
 
   entur-post-responses-validation:
-    message: "Invalid response code: {{property}}. POST responses must use one of these response codes: 201, 202, 303, 400, 401, 403, 404, 500, 503"
+    message: "Invalid response code: {{property}}. POST responses MUST use one of these response codes: 201, 202, 303, 400, 401, 403, 404, 500, 503"
     severity: error
     given: $.paths.*.post.responses.*~
     then:
@@ -58,7 +58,7 @@ rules:
         values: ["201", "202", "303", "400", "401", "403", "404", "500", "503"]
 
   entur-put-responses-validation:
-    message: "Invalid response code: {{property}}. PUT responses must use one of these response codes: 200, 204, 400, 401, 403, 404, 500, 503"
+    message: "Invalid response code: {{property}}. PUT responses MUST use one of these response codes: 200, 204, 400, 401, 403, 404, 500, 503"
     severity: error
     given: $.paths.*.put.responses.*~
     then:
@@ -67,7 +67,7 @@ rules:
         values: ["200", "204", "400", "401", "403", "404", "500", "503"]
 
   entur-patch-responses-validation:
-    message: "Invalid response code: {{property}}. PATCH responses must use one of these response codes: 200, 204, 400, 401, 403, 404, 500, 503"
+    message: "Invalid response code: {{property}}. PATCH responses MUST use one of these response codes: 200, 204, 400, 401, 403, 404, 500, 503"
     severity: error
     given: $.paths.*.patch.responses.*~
     then:
@@ -109,7 +109,7 @@ rules:
       function: truthy
 
   entur-example-parameter:
-    message: "Please provide an example for parameter."
+    message: "Parameters SHOULD have example values."
     severity: warn
     recommended: false
     given: $.paths.*.*.parameters.*
@@ -118,7 +118,7 @@ rules:
       function: defined
 
   entur-example-schema-property:
-    message: "Please provide an example for property in schema."
+    message: "Properties in schema SHOULD have example values."
     severity: warn
     recommended: false
     given: $.components.schemas.*.properties.*
@@ -127,7 +127,7 @@ rules:
       function: defined
 
   entur-example-schema:
-    message: "Please provide an example for schema."
+    message: "Schemas SHOULD have an example."
     severity: warn
     recommended: false
     given: $.components.schemas.*
@@ -147,7 +147,7 @@ rules:
           - application/problem+json
 
   entur-rfc-9457-body-type:
-    message: "Error responses MUST follow the RFC 9457 standard for the response body. Property 'type' is missing."
+    message: "Error responses MUST have property 'type'."
     severity: error
     given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))].content.*.schema.properties
     then:
@@ -155,7 +155,7 @@ rules:
       function: defined
 
   entur-rfc-9457-body-title:
-    message: "Error responses MUST follow the RFC 9457 standard for the response body. Property 'title' is missing."
+    message: "Error responses MUST have property 'title'."
     severity: error
     given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))].content.*.schema.properties
     then:
@@ -163,7 +163,7 @@ rules:
       function: defined
 
   entur-rfc-9457-body-status:
-    message: "Error responses MUST follow the RFC 9457 standard for the response body. Property 'status' is missing."
+    message: "Error responses MUST have property 'status'."
     severity: error
     given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))].content.*.schema.properties
     then:
@@ -171,7 +171,7 @@ rules:
       function: defined
 
   entur-rfc-9457-body-detail:
-    message: "Error responses MUST follow the RFC 9457 standard for the response body. Property 'detail' is missing."
+    message: "Error responses MUST have property 'detail'."
     severity: error
     given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))].content.*.schema.properties
     then:
