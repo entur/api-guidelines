@@ -1,0 +1,229 @@
+extends: [spectral:oas]
+
+rules:
+
+  entur-openapi-version:
+    message: "OpenAPI specification version MUST be at least 3.0.0. Value: {{value}}"
+    severity: error
+    given: $.openapi
+    then:
+      function: pattern
+      functionOptions:
+        match: ^([3-9]|[1-9][0-9]+)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-.+)?$
+
+  entur-operation-standard-methods:
+    message: "Operations SHOULD use standard HTTP methods (get, post, put, patch, delete)"
+    given: $.paths[*]
+    severity: warn
+    then:
+      field: "@key"
+      function: pattern
+      functionOptions:
+        notMatch: "^(options|head|trace)$"
+
+  entur-hosts-https-only:
+    message: "Servers MUST use HTTPS. Value: {{value}}"
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: ^(https:)
+
+  entur-get-responses-validation:
+    message: "Invalid response code: {{property}}. GET responses MUST use one of these response codes: 200, 204, 401, 403, 404, 500, 503"
+    severity: error
+    given: $.paths.*.get.responses.*~
+    then:
+      function: enumeration
+      functionOptions:
+        values: ["200", "204", "401", "403", "404", "500", "503"]
+
+  entur-delete-responses-validation:
+    message: "Invalid response code: {{property}}. DELETE responses MUST use one of these response codes: 200, 204, 401, 403, 404, 500, 503"
+    severity: error
+    given: $.paths.*.delete.responses.*~
+    then:
+      function: enumeration
+      functionOptions:
+        values: ["200", "204", "401", "403", "404", "500", "503"]
+
+  entur-post-responses-validation:
+    message: "Invalid response code: {{property}}. POST responses MUST use one of these response codes: 201, 202, 303, 400, 401, 403, 404, 500, 503"
+    severity: error
+    given: $.paths.*.post.responses.*~
+    then:
+      function: enumeration
+      functionOptions:
+        values: ["201", "202", "303", "400", "401", "403", "404", "500", "503"]
+
+  entur-put-responses-validation:
+    message: "Invalid response code: {{property}}. PUT responses MUST use one of these response codes: 200, 204, 400, 401, 403, 404, 500, 503"
+    severity: error
+    given: $.paths.*.put.responses.*~
+    then:
+      function: enumeration
+      functionOptions:
+        values: ["200", "204", "400", "401", "403", "404", "500", "503"]
+
+  entur-patch-responses-validation:
+    message: "Invalid response code: {{property}}. PATCH responses MUST use one of these response codes: 200, 204, 400, 401, 403, 404, 500, 503"
+    severity: error
+    given: $.paths.*.patch.responses.*~
+    then:
+      function: enumeration
+      functionOptions:
+        values: ["200", "204", "400", "401", "403", "404", "500", "503"]
+
+# Media types ---
+  entur-request-media-type:
+    severity: error
+    message: "Request MUST support `application/json` media type."
+    given: $.paths.*.*.requestBody
+    then:
+      field: content.application/json
+      function: defined
+  entur-response-media-type:
+    message: "OK responses MUST have content type application/json."
+    severity: error
+    given: $.paths.*.*.responses[?(@property.match(/^(2)/))]
+    then:
+      field: content.application/json
+      function: defined
+
+# Documentation ---
+  entur-operation-description:
+    message: "Operations SHOULD have a non-empty description"
+    given: $.paths.*[?(@.operationId)]]
+    severity: warn
+    then:
+      field: description
+      function: truthy
+
+  entur-responses-200-description:
+    message: "Response 200 MUST have a non-empty description. Value: {{value}}"
+    severity: error
+    given: $.paths.*.*.responses.200
+    then:
+      field: description
+      function: truthy
+
+  entur-example-parameter:
+    message: "Parameters SHOULD have example values."
+    severity: warn
+    recommended: false
+    given: $.paths.*.*.parameters.*
+    then:
+      field: example
+      function: defined
+
+  entur-example-schema-property:
+    message: "Properties in schema SHOULD have example values."
+    severity: warn
+    recommended: false
+    given: $.components.schemas.*.properties.*
+    then:
+      field: example
+      function: defined
+
+  entur-example-schema:
+    message: "Schemas SHOULD have an example."
+    severity: warn
+    recommended: false
+    given: $.components.schemas.*
+    then:
+      field: example
+      function: defined
+
+# Errors ---
+  entur-rfc-9457-content-type:
+    message: "Error responses MUST have content type application/problem+json."
+    severity: error
+    given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))].content.*~
+    then:
+      function: enumeration
+      functionOptions:
+        values:
+          - application/problem+json
+
+  entur-rfc-9457-body-type:
+    message: "Error responses MUST have property 'type'."
+    severity: error
+    given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))].content.*.schema.properties
+    then:
+      field: type
+      function: defined
+
+  entur-rfc-9457-body-title:
+    message: "Error responses MUST have property 'title'."
+    severity: error
+    given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))].content.*.schema.properties
+    then:
+      field: title
+      function: defined
+
+  entur-rfc-9457-body-status:
+    message: "Error responses MUST have property 'status'."
+    severity: error
+    given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))].content.*.schema.properties
+    then:
+      field: status
+      function: defined
+
+  entur-rfc-9457-body-detail:
+    message: "Error responses MUST have property 'detail'."
+    severity: error
+    given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))].content.*.schema.properties
+    then:
+      field: detail
+      function: defined
+
+# Naming ---
+  entur-server-urls-lowercase:
+    message: "Server URL MUST be in lowercase. Value: {{value}}"
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[^A-Z]*$
+
+  entur-paths-format:
+    message: "Paths MUST be in kebab-case (lower case and separated with hyphens), with single slashes, and no trailing slash at end of path."
+    severity: error
+    given: $.paths.*~
+    then:
+      function: pattern
+      functionOptions:
+        #Match leading slash followed by kebab casing, and then optional trailing kebab with url params allowed. No trailing slash.
+        #Double slashes now allowed.
+        #Custom functions not allowed in path for now (e.g. /ecards/{mediaSerialNumberId}:block)
+        match: ^(\/[a-z0-9]+(-[a-z0-9]+)*)(\/[a-z0-9]+(-[a-z0-9]+)*|\/{.+})*$
+
+  entur-paths-with-api:
+    message: "Paths SHOULD NOT contain 'api'."
+    severity: warn
+    given: $.paths.*~
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: \bapi\b
+
+  entur-query-parameters-lower-camel-case:
+    message: "Query parameters MUST be lowerCamelCase. Value: {{value}}"
+    severity: error
+    given: $.paths.*.*.parameters[?(@.in=='query')].name
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[a-z][a-zA-Z0-9]*$
+
+  entur-body-fields-lower-camel-case:
+    message: "Request and Response body fields MUST be lowerCamelCase. Value: {{value}}"
+    severity: error
+    given: $..[?(@property === 'properties')]
+    then:
+      field: "@key"
+      function: pattern
+      functionOptions:
+        match: ^[a-z][a-zA-Z0-9]*$
