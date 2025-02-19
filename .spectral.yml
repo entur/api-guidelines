@@ -30,17 +30,26 @@ rules:
       functionOptions:
         match: ^(https:)
 
-  entur-get-delete-responses-validation:
-    message: "Bad response code for operation. Expected one of: 200, 204, 401, 403, 404, 500, 503"
+  entur-get-responses-validation:
+    message: "GET responses must use one of these response codes: 200, 204, 401, 403, 404, 500, 503"
     severity: error
-    given: $.paths.*.[?(@property.match(/^(get|delete)/))].responses.*~
+    given: $.paths.*.get.responses.*~
+    then:
+      function: enumeration
+      functionOptions:
+        values: ["200", "204", "401", "403", "404", "500", "503"]
+
+  entur-delete-responses-validation:
+    message: "DELETE responses must use one of these response codes: 200, 204, 401, 403, 404, 500, 503"
+    severity: error
+    given: $.paths.*.delete.responses.*~
     then:
       function: enumeration
       functionOptions:
         values: ["200", "204", "401", "403", "404", "500", "503"]
 
   entur-post-responses-validation:
-    message: "Bad response code for operation. Expected one of: 201, 202, 303, 400, 401, 403, 404, 500, 503"
+    message: "POST responses must use one of these response codes: 201, 202, 303, 400, 401, 403, 404, 500, 503"
     severity: error
     given: $.paths.*.post.responses.*~
     then:
@@ -48,10 +57,19 @@ rules:
       functionOptions:
         values: ["201", "202", "303", "400", "401", "403", "404", "500", "503"]
 
-  entur-put-patch-responses-validation:
-    message: "Bad response code for operation. Expected one of: 200, 204, 400, 401, 403, 404, 500, 503"
+  entur-put-responses-validation:
+    message: "PUT responses must use one of these response codes: 200, 204, 400, 401, 403, 404, 500, 503"
     severity: error
-    given: $.paths.*.[?(@property.match(/^(put|patch)/))].responses.*~
+    given: $.paths.*.put.responses.*~
+    then:
+      function: enumeration
+      functionOptions:
+        values: ["200", "204", "400", "401", "403", "404", "500", "503"]
+
+  entur-patch-responses-validation:
+    message: "PATCH responses must use one of these response codes: 200, 204, 400, 401, 403, 404, 500, 503"
+    severity: error
+    given: $.paths.*.patch.responses.*~
     then:
       function: enumeration
       functionOptions:
