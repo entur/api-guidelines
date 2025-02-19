@@ -31,7 +31,7 @@ rules:
         match: ^(https:)
 
   entur-get-responses-validation:
-    message: "GET responses must use one of these response codes: 200, 204, 401, 403, 404, 500, 503"
+    message: "Invalid response code: {{property}}. GET responses must use one of these response codes: 200, 204, 401, 403, 404, 500, 503"
     severity: error
     given: $.paths.*.get.responses.*~
     then:
@@ -40,7 +40,7 @@ rules:
         values: ["200", "204", "401", "403", "404", "500", "503"]
 
   entur-delete-responses-validation:
-    message: "DELETE responses must use one of these response codes: 200, 204, 401, 403, 404, 500, 503"
+    message: "Invalid response code: {{property}}. DELETE responses must use one of these response codes: 200, 204, 401, 403, 404, 500, 503"
     severity: error
     given: $.paths.*.delete.responses.*~
     then:
@@ -49,7 +49,7 @@ rules:
         values: ["200", "204", "401", "403", "404", "500", "503"]
 
   entur-post-responses-validation:
-    message: "POST responses must use one of these response codes: 201, 202, 303, 400, 401, 403, 404, 500, 503"
+    message: "Invalid response code: {{property}}. POST responses must use one of these response codes: 201, 202, 303, 400, 401, 403, 404, 500, 503"
     severity: error
     given: $.paths.*.post.responses.*~
     then:
@@ -58,7 +58,7 @@ rules:
         values: ["201", "202", "303", "400", "401", "403", "404", "500", "503"]
 
   entur-put-responses-validation:
-    message: "PUT responses must use one of these response codes: 200, 204, 400, 401, 403, 404, 500, 503"
+    message: "Invalid response code: {{property}}. PUT responses must use one of these response codes: 200, 204, 400, 401, 403, 404, 500, 503"
     severity: error
     given: $.paths.*.put.responses.*~
     then:
@@ -67,7 +67,7 @@ rules:
         values: ["200", "204", "400", "401", "403", "404", "500", "503"]
 
   entur-patch-responses-validation:
-    message: "PATCH responses must use one of these response codes: 200, 204, 400, 401, 403, 404, 500, 503"
+    message: "Invalid response code: {{property}}. PATCH responses must use one of these response codes: 200, 204, 400, 401, 403, 404, 500, 503"
     severity: error
     given: $.paths.*.patch.responses.*~
     then:
