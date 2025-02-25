@@ -39,7 +39,7 @@ This guide is intended for developers, architects, and technical designers who w
   - Create the API specification before implementing / coding the API.
   - The specification is the primary reference for both development and documentation.
   - Iterative Process - Continuously update the specification throughout the development cycle to reflect changes.
-- [Lint your API spec](README.md) 
+- [Lint your API spec](README.md)
 - Differentiate APIs based on the target audience
   - Internal APIs - May have extended functionality and less stringent requirements, but **MUST** still be documented and tested.
   - External APIs - **MUST** be carefully documented with a focus on stability, security, and consistency, so that third-party developers can integrate with minimal effort.
@@ -88,7 +88,7 @@ To avoid breaking existing integrations:
 | 204  | No Content            | :heavy_check_mark:    |      |  :heavy_check_mark:    |  :heavy_check_mark:      |  :heavy_check_mark:       |
 | 303  | See Other             |     |   :heavy_check_mark:    |     |       |        |
 | 400  | Bad Request           |     |   :heavy_check_mark:    |   :heavy_check_mark:   |:heavy_check_mark:        |        |
-| 401  | Unauthorized          |  :heavy_check_mark:    |:heavy_check_mark:       |:heavy_check_mark:      |:heavy_check_mark:        |:heavy_check_mark:         |:heavy_check_mark: 
+| 401  | Unauthorized          |  :heavy_check_mark:    |:heavy_check_mark:       |:heavy_check_mark:      |:heavy_check_mark:        |:heavy_check_mark:         |:heavy_check_mark:
 | 403  | Forbidden             |  :heavy_check_mark:    |:heavy_check_mark:       |:heavy_check_mark:      |:heavy_check_mark:        |:heavy_check_mark:         |:heavy_check_mark:
 | 404  | Not Found             |  :heavy_check_mark:    |:heavy_check_mark:       |:heavy_check_mark:      |:heavy_check_mark:        |:heavy_check_mark:         |:heavy_check_mark:
 | 500  | Internal Server Error |  :heavy_check_mark:    |:heavy_check_mark:       |:heavy_check_mark:      |:heavy_check_mark:        |:heavy_check_mark:         |:heavy_check_mark:
@@ -97,7 +97,7 @@ To avoid breaking existing integrations:
 
 #### Error responses
 
-When an error occurs, the IETF standard for Problem Details for HTTP APIs [(RFC 9457)](https://www.rfc-editor.org/rfc/rfc9457.html) **MUST** be followed, which means that:  
+When an error occurs, the IETF standard for Problem Details for HTTP APIs [(RFC 9457)](https://www.rfc-editor.org/rfc/rfc9457.html) **MUST** be followed, which means that:
 
 :heavy_check_mark: The error response **MUST** be returned with the media type `application/problem+json`.
 
@@ -107,13 +107,13 @@ When an error occurs, the IETF standard for Problem Details for HTTP APIs [(RFC 
 - status (integer)
 - detail (string)
 
-:eyes: The response body **MAY** also include the following fields: 
+:eyes: The response body **MAY** also include the following fields:
 - instance (string, URI)
 - “extensions” (any number of custom fields)
 
 Example:
-> HTTP/1.1 403 Forbidden  
-Content-Type: application/problem+json  
+> HTTP/1.1 403 Forbidden
+Content-Type: application/problem+json
 Content-Language: en
 ```json
 {
@@ -121,7 +121,7 @@ Content-Language: en
   "title": "Something",
   "status": 403,
   "detail": "Something.",
-  "instance": "/something/something",   
+  "instance": "/something/something",
   "balance": 30,                        //Custom field
   "recommended-action": "Something."    //Custom field
 }
@@ -149,8 +149,12 @@ HATEOAS Example:
 ### Language
 You **MAY** allow clients to specify preferred language via Accept-Language header or as query parameter.
 Example:
->GET /api/v1/info?lang=no  
+>GET /api/v1/info?lang=no
 Accept-Language: nob
+
+### Spelling Conventions
+We adhere to British English spelling as defined in the Oxford English Dictionary (OED). This standardization ensures consistency across all API documentation, error messages, and responses.
+
 
 ### Date
 :eyes: You **SHOULD** use the ISO 8601 standard for all date and timestamps.
@@ -161,23 +165,35 @@ Example:
 }
 ```
 
+### Currency Representation
+
+Prices should be specified as floating-point numbers, represented by a string in standard currency units. For NOK, this means kroner.
+* Request: Max 18 digits total; max 5 decimals (follows ISO 20022)
+* Response: Always serialized with the standard number of decimals. For NOK, this means 2, since øre is the smallest unit.
+```
+{
+    "amount": "99.00"
+    "currency": "NOK"
+}
+```
+
 ### Unicode
 :heavy_check_mark: You **MUST** encode all text (in request and response) in UTF-8.
-Tips: 
+Tips:
 - :eyes: Set the Content-Type header to application/json; charset=utf-8
 - Test the API with international characters (e.g. æ, ø, å)
 
 
 ### Import and export
-You **MUST** support JSON, but **MAY** use XML or CSV where appropriate.  
+You **MUST** support JSON, but **MAY** use XML or CSV where appropriate.
 Example:
 > GET /api/v1/data?format=csv
 
 ### Validation
-You **SHOULD** Validate all incoming data and return detailed error messages with appropriate HTTP status codes (e.g. 400 Bad Request).  
-Example: 
-> HTTP/1.1 400 Bad Request  
-Content-Type: application/problem+json  
+You **SHOULD** Validate all incoming data and return detailed error messages with appropriate HTTP status codes (e.g. 400 Bad Request).
+Example:
+> HTTP/1.1 400 Bad Request
+Content-Type: application/problem+json
 Content-Language: en
 
 ```json
@@ -198,7 +214,7 @@ You **MAY** let clients choose which fields they want to include in the response
 You **MAY** allow filtering, sorting, and pagination so that the client can retrieve exactly the data needed.
 
 > GET /api/v1/bus-stops?city=Oslo&sort=name&page=2&limit=20
- 
+
 ### Pagination
 **TODO**
 
@@ -206,10 +222,10 @@ You **MAY** allow filtering, sorting, and pagination so that the client can retr
 You **MAY** use HTTP headers such as Cache-Control, ETag, and Last-Modified to streamline caching.
 
 Example:
-> HTTP/1.1 200 OK  
-Cache-Control: max-age=3600  
-ETag: "abc123"  
-Last-Modified: Fri, 13 Feb 2025 15:30:00 GMT  
+> HTTP/1.1 200 OK
+Cache-Control: max-age=3600
+ETag: "abc123"
+Last-Modified: Fri, 13 Feb 2025 15:30:00 GMT
 
 
 ### Batch requests
@@ -232,7 +248,7 @@ Dedicated Batch Endpoint example:
 ## Alternative Approaches
 
 ### What to do when REST doesn't fit?
-There may be situations where a pure REST architecture is not the best solution. In such cases, consider alternative design patterns. The choice should be justified based on performance requirements, complexity, and consistency with other systems, as well as overall guidelines in the architect's intent.  
+There may be situations where a pure REST architecture is not the best solution. In such cases, consider alternative design patterns. The choice should be justified based on performance requirements, complexity, and consistency with other systems, as well as overall guidelines in the architect's intent.
 
 Examples of other design patterns:
 - GraphQL: For flexible queries where the client can specify exactly what data is needed.
@@ -244,7 +260,7 @@ Examples of other design patterns:
 Separate specifications from implementation code. OpenAPI files **SHOULD** be in **TBD**
 
 ## FAQ
-*Must existing APIs conform the guidelines?*  
-Non-breaking changes (like adding example values) **SHOULD** be updated to be compliant with the guidelines.  
-Breaking changes **MAY** be added in a new version of the API.  
+*Must existing APIs conform the guidelines?*
+Non-breaking changes (like adding example values) **SHOULD** be updated to be compliant with the guidelines.
+Breaking changes **MAY** be added in a new version of the API.
 New APIs **MUST** follow the guidelines.
