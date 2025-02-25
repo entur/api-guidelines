@@ -236,9 +236,9 @@ There may be situations where a pure REST architecture is not the best solution.
 
 Examples of other design patterns:
 - GraphQL: For flexible queries where the client can specify exactly what data is needed.
-- WebSocket: TBD
 - Event-driven architecture: For asynchronous or event-based scenarios.
-- gRPC: TBD on what Entur thinks about this.
+- WebSocket: TBA
+- gRPC: TBA
 
 ## Project organization
 Separate specifications from implementation code. OpenAPI files **SHOULD** be in **TBD**
