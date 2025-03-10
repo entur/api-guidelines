@@ -56,10 +56,12 @@ This guide is intended for developers, architects, and technical designers who w
 #### Resource Naming
 
 - :eyes: You **SHOULD** use plural Nouns - For example: `/customers`, `/benefits` and `/offers`
+  - Exception: Singleton resources that represent a unique entity **MAY** use singular form, such as `/user/profile`, `/me`, or `/system/status`
 - :eyes: Hierarchical Structure - For related resources you **SHOULD** use hierarchical URL structure. For example: `/orders/{orderId}/fees`
 - :eyes: No Actions in URL - Actions (such as create, delete) **SHOULD** be handled via the HTTP method, not in the URL itself.
 - :heavy_check_mark: URL in kebab-case - URL for APIs **MUST** be in kebab-case. For example `/realtime-deviations/v1/subscription`
 - :heavy_check_mark: Field Names in camelCase - For request and response body field names and query parameters, camelCase **MUST** be used.
+- :eyes: Consistent Terminology - Similar concepts across different APIs **SHOULD** use consistent naming. For example, don't mix `/users` and `/people` or `/proposals` and `/offers` when referring to the same concept across different APIs.
 
 #### Versioning
 - :eyes: URL Based Versioning - You **MUST** include the version number in the URL.
