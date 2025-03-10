@@ -186,8 +186,23 @@ Tips:
 
 ### Import and export
 You **MUST** support JSON, but **MAY** use XML or CSV where appropriate.
+
+:heavy_check_mark: You **MUST** use the HTTP Accept header to specify the desired response format.
+
 Example:
-> GET /api/v1/data?format=csv
+```
+GET /api/v1/data
+Accept: text/csv
+```
+
+or
+
+```
+GET /api/v1/data
+Accept: application/json
+```
+
+:eyes: You **MAY** additionally support a query parameter for format specification, but this should be considered a fallback mechanism.
 
 ### Validation
 You **SHOULD** Validate all incoming data and return detailed error messages with appropriate HTTP status codes (e.g. 400 Bad Request).
