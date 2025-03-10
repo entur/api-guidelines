@@ -87,7 +87,7 @@ To avoid breaking existing integrations:
 | 202  | Accepted              |     |  :heavy_check_mark:    |     |       |        |
 | 204  | No Content            | :heavy_check_mark:    |      |  :heavy_check_mark:    |  :heavy_check_mark:      |  :heavy_check_mark:       |
 | 303  | See Other             |     |   :heavy_check_mark:    |     |       |        |
-| 400  | Bad Request           |     |   :heavy_check_mark:    |   :heavy_check_mark:   |:heavy_check_mark:        |        |
+| 400  | Bad Request           |  :heavy_check_mark:   |   :heavy_check_mark:    |   :heavy_check_mark:   |:heavy_check_mark:        |:heavy_check_mark:        |
 | 401  | Unauthorized          |  :heavy_check_mark:    |:heavy_check_mark:       |:heavy_check_mark:      |:heavy_check_mark:        |:heavy_check_mark:         |:heavy_check_mark:
 | 403  | Forbidden             |  :heavy_check_mark:    |:heavy_check_mark:       |:heavy_check_mark:      |:heavy_check_mark:        |:heavy_check_mark:         |:heavy_check_mark:
 | 404  | Not Found             |  :heavy_check_mark:    |:heavy_check_mark:       |:heavy_check_mark:      |:heavy_check_mark:        |:heavy_check_mark:         |:heavy_check_mark:
