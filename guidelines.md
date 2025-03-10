@@ -256,8 +256,14 @@ Examples of other design patterns:
 - WebSocket: TBA
 - gRPC: TBA
 
-## Project organization
-Separate specifications from implementation code. OpenAPI files **SHOULD** be in **TBD**
+## Development Workflow Recommendations
+
+### Contract-First Development
+We **encouraged** to follow a Contract-First workflow:
+  - Create the API specification before implementing / coding the API
+  - Use the specification as the primary reference for both development and documentation
+  - Follow an iterative process - continuously update the specification throughout the development cycle to reflect changes
+  - This approach facilitates better communication between teams and ensures clearer API contracts
 
 ## FAQ
 *Must existing APIs conform the guidelines?*
