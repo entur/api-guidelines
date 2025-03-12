@@ -259,7 +259,7 @@ Examples of other design patterns:
 ## Development Workflow Recommendations
 
 ### Contract-First Development
-We **encouraged** to follow a Contract-First workflow:
+We **encourage** to follow a Contract-First workflow:
   - Create the API specification before implementing / coding the API
   - Use the specification as the primary reference for both development and documentation
   - Follow an iterative process - continuously update the specification throughout the development cycle to reflect changes
