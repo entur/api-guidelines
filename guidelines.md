@@ -91,6 +91,7 @@ To avoid breaking existing integrations:
 | 401  | Unauthorized          |  :heavy_check_mark:    |:heavy_check_mark:       |:heavy_check_mark:      |:heavy_check_mark:        |:heavy_check_mark:         |:heavy_check_mark:
 | 403  | Forbidden             |  :heavy_check_mark:    |:heavy_check_mark:       |:heavy_check_mark:      |:heavy_check_mark:        |:heavy_check_mark:         |:heavy_check_mark:
 | 404  | Not Found             |  :heavy_check_mark:    |:heavy_check_mark:       |:heavy_check_mark:      |:heavy_check_mark:        |:heavy_check_mark:         |:heavy_check_mark:
+| 409  | Conflict              |     |   :heavy_check_mark:    |   :heavy_check_mark:   |:heavy_check_mark:        |:heavy_check_mark:         |
 | 500  | Internal Server Error |  :heavy_check_mark:    |:heavy_check_mark:       |:heavy_check_mark:      |:heavy_check_mark:        |:heavy_check_mark:         |:heavy_check_mark:
 | 503  | Service Unavailable   |  :heavy_check_mark:    |:heavy_check_mark:       |:heavy_check_mark:      |:heavy_check_mark:        |:heavy_check_mark:         |:heavy_check_mark:
 
