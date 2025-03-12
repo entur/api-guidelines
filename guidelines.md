@@ -170,10 +170,10 @@ Example:
 * :eyes: You **MUST** be conscious of the precision of decimal amounts in the documentation
 * :eyes: You **MUST** be conscious of which rounding method is used to achieve the desired precision (there are several variants)
 * :eyes: You **MUST** always present amounts as strings (bigdecimal)
-* :eyes: You **MAY** make currency code optional if it is explicitly stated in the documentation
 * :eyes: You **MUST** always format the string with the number of decimals that matches the precision of the API. For example "100.0300"
 * :eyes: You **SHOULD** perform internal currency calculations with lossless APIs (BigDecimal, not double)
 * :eyes: You **SHOULD** preferably use an API designed for money if it involves more than simple addition
+* :eyes: You **MAY** make currency code optional if it is explicitly stated in the documentation
 
 :eyes: Prices should be specified as string values in standard currency units. For NOK, this means kroner.
 * Request: Max 18 digits total; max 5 decimals (follows ISO 20022)
