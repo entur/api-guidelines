@@ -263,7 +263,7 @@ rules:
         match: "/^([A-Z][a-z0-9]-)*([A-Z][a-z0-9])+/"
 
   entur-body-fields-lower-camel-case:
-    message: "Request and Response body fields MUST be lowerCamelCase. Value: {{value}}"
+    message: "Request and Response body fields MUST be lowerCamelCase."
     severity: error
     given: $..[?(@property === 'properties')]
     then:
