@@ -379,6 +379,7 @@ rules:
   # 6.5 Import & Export Formats - Accept header validation handled at runtime
   # -------------------------------------------------------------------------
 
+
  # Media type for 2xx responses
   entur-response-media-type:
     message: "OK responses MUST have content type application/json."
@@ -387,6 +388,7 @@ rules:
     then:
       field: content.application/json
       function: defined
+
 
   # -------------------------------------------------------------------------
   # 6.6 Validation - Error response format covered in section 4.2
