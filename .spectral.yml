@@ -1,7 +1,8 @@
-extends: [spectral:oas]
+#extends: [spectral:oas]
 
 rules:
 
+# General
   entur-openapi-version:
     message: "OpenAPI specification version MUST be at least 3.0.0. Value: {{value}}"
     severity: error
@@ -30,6 +31,19 @@ rules:
       functionOptions:
         match: ^(https:)
 
+  entur-request-body-allowed-methods:
+    message: "Request body is allowed only for PUT, POST, and PATCH operations. Request body found in a disallowed method."
+    severity: error
+    given:
+      - "$.paths[*].get.requestBody"
+      - "$.paths[*].delete.requestBody"
+      - "$.paths[*].options.requestBody"
+      - "$.paths[*].head.requestBody"
+      - "$.paths[*].trace.requestBody"
+    then:
+      function: falsy
+
+  # Response codes
   entur-get-responses-validation:
     message: "Invalid response code: {{property}}. GET responses MUST use one of these response codes: 200, 204, 401, 403, 404, 500, 503"
     severity: error
@@ -94,7 +108,7 @@ rules:
 # Documentation ---
   entur-operation-description:
     message: "Operations SHOULD have a non-empty description"
-    given: $.paths.*[?(@.operationId)]]
+    given: $.paths.*[?(@.operationId)]
     severity: warn
     then:
       field: description
@@ -218,6 +232,34 @@ rules:
       functionOptions:
         match: ^[a-z][a-zA-Z0-9]*$
 
+  entur-path-parameters-camelCase-alphanumeric:
+    message: "Path parameter MUST be camelCase: {{error}}"
+    severity: error
+    given: $..parameters[?(@.in == 'path')].name
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[a-z][a-zA-Z0-9]*$
+
+  entur-headers-no-x-headers:
+    message: "HTTP headers SHOULD NOT include 'X-' prefix."
+    severity: warn
+    given: "$..parameters[?(@.in == 'header')].name"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "/^(x|X)-/"
+
+  entur-headers-hyphenated-pascal-case:
+    description: All HTTP headers MUST use `Hyphenated-Pascal-Case` notation
+    severity: error
+    given: "$..parameters[?(@.in == 'header')].name"
+    message: "'HTTP' headers MUST follow 'Hyphenated-Pascal-Case' notation"
+    then:
+      function: pattern
+      functionOptions:
+        match: "/^([A-Z][a-z0-9]-)*([A-Z][a-z0-9])+/"
+
   entur-body-fields-lower-camel-case:
     message: "Request and Response body fields MUST be lowerCamelCase. Value: {{value}}"
     severity: error
@@ -227,3 +269,27 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z][a-zA-Z0-9]*$
+
+  entur-info-title:
+    message: "The OpenAPI info section MUST include a non-empty title."
+    severity: error
+    given: $
+    then:
+      field: info.title
+      function: truthy
+
+  entur-info-version:
+    message: "The OpenAPI info section MUST include a non-empty version."
+    severity: error
+    given: $
+    then:
+      field: info.version
+      function: truthy
+
+  entur-info-description:
+    message: "The OpenAPI info section MUST include a non-empty description."
+    severity: error
+    given: $
+    then:
+      field: info.description
+      function: truthy
