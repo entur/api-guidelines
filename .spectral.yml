@@ -116,14 +116,6 @@ rules:
       field: description
       function: truthy
 
-  entur-responses-200-description:
-    message: "Response 200 MUST have a non-empty description. Value: {{value}}"
-    severity: error
-    given: $.paths.*.*.responses.200
-    then:
-      field: description
-      function: truthy
-
   entur-example-parameter:
     message: "Parameters SHOULD have example values."
     severity: warn
