@@ -227,7 +227,7 @@ rules:
         match: ^[a-z][a-zA-Z0-9]*$
 
   entur-path-parameters-camelCase-alphanumeric:
-    message: "Path parameter MUST be camelCase: {{error}}"
+    message: "Path parameter MUST be lowerCamelCase. Value: {{value}}"
     severity: error
     given: $..parameters[?(@.in == 'path')].name
     then:
