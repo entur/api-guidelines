@@ -32,7 +32,7 @@ rules:
         match: ^(https:)
 
   entur-request-body-allowed-methods:
-    message: "Request body is allowed only for PUT, POST, and PATCH operations. Request body found in a disallowed method."
+    message: "Request body is allowed only for PUT, POST, and PATCH."
     severity: error
     given:
       - "$.paths[*].get.requestBody"
