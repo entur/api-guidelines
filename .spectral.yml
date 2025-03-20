@@ -251,10 +251,10 @@ rules:
         notMatch: "/^(x|X)-/"
 
   entur-headers-hyphenated-pascal-case:
-    description: All HTTP headers MUST use `Hyphenated-Pascal-Case` notation
+    message: "HTTP headers MUST be Hyphenated-Pascal-Case."
     severity: error
     given: "$..parameters[?(@.in == 'header')].name"
-    message: "'HTTP' headers MUST follow 'Hyphenated-Pascal-Case' notation"
+
     then:
       function: pattern
       functionOptions:
