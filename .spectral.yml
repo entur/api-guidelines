@@ -93,10 +93,12 @@ rules:
     severity: error
     given: "$"
     then:
-      field: openapi
-      function: pattern
-      functionOptions:
-        match: "^3\\.\\d+\\.\\d+$"
+      - field: openapi
+        function: pattern
+        functionOptions:
+          match: "^3\\.\\d+\\.\\d+$"
+      - field: swagger
+        function: falsy
 
 
   # Security - HTTPS requirement
