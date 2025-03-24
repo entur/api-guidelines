@@ -1,10 +1,45 @@
+# API Guidelines Ruleset
+# This ruleset enforces the API design standards described in our API Guidelines document.
+# Structure follows the same organization as the main guidelines document for easy reference.
+
+# OpenAPI Specification version 3.x
 extends: [spectral:oas]
 
 rules:
+  # =============================================================================
+  # 1. Introduction
+  # =============================================================================
+  # Core info requirements for all APIs
+
+  entur-info-title:
+    message: "The OpenAPI info section MUST include a non-empty title."
+    severity: error
+    given: $
+    then:
+      field: info.title
+      function: truthy
+
+  entur-info-version:
+    message: "The OpenAPI info section MUST include a non-empty version."
+    severity: error
+    given: $
+    then:
+      field: info.version
+      function: truthy
 
   info-description: error
 
-  # General
+
+  # =============================================================================
+  # 2. Core Principles
+  # =============================================================================
+
+  # -------------------------------------------------------------------------
+  # 2.1 General Design Principles
+  # -------------------------------------------------------------------------
+
+
+  # HTTP Methods
   entur-operation-standard-methods:
     message: "Operations SHOULD use standard HTTP methods (get, post, put, patch, delete)"
     given: $.paths[*]
@@ -15,74 +50,7 @@ rules:
       functionOptions:
         notMatch: "^(options|head|trace)$"
 
-  entur-hosts-https-only:
-    message: "Servers MUST use HTTPS. Value: {{value}}"
-    severity: error
-    given: $.servers[*].url
-    then:
-      function: pattern
-      functionOptions:
-        match: ^(https:)
-
-  entur-request-body-allowed-methods:
-    message: "Request body is allowed only for PUT, POST, and PATCH."
-    severity: error
-    given:
-      - "$.paths[*].get.requestBody"
-      - "$.paths[*].delete.requestBody"
-      - "$.paths[*].options.requestBody"
-      - "$.paths[*].head.requestBody"
-      - "$.paths[*].trace.requestBody"
-    then:
-      function: falsy
-
-  # Response codes
-  entur-get-responses-validation:
-    message: "Invalid response code: {{property}}. GET responses MUST use one of these response codes: 200, 204, 401, 403, 404, 500, 503"
-    severity: error
-    given: $.paths.*.get.responses.*~
-    then:
-      function: enumeration
-      functionOptions:
-        values: ["200", "204", "401", "403", "404", "500", "503"]
-
-  entur-delete-responses-validation:
-    message: "Invalid response code: {{property}}. DELETE responses MUST use one of these response codes: 200, 204, 401, 403, 404, 500, 503"
-    severity: error
-    given: $.paths.*.delete.responses.*~
-    then:
-      function: enumeration
-      functionOptions:
-        values: ["200", "204", "401", "403", "404", "500", "503"]
-
-  entur-post-responses-validation:
-    message: "Invalid response code: {{property}}. POST responses MUST use one of these response codes: 201, 202, 303, 400, 401, 403, 404, 500, 503"
-    severity: error
-    given: $.paths.*.post.responses.*~
-    then:
-      function: enumeration
-      functionOptions:
-        values: ["201", "202", "303", "400", "401", "403", "404", "500", "503"]
-
-  entur-put-responses-validation:
-    message: "Invalid response code: {{property}}. PUT responses MUST use one of these response codes: 200, 204, 400, 401, 403, 404, 500, 503"
-    severity: error
-    given: $.paths.*.put.responses.*~
-    then:
-      function: enumeration
-      functionOptions:
-        values: ["200", "204", "400", "401", "403", "404", "500", "503"]
-
-  entur-patch-responses-validation:
-    message: "Invalid response code: {{property}}. PATCH responses MUST use one of these response codes: 200, 204, 400, 401, 403, 404, 500, 503"
-    severity: error
-    given: $.paths.*.patch.responses.*~
-    then:
-      function: enumeration
-      functionOptions:
-        values: ["200", "204", "400", "401", "403", "404", "500", "503"]
-
-# Media types ---
+  # Data Format - JSON support requirement
   entur-request-media-type:
     severity: error
     message: "Request MUST support `application/json` media type."
@@ -90,15 +58,8 @@ rules:
     then:
       field: content.application/json
       function: defined
-  entur-response-media-type:
-    message: "OK responses MUST have content type application/json."
-    severity: error
-    given: $.paths.*.*.responses[?(@property.match(/^(2)/))]
-    then:
-      field: content.application/json
-      function: defined
 
-# Documentation ---
+  # Documentation with examples
   entur-example-parameter:
     message: "Parameters SHOULD have example values."
     severity: warn
@@ -126,7 +87,186 @@ rules:
       field: example
       function: defined
 
-# Errors ---
+  # openapi spec version 3
+  entur-openapi-version-3:
+    description: "OpenAPI specification must use version 3.x"
+    severity: error
+    given: "$"
+    then:
+      - field: openapi
+        function: pattern
+        functionOptions:
+          match: "^3\\.\\d+\\.\\d+$"
+      - field: swagger
+        function: falsy
+
+
+  # Security - HTTPS requirement
+  entur-hosts-https-only:
+    message: "Servers MUST use HTTPS. Value: {{value}}"
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: ^(https:)
+
+
+  # =============================================================================
+  # 3. Naming & Structure Conventions
+  # =============================================================================
+
+  # -------------------------------------------------------------------------
+  # 3.1 Resource Naming
+  # -------------------------------------------------------------------------
+
+  # URL format requirements
+  entur-paths-format:
+    message: "Paths MUST be in kebab-case (lower case and separated with hyphens), with single slashes, and no trailing slash at end of path."
+    severity: error
+    given: $.paths.*~
+    then:
+      function: pattern
+      functionOptions:
+        #Match leading slash followed by kebab casing, and then optional trailing kebab with url params allowed. No trailing slash.
+        #Double slashes now allowed.
+        #Custom functions not allowed in path for now (e.g. /ecards/{mediaSerialNumberId}:block)
+        match: ^(\/[a-z0-9]+(-[a-z0-9]+)*)(\/[a-z0-9]+(-[a-z0-9]+)*|\/{.+})*$
+
+  # Field naming conventions
+  entur-query-parameters-lower-camel-case:
+    message: "Query parameters MUST be lowerCamelCase. Value: {{value}}"
+    severity: error
+    given: $.paths.*.*.parameters[?(@.in=='query')].name
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[a-z][a-zA-Z0-9]*$
+
+  entur-path-parameters-camelCase-alphanumeric:
+    message: "Path parameter MUST be lowerCamelCase. Value: {{value}}"
+    severity: error
+    given: $..parameters[?(@.in == 'path')].name
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[a-z][a-zA-Z0-9]*$
+
+  entur-body-fields-lower-camel-case:
+    message: "Request and Response body fields MUST be lowerCamelCase."
+    severity: error
+    given: $..[?(@property === 'properties')]
+    then:
+      field: "@key"
+      function: pattern
+      functionOptions:
+        match: ^[a-z][a-zA-Z0-9]*$
+
+# Server URL case requirements
+  entur-server-urls-lowercase:
+    message: "Server URL MUST be in lowercase. Value: {{value}}"
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[^A-Z]*$
+
+  # Avoid 'api' in paths
+  entur-paths-with-api:
+    message: "Paths SHOULD NOT contain 'api'."
+    severity: warn
+    given: $.paths.*~
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: \bapi\b
+
+  # -------------------------------------------------------------------------
+  # 3.2 Versioning - Not directly lintable
+  # -------------------------------------------------------------------------
+
+
+  # -------------------------------------------------------------------------
+  # 3.3 Backward Compatibility - Not directly lintable
+  # -------------------------------------------------------------------------
+
+
+  # =============================================================================
+  # 4. Communication Standards
+  # =============================================================================
+
+
+  # -------------------------------------------------------------------------
+  # 4.1 HTTP Status Codes
+  # -------------------------------------------------------------------------
+
+  # Request body allowed methods
+  entur-request-body-allowed-methods:
+    message: "Request body is allowed only for PUT, POST, and PATCH."
+    severity: error
+    given:
+      - "$.paths[*].get.requestBody"
+      - "$.paths[*].delete.requestBody"
+      - "$.paths[*].options.requestBody"
+      - "$.paths[*].head.requestBody"
+      - "$.paths[*].trace.requestBody"
+    then:
+      function: falsy
+
+  # HTTP method responses validation
+  entur-get-responses-validation:
+    message: "Invalid response code: {{property}}. GET responses MUST use one of these response codes: 200, 204, 401, 403, 404, 500, 503"
+    severity: error
+    given: $.paths.*.get.responses.*~
+    then:
+      function: enumeration
+      functionOptions:
+        values: ["200", "204", "401", "403", "404", "500", "503"]
+
+  entur-delete-responses-validation:
+    message: "Invalid response code: {{property}}. DELETE responses MUST use one of these response codes: 200, 204, 401, 403, 404, 409, 500, 503"
+    severity: error
+    given: $.paths.*.delete.responses.*~
+    then:
+      function: enumeration
+      functionOptions:
+        values: ["200", "204", "401", "403", "404", "409", "500", "503"]
+
+  entur-post-responses-validation:
+    message: "Invalid response code: {{property}}. POST responses MUST use one of these response codes: 201, 202, 303, 400, 401, 403, 404, 409, 500, 503"
+    severity: error
+    given: $.paths.*.post.responses.*~
+    then:
+      function: enumeration
+      functionOptions:
+        values: ["201", "202", "303", "400", "401", "403", "404", "409", "500", "503"]
+
+  entur-put-responses-validation:
+    message: "Invalid response code: {{property}}. PUT responses MUST use one of these response codes: 200, 204, 400, 401, 403, 404, 409, 500, 503"
+    severity: error
+    given: $.paths.*.put.responses.*~
+    then:
+      function: enumeration
+      functionOptions:
+        values: ["200", "204", "400", "401", "403", "404", "409", "500", "503"]
+
+  entur-patch-responses-validation:
+    message: "Invalid response code: {{property}}. PATCH responses MUST use one of these response codes: 200, 204, 400, 401, 403, 404, 409, 500, 503"
+    severity: error
+    given: $.paths.*.patch.responses.*~
+    then:
+      function: enumeration
+      functionOptions:
+        values: ["200", "204", "400", "401", "403", "404", "409", "500", "503"]
+
+
+  # -------------------------------------------------------------------------
+  # 4.2 Error Handling - RFC 9457 compliance
+  # -------------------------------------------------------------------------
+
+
+  # Error response format validation
   entur-rfc-9457-content-type:
     message: "Error responses MUST have content type application/problem+json."
     severity: error
@@ -169,55 +309,48 @@ rules:
       field: detail
       function: defined
 
-# Naming ---
-  entur-server-urls-lowercase:
-    message: "Server URL MUST be in lowercase. Value: {{value}}"
-    severity: error
-    given: $.servers[*].url
-    then:
-      function: pattern
-      functionOptions:
-        match: ^[^A-Z]*$
 
-  entur-paths-format:
-    message: "Paths MUST be in kebab-case (lower case and separated with hyphens), with single slashes, and no trailing slash at end of path."
-    severity: error
-    given: $.paths.*~
-    then:
-      function: pattern
-      functionOptions:
-        #Match leading slash followed by kebab casing, and then optional trailing kebab with url params allowed. No trailing slash.
-        #Double slashes now allowed.
-        #Custom functions not allowed in path for now (e.g. /ecards/{mediaSerialNumberId}:block)
-        match: ^(\/[a-z0-9]+(-[a-z0-9]+)*)(\/[a-z0-9]+(-[a-z0-9]+)*|\/{.+})*$
+  # =============================================================================
+  # 5. Data Formatting Standards
+  # =============================================================================
 
-  entur-paths-with-api:
-    message: "Paths SHOULD NOT contain 'api'."
+
+  # -------------------------------------------------------------------------
+  # 5.1 Language & Spelling - Not directly lintable
+  # -------------------------------------------------------------------------
+
+
+  # -------------------------------------------------------------------------
+  # 5.2 Date & Time - Requires runtime validation
+  # -------------------------------------------------------------------------
+
+
+  # -------------------------------------------------------------------------
+  # 5.3 Currency Representation - Requires runtime validation
+  # -------------------------------------------------------------------------
+
+
+  # -------------------------------------------------------------------------
+  # 5.4 Character Encoding - Not directly lintable for UTF-8
+  # -------------------------------------------------------------------------
+
+
+  # Check for charset=utf-8 in Content-Type headers
+  entur-content-type-utf8:
+    message: "Content-Type header SHOULD specify charset=utf-8 for JSON responses"
     severity: warn
-    given: $.paths.*~
+    given: $.paths.*.*.responses.*.content["application/json"].examples..headers["Content-Type"]
     then:
       function: pattern
       functionOptions:
-        notMatch: \bapi\b
+        match: charset=utf-8
 
-  entur-query-parameters-lower-camel-case:
-    message: "Query parameters MUST be lowerCamelCase. Value: {{value}}"
-    severity: error
-    given: $.paths.*.*.parameters[?(@.in=='query')].name
-    then:
-      function: pattern
-      functionOptions:
-        match: ^[a-z][a-zA-Z0-9]*$
+  # -------------------------------------------------------------------------
+  # 5.5 HTTP Headers
+  # -------------------------------------------------------------------------
 
-  entur-path-parameters-camelCase-alphanumeric:
-    message: "Path parameter MUST be lowerCamelCase. Value: {{value}}"
-    severity: error
-    given: $..parameters[?(@.in == 'path')].name
-    then:
-      function: pattern
-      functionOptions:
-        match: ^[a-z][a-zA-Z0-9]*$
 
+  # Header naming conventions
   entur-headers-no-x-headers:
     message: "HTTP headers SHOULD NOT include 'X-' prefix."
     severity: warn
@@ -231,34 +364,39 @@ rules:
     message: "HTTP headers MUST be Hyphenated-Pascal-Case."
     severity: error
     given: "$..parameters[?(@.in == 'header')].name"
-
     then:
       function: pattern
       functionOptions:
         match: "/^([A-Z][a-z0-9]-)*([A-Z][a-z0-9])+/"
 
-  entur-body-fields-lower-camel-case:
-    message: "Request and Response body fields MUST be lowerCamelCase."
-    severity: error
-    given: $..[?(@property === 'properties')]
-    then:
-      field: "@key"
-      function: pattern
-      functionOptions:
-        match: ^[a-z][a-zA-Z0-9]*$
+# =============================================================================
+  # 6. Advanced Design Patterns
+  # =============================================================================
 
-  entur-info-title:
-    message: "The OpenAPI info section MUST include a non-empty title."
-    severity: error
-    given: $
-    then:
-      field: info.title
-      function: truthy
+  # Most advanced design patterns require runtime validation or manual review
+  # The rules here focus on aspects that can be statically verified
 
-  entur-info-version:
-    message: "The OpenAPI info section MUST include a non-empty version."
+
+  # -------------------------------------------------------------------------
+  # 6.5 Import & Export Formats - Accept header validation handled at runtime
+  # -------------------------------------------------------------------------
+
+
+ # Media type for 2xx responses
+  entur-response-media-type:
+    message: "OK responses MUST have content type application/json."
     severity: error
-    given: $
+    given: $.paths.*.*.responses[?(@property.match(/^(2)/))]
     then:
-      field: info.version
-      function: truthy
+      field: content.application/json
+      function: defined
+
+
+  # -------------------------------------------------------------------------
+  # 6.6 Validation - Error response format covered in section 4.2
+  # -------------------------------------------------------------------------
+
+
+  # -------------------------------------------------------------------------
+  # 6.7 HATEOAS - Not directly lintable, requires manual review
+  # -------------------------------------------------------------------------
