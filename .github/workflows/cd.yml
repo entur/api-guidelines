@@ -1,0 +1,8 @@
+name: create release
+on:
+  push:
+    branches:
+      - main
+jobs:
+  release:
+    uses: entur/gha-meta/.github/workflows/release.yml@v1
