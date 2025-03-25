@@ -1,0 +1,13 @@
+name: Validate PR
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - edited
+
+jobs:
+  validate-pr:
+    uses: entur/gha-meta/.github/workflows/verify-pr.yml@v1
