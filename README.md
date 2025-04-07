@@ -7,9 +7,10 @@ A human-readable version of the API Guidelines at Entur can be found [here](guid
 By "linting your API", we mean [linting](https://en.wikipedia.org/wiki/Lint_(software)) the [OpenAPI specification](https://swagger.io/specification/) of your API.
 This is done using [Spectral](https://docs.stoplight.io/docs/spectral/674b27b261c3c-overview) with the Entur [linting rules](.spectral.yml).
 
-### Running the linter on the command line, using Spectral CLI
+### Adding the linter as a Github Action
+[gha-api linter](https://github.com/entur/gha-api)
 
-This is the eaiest way to quickly try out the linter.
+### Running the linter on the command line, using Spectral CLI
 
 #### Installing Spectral CLI
 Using npm:  
@@ -19,8 +20,7 @@ Or using yarn:
 `yarn global add @stoplight/spectral-cli`
 
 #### Running Spectral CLI
-Download [.spectral.yml](.spectral.yml), and then:   
-`spectral lint api-spec.json --ruleset .spectral.yaml`
+`spectral lint api-spec.json --ruleset https://raw.githubusercontent.com/entur/api-guidelines/refs/tags/v0.1.0/.spectral.yml`
 
 
 ### Running the linter in your IDE
@@ -39,8 +39,8 @@ Here's an example of a Spectral Git hook using Husky:
 {
   "husky": {
     "hooks": {
-      "pre-commit": "spectral lint ./openapi/**/*.{json,yml,yaml}",
-      "pre-push": "spectral lint ./openapi/**/*.{json,yml,yaml}",
+      "pre-commit": "spectral lint specs/*.{json,yml,yaml} --ruleset https://raw.githubusercontent.com/entur/api-guidelines/refs/tags/v0.1.0/.spectral.yml",
+      "pre-push": "spectral lint specs/*.{json,yml,yaml} --ruleset https://raw.githubusercontent.com/entur/api-guidelines/refs/tags/v0.1.0/.spectral.yml",
       "...": "..."
     }
   }
