@@ -112,10 +112,17 @@ Throughout this document, rules are marked with the following indicators:
 
 
 ### 4.2 Error Handling
-When an error occurs, the IETF standard for Problem Details for HTTP APIs [(RFC 9457)](https://www.rfc-editor.org/rfc/rfc9457.html) **MUST** be followed:
+When an error occurs, the IETF standard for Problem Details for HTTP APIs [(RFC 9457)](https://www.rfc-editor.org/rfc/rfc9457.html) **SHOULD** be followed, with few additional guidelines:
 - :white_check_mark: Error responses **MUST** use media type `application/problem+json`
-- :white_check_mark: Required fields: type, title, status, detail
-- :eyes: Optional fields: instance, custom fields (extensions)
+- :white_check_mark: The following fields MUST be included: `title`, `status`.
+- :eyes: The `detail` field **SHOULD** be included when it provides additional useful information.
+- :eyes: The `type` field is **OPTIONAL**. If used, it should ideally be a meaningful URI, but **MAY** fallback to `about:blank`.
+- :eyes: Optional fields: `instance`, and any custom fields (extensions).
+
+
+
+
+
 
 Example:
 > HTTP/1.1 403 Forbidden
@@ -123,10 +130,10 @@ Content-Type: application/problem+json
 Content-Language: en
 ```json
 {
-  "type": "https://api.entur.io/v1/orders",
-  "title": "Something",
+  "type": "about:blank",
+  "title": "Access forbidden",
   "status": 403,
-  "detail": "Something.",
+  "detail": "You do not have permission to access this resource..",
   "instance": "/something/something",
   "balance": 30,                        //Custom field
   "recommended-action": "Something."    //Custom field
