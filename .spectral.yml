@@ -277,14 +277,6 @@ rules:
         values:
           - application/problem+json
 
-  entur-rfc-9457-body-type:
-    message: "Error responses MUST have property 'type'."
-    severity: error
-    given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))].content.*.schema.properties
-    then:
-      field: type
-      function: defined
-
   entur-rfc-9457-body-title:
     message: "Error responses MUST have property 'title'."
     severity: error
@@ -302,8 +294,8 @@ rules:
       function: defined
 
   entur-rfc-9457-body-detail:
-    message: "Error responses MUST have property 'detail'."
-    severity: error
+    message: "Error responses SHOULD have property 'detail' to provide additional context."
+    severity: warn
     given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))].content.*.schema.properties
     then:
       field: detail
