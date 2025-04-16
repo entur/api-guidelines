@@ -376,9 +376,9 @@ rules:
 
  # Media type for 2xx responses
   entur-response-media-type:
-    message: "OK responses MUST have content type application/json."
+    message: "OK responses MUST have content type application/json, except for 204 responses."
     severity: error
-    given: $.paths.*.*.responses[?(@property.match(/^(2)/))]
+    given: $.paths.*.*.responses[?(@property.match(/^(2)/) && @property != '204')]
     then:
       field: content.application/json
       function: defined
