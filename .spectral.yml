@@ -270,12 +270,12 @@ rules:
   entur-rfc-9457-content-type:
     message: "Error responses MUST have content type application/problem+json."
     severity: error
-    given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))].content.*~
+    given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))]
     then:
-      function: enumeration
-      functionOptions:
-        values:
-          - application/problem+json
+      - field: content
+        function: truthy
+      - field: content.application/problem+json
+        function: truthy
 
   entur-rfc-9457-body-title:
     message: "Error responses MUST have property 'title'."
