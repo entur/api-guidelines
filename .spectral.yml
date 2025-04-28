@@ -100,17 +100,16 @@ rules:
       - field: swagger
         function: falsy
 
-
   # Security - HTTPS requirement
   entur-hosts-https-only:
-    message: "Servers MUST use HTTPS. Value: {{value}}"
+    message: "Servers MUST use HTTPS (except localhost). Value: {{value}}"
     severity: error
     given: $.servers[*].url
     then:
       function: pattern
       functionOptions:
-        match: ^(https:)
-
+        # Allow only https, except for localhost
+        match: ^(https:|http://(localhost|127.0.0.1))
 
   # =============================================================================
   # 3. Naming & Structure Conventions
