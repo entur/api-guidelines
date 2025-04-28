@@ -216,13 +216,13 @@ rules:
 
   # HTTP method responses validation
   entur-get-responses-validation:
-    message: "Invalid response code: {{property}}. GET responses MUST use one of these response codes: 200, 204, 400, 401, 403, 404, 500, 503"
+    message: "Invalid response code: {{property}}. GET responses MUST use one of these response codes: 200, 400, 401, 403, 404, 500, 503"
     severity: error
     given: $.paths.*.get.responses.*~
     then:
       function: enumeration
       functionOptions:
-        values: ["200", "204", "400", "401", "403", "404", "500", "503"]
+        values: ["200", "400", "401", "403", "404", "500", "503"]
 
   entur-delete-responses-validation:
     message: "Invalid response code: {{property}}. DELETE responses MUST use one of these response codes: 200, 204, 400, 401, 403, 404, 409, 500, 503"
@@ -234,13 +234,13 @@ rules:
         values: ["200", "204", "400", "401", "403", "404", "409", "500", "503"]
 
   entur-post-responses-validation:
-    message: "Invalid response code: {{property}}. POST responses MUST use one of these response codes: 201, 202, 303, 400, 401, 403, 404, 409, 500, 503"
+    message: "Invalid response code: {{property}}. POST responses MUST use one of these response codes: 200, 201, 202, 204, 303, 400, 401, 403, 404, 409, 500, 503"
     severity: error
     given: $.paths.*.post.responses.*~
     then:
       function: enumeration
       functionOptions:
-        values: ["201", "202", "303", "400", "401", "403", "404", "409", "500", "503"]
+        values: ["200", "201", "202", "204", "303", "400", "401", "403", "404", "409", "500", "503"]
 
   entur-put-responses-validation:
     message: "Invalid response code: {{property}}. PUT responses MUST use one of these response codes: 200, 204, 400, 401, 403, 404, 409, 500, 503"
