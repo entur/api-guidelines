@@ -113,7 +113,7 @@ Throughout this document, rules are marked with the following indicators:
 
 ### 4.2 Error Handling
 When an error occurs, the IETF standard for Problem Details for HTTP APIs [(RFC 9457)](https://www.rfc-editor.org/rfc/rfc9457.html) **SHOULD** be followed, with few additional guidelines:
-- :white_check_mark: Error responses **MUST** use media type `application/problem+json`
+- :white_check_mark: Error responses **MUST** either use media type `application/problem+json`, OR `application/problem+xml` (if Accept header is `application/xml`).
 - :white_check_mark: The following fields MUST be included: `title`, `status`.
 - :eyes: The `detail` field **SHOULD** be included when it provides additional useful information.
 - :eyes: The `type` field is **OPTIONAL**. If used, it should ideally be a meaningful URI, but **MAY** fallback to `about:blank`.

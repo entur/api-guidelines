@@ -265,17 +265,23 @@ rules:
   # 4.2 Error Handling - RFC 9457 compliance
   # -------------------------------------------------------------------------
 
-
   # Error response format validation
   entur-rfc-9457-content-type:
-    message: "Error responses MUST have content type application/problem+json."
+    message: "Error responses MUST have content type application/problem+json or application/problem+xml"
     severity: error
-    given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))].content.*~
+    given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))]
     then:
-      function: enumeration
-      functionOptions:
-        values:
-          - application/problem+json
+      - field: content
+        function: truthy
+      - field: content
+        function: schema
+        functionOptions:
+          # JSON Schema to require either the JSON or XML problem media-type
+          schema:
+            type: object
+            anyOf:
+              - required: ["application/problem+json"]
+              - required: ["application/problem+xml"]
 
   entur-rfc-9457-body-title:
     message: "Error responses MUST have property 'title'."
