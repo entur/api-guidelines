@@ -117,7 +117,7 @@ When an error occurs, the IETF standard for Problem Details for HTTP APIs [(RFC 
 - :white_check_mark: The following fields MUST be included: `title`, `status`.
 - :eyes: The `detail` field **SHOULD** be included when it provides additional useful information.
 - :eyes: The `type` field is **OPTIONAL**. If used, it should ideally be a meaningful URI, but **MAY** fallback to `about:blank`.
-- :eyes: Optional fields: `instance`, and any custom fields (extensions).
+- :eyes: Optional fields: `instance` (an absolute URI), and any custom fields (extensions).
 
 
 
@@ -134,7 +134,7 @@ Content-Language: en
   "title": "Access forbidden",
   "status": 403,
   "detail": "You do not have permission to access this resource..",
-  "instance": "/something/something",
+  "instance": "https://example.com/something/something",
   "balance": 30,                        //Custom field
   "recommended-action": "Something."    //Custom field
 }
