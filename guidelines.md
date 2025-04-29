@@ -97,18 +97,18 @@ Throughout this document, rules are marked with the following indicators:
 
 | Code | Description           | GET | POST | PUT | PATCH | DELETE |
 |------|-----------------------|-----|------|-----|-------|--------|
-| 200  | OK                    |  :white_check_mark:  |      | :white_check_mark:    | :white_check_mark:      |:white_check_mark: |
+| 200  | OK                    |  :white_check_mark: |   :white_check_mark:    | :white_check_mark:    | :white_check_mark:      |:white_check_mark: |
 | 201  | Created               |     |   :white_check_mark:   |     |       |        |
 | 202  | Accepted              |     |  :white_check_mark:    |     |       |        |
-| 204  | No Content            | :white_check_mark:    |      |  :white_check_mark:    |  :white_check_mark:      |  :white_check_mark:       |
+| 204  | No Content            |     |  :white_check_mark:     |  :white_check_mark:    |  :white_check_mark:      |  :white_check_mark:       |
 | 303  | See Other             |     |   :white_check_mark:    |     |       |        |
-| 400  | Bad Request           |  :white_check_mark:   |   :white_check_mark:    |   :white_check_mark:   |:white_check_mark:        |:white_check_mark:        |
-| 401  | Unauthorized          |  :white_check_mark:    |:white_check_mark:       |:white_check_mark:      |:white_check_mark:        |:white_check_mark:         |:white_check_mark:
-| 403  | Forbidden             |  :white_check_mark:    |:white_check_mark:       |:white_check_mark:      |:white_check_mark:        |:white_check_mark:         |:white_check_mark:
-| 404  | Not Found             |  :white_check_mark:    |:white_check_mark:       |:white_check_mark:      |:white_check_mark:        |:white_check_mark:         |:white_check_mark:
+| 400  | Bad Request           |  :white_check_mark:  |   :white_check_mark:    |   :white_check_mark:   |:white_check_mark:        |:white_check_mark:        |
+| 401  | Unauthorized          |  :white_check_mark:   |:white_check_mark:       |:white_check_mark:      |:white_check_mark:        |:white_check_mark:         |:white_check_mark:
+| 403  | Forbidden             |  :white_check_mark:   |:white_check_mark:       |:white_check_mark:      |:white_check_mark:        |:white_check_mark:         |:white_check_mark:
+| 404  | Not Found             |  :white_check_mark:   |:white_check_mark:       |:white_check_mark:      |:white_check_mark:        |:white_check_mark:         |:white_check_mark:
 | 409  | Conflict              |     |   :white_check_mark:    |   :white_check_mark:   |:white_check_mark:        |:white_check_mark:         |
-| 500  | Internal Server Error |  :white_check_mark:    |:white_check_mark:       |:white_check_mark:      |:white_check_mark:        |:white_check_mark:         |:white_check_mark:
-| 503  | Service Unavailable   |  :white_check_mark:    |:white_check_mark:       |:white_check_mark:      |:white_check_mark:        |:white_check_mark:         |:white_check_mark:
+| 500  | Internal Server Error |  :white_check_mark:   |:white_check_mark:       |:white_check_mark:      |:white_check_mark:        |:white_check_mark:         |:white_check_mark:
+| 503  | Service Unavailable   |  :white_check_mark:   |:white_check_mark:       |:white_check_mark:      |:white_check_mark:        |:white_check_mark:         |:white_check_mark:
 
 
 ### 4.2 Error Handling
