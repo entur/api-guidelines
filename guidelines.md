@@ -193,9 +193,15 @@ Example:
 
 ### 6.1 Filtering, Sorting & Pagination
 - :eyes: You **MAY** allow filtering, sorting, and pagination to retrieve specific data
+- :eyes: If you implement pagination, you **MUST** use either query parameters "page" (zero based page to get) and "size" (number of items per page), 
+  **OR** query parameters offset (zero based) and limit (number of items).  
+- :eyes: If you implement sorting, you **SHOULD** use query parameter "sort", unless you good reason not to.
+- **TODO**: Requirements for response format for pagination and sorting.
+
+The requirements above are based on the Spring way of doing things: https://docs.spring.io/spring-data/rest/reference/paging-and-sorting.html
 
 Example:
-> GET /api/v1/bus-stops?city=Oslo&sort=name&page=2&limit=20
+> GET /api/v1/bus-stops?city=Oslo&sort=name,asc&sort=something,desc&page=0&size=20
 
 
 ### 6.2 Partial Responses
