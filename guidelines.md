@@ -57,7 +57,28 @@ Throughout this document, rules are marked with the following indicators:
 
 
 ### 2.3 Authentication and Authorization
-*TODO*
+- :eyes: For APIs that implement authentication, used schemas **MUST** be documented in the `securitySchemes` and `security` sections of the OpenAPI spec.
+ 
+Example:
+```json
+{
+
+  "security": [{ "entur-jwt": [] }],
+  
+  "components": {
+    "securitySchemes": {
+      "entur-jwt": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+    }
+  }
+}
+```
+
+The above example defines a security scheme named `entur-jwt` that uses the Bearer authentication scheme with JWT format. The `security` at the top level of the spec specifies that this scheme is required for all endpoints in the API.
+Security can also be defined at the operation level, allowing for different security requirements for different endpoints.
+
+[More information on Authentication](https://swagger.io/docs/specification/v3_0/authentication/)
+
+*TODO*: Needs more details 
 
 
 ## 3. Naming & Structure Conventions
