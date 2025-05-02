@@ -1,0 +1,209 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Example Service",
+    "version": "1.0.0",
+    "description": "A long and descriptive description",
+    "termsOfService": "http://developer.entur.org/terms-of-service",
+    "contact": {
+      "name": "API Support",
+      "url": "http://entur.no",
+      "email": "support@entur.no"
+    }
+  },
+  "tags": [
+    {
+      "name": "Orders",
+      "description": "Orders"
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://api.entur.no/sales/v1",
+      "description": "Production"
+    },
+    {
+      "url": "https://staging.api.entur.no/sales/v1",
+      "description": "Staging"
+    }
+  ],
+  "security": [{ "entur-jwt": [] }],
+  "components": {
+    "parameters": {
+      "Entur-Distribution-Channel": {
+        "in": "header",
+        "name": "Entur-Distribution-Channel",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "schemas": {
+      "Order": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "Problem": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+
+    "securitySchemes": {
+      "entur-jwt": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+    }
+  },
+  "paths": {
+    "/orders": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Entur-Distribution-Channel"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "description": "Get orders",
+        "operationId": "getOrders",
+        "responses": {
+          "200": {
+            "description": "Get orders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              },
+              "application/xml": {
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "description": "Create an order",
+        "operationId": "createOrder",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{orderId}": {
+      "get": {
+        "parameters": [
+          {
+            "name": "orderId",
+            "description": "The order ID.",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "test",
+            "description": "The order ID.",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "description": "Get an order",
+        "operationId": "getOrder",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "parameters": [
+          {
+            "name": "orderId",
+            "description": "The order ID.",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "description": "updateOrder",
+        "operationId": "updateOrder",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
