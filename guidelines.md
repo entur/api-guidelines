@@ -38,11 +38,11 @@ Throughout this document, rules are marked with the following indicators:
 ### 2.1 General Design Principles
 - Consistency - Make sure the API is easy to understand and predictable
 - :white_check_mark: HTTP Methods - API endpoints **MUST** use standard HTTP methods (GET, POST, PUT, PATCH, DELETE)
-- :white_check_mark: Data Format - API endpoints **MUST** support the JSON data format
+- :white_check_mark: Data Format - API endpoints **SHOULD** support the JSON data format, unless there is a good reason not to
 - :white_check_mark: Documentation - All functionality **SHOULD** be documented with examples and descriptions
 - :white_check_mark: You **MUST** use the OpenAPI V3 spec to define APIs
 - :white_check_mark: Encryption: All communication **MUST** be over HTTPS
-- :white_check_mark: No localhost (or 127.0.0.1) host names.
+- :white_check_mark: No localhost (or 127.0.0.1) host names
 
 
 ### 2.2 Development Approach
@@ -179,7 +179,7 @@ Example:
 
 ### 5.4 Character Encoding
 - :white_check_mark: You **MUST** encode all text in UTF-8
-- :eyes: Set the Content-Type header to `application/json; charset=utf-8`
+- :eyes: Set the Content-Type header to for example `application/json; charset=utf-8`
   - Tip: test the api with international character (e.g. æ, ø, å)
 
 
@@ -231,7 +231,7 @@ Last-Modified: Fri, 13 Feb 2025 15:30:00 UTC
 
 
 ### 6.5 Import & Export Formats
-- :eyes: You **MUST** support JSON, but **MAY** use XML or CSV where appropriate
+- :eyes: You **SHOULD** support JSON, unless you have a good reason not to.
 - :white_check_mark: Use the HTTP Accept header to specify desired response format
 
 Example:
