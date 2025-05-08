@@ -57,7 +57,43 @@ Throughout this document, rules are marked with the following indicators:
 
 
 ### 2.3 Authentication and Authorization
-*TODO*
+
+#### 2.3.1 Open APIs
+It is required that all consumers identify themselves by using the header `ET-Client-Name`.  
+The header value should be on the format `<company>-<application>`, e.g. `brakar-journeyplanner`.
+
+#### 2.3.1 Partner APIs
+
+- :eyes: Used security schemes **MUST** be documented using `securitySchemes` and `security`.
+You use `securitySchemes` to define all security schemes your API supports, then use `security` to apply specific schemes to the whole API or individual operations.
+After you have defined the security schemes in the `securitySchemes` section, you can apply them to the whole API or individual operations by adding the `security` 
+section on the root level or operation level, respectively. When used on the root level, security applies the specified security schemes globally to all API operations, 
+unless overridden on the operation level.
+
+Example:
+```json
+{
+
+  "security": [{ "entur-jwt": [] }],
+  
+  "components": {
+    "securitySchemes": {
+      "enturJwt": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+    }
+  }
+}
+```
+The above example defines a security scheme named `enturJwt` that uses the Bearer authentication scheme with JWT format. 
+
+[More information on Authentication](https://swagger.io/docs/specification/v3_0/authentication/)
+
+
+#### 2.3.1 Internal APIs
+**TODO** 
+
+
+
+ 
 
 
 ## 3. Naming & Structure Conventions
