@@ -67,7 +67,7 @@ Example:
   
   "components": {
     "securitySchemes": {
-      "entur-jwt": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+      "enturJwt": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
     }
   }
 }
