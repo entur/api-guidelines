@@ -38,11 +38,11 @@ Throughout this document, rules are marked with the following indicators:
 ### 2.1 General Design Principles
 - Consistency - Make sure the API is easy to understand and predictable
 - :white_check_mark: HTTP Methods - API endpoints **MUST** use standard HTTP methods (GET, POST, PUT, PATCH, DELETE)
-- :white_check_mark: Data Format - API endpoints **MUST** support the JSON data format
+- :white_check_mark: Data Format - API endpoints **SHOULD** support the JSON data format, unless there is a good reason not to
 - :white_check_mark: Documentation - All functionality **SHOULD** be documented with examples and descriptions
 - :white_check_mark: You **MUST** use the OpenAPI V3 spec to define APIs
 - :white_check_mark: Encryption: All communication **MUST** be over HTTPS
-- :white_check_mark: No localhost (or 127.0.0.1) host names.
+- :white_check_mark: No localhost (or 127.0.0.1) host names
 
 
 ### 2.2 Development Approach
@@ -57,7 +57,43 @@ Throughout this document, rules are marked with the following indicators:
 
 
 ### 2.3 Authentication and Authorization
-*TODO*
+
+#### 2.3.1 Open APIs
+It is required that all consumers identify themselves by using the header `ET-Client-Name`.  
+The header value should be on the format `<company>-<application>`, e.g. `brakar-journeyplanner`.
+
+#### 2.3.1 Partner APIs
+
+- :eyes: Used security schemes **MUST** be documented using `securitySchemes` and `security`.
+You use `securitySchemes` to define all security schemes your API supports, then use `security` to apply specific schemes to the whole API or individual operations.
+After you have defined the security schemes in the `securitySchemes` section, you can apply them to the whole API or individual operations by adding the `security` 
+section on the root level or operation level, respectively. When used on the root level, security applies the specified security schemes globally to all API operations, 
+unless overridden on the operation level.
+
+Example:
+```json
+{
+
+  "security": [{ "entur-jwt": [] }],
+  
+  "components": {
+    "securitySchemes": {
+      "enturJwt": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+    }
+  }
+}
+```
+The above example defines a security scheme named `enturJwt` that uses the Bearer authentication scheme with JWT format. 
+
+[More information on Authentication](https://swagger.io/docs/specification/v3_0/authentication/)
+
+
+#### 2.3.1 Internal APIs
+**TODO** 
+
+
+
+ 
 
 
 ## 3. Naming & Structure Conventions
@@ -179,7 +215,7 @@ Example:
 
 ### 5.4 Character Encoding
 - :white_check_mark: You **MUST** encode all text in UTF-8
-- :eyes: Set the Content-Type header to `application/json; charset=utf-8`
+- :eyes: Set the Content-Type header to for example `application/json; charset=utf-8`
   - Tip: test the api with international character (e.g. æ, ø, å)
 
 
@@ -193,9 +229,15 @@ Example:
 
 ### 6.1 Filtering, Sorting & Pagination
 - :eyes: You **MAY** allow filtering, sorting, and pagination to retrieve specific data
+- :eyes: If you implement pagination, you **MUST** use either query parameters "page" (zero based page to get) and "size" (number of items per page), 
+  **OR** query parameters offset (zero based) and limit (number of items)  
+- :eyes: If you implement sorting, you **SHOULD** use query parameter "sort". Sorting can be done on multiple levels, and sort order (desc / asc) is also specified, like so: `sort=<field1>,<asc|desc>&sort=<field2>,<asc|desc>`
+- **TODO**: Requirements for response format for pagination and sorting
+
+The requirements above are based on the Spring way of doing things: https://docs.spring.io/spring-data/rest/reference/paging-and-sorting.html
 
 Example:
-> GET /api/v1/bus-stops?city=Oslo&sort=name&page=2&limit=20
+> GET /api/v1/bus-stops?city=Oslo&sort=name,asc&sort=something,desc&page=0&size=20
 
 
 ### 6.2 Partial Responses
@@ -231,7 +273,7 @@ Last-Modified: Fri, 13 Feb 2025 15:30:00 UTC
 
 
 ### 6.5 Import & Export Formats
-- :eyes: You **MUST** support JSON, but **MAY** use XML or CSV where appropriate
+- :eyes: You **SHOULD** support JSON, unless you have a good reason not to.
 - :white_check_mark: Use the HTTP Accept header to specify desired response format
 
 Example:
