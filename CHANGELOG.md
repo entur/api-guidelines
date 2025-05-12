@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.1](https://github.com/entur/api-guidelines/compare/v1.0.0...v1.0.1) (2025-05-12)
+
+
+### Bug Fixes
+
+* Api 382 - Rule fixes ([6339b4c](https://github.com/entur/api-guidelines/commit/6339b4ca1ed7cdaee9724d69b052f17d4239dcdb))
+* API-382: Do not require support for `application/json` request body media type. ([3546278](https://github.com/entur/api-guidelines/commit/3546278f0fab8be59f1d2d26693f0c790153e9e5))
+* API-382: Fixed entur-headers-hyphenated-pascal-case, it had a regex which both failed incorrectly in some cases and succeeded incorrectly in some cases. Also removed unnecessary slashes in rules entur-headers-hyphenated-pascal-case and entur-headers-no-x-headers. ([453e927](https://github.com/entur/api-guidelines/commit/453e927719a67b7b5017c66443a97efdcf262850))
+
 ## [1.0.0](https://github.com/entur/api-guidelines/compare/v0.1.0...v1.0.0) (2025-05-08)
 
 
