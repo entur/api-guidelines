@@ -50,15 +50,6 @@ rules:
       functionOptions:
         notMatch: "^(options|head|trace)$"
 
-  # Data Format - JSON support requirement
-  entur-request-media-type:
-    severity: error
-    message: "Request MUST support `application/json` media type."
-    given: $.paths.*.*.requestBody
-    then:
-      field: content.application/json
-      function: defined
-
   # Documentation with examples
   entur-example-parameter:
     message: "Parameters SHOULD have example values."
