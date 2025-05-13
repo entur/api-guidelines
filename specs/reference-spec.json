@@ -4,18 +4,17 @@
     "title": "Example Service",
     "version": "1.0.0",
     "description": "A long and descriptive description",
-    "termsOfService": "http://developer.entur.org/terms-of-service",
+    "termsOfService": "https://developer.entur.org/terms-of-service",
     "contact": {
       "name": "API Support",
-      "url": "http://entur.no",
+      "url": "https://entur.no",
       "email": "support@entur.no"
     }
   },
+
   "tags": [
-    {
-      "name": "Orders",
-      "description": "Orders"
-    }
+    {"name": "Items Public API"},
+    {"name": "Items Internal API"}
   ],
   "servers": [
     {
@@ -27,78 +26,112 @@
       "description": "Staging"
     }
   ],
-  "security": [{ "entur-jwt": [] }],
   "components": {
     "parameters": {
-      "Entur-Distribution-Channel": {
+      "Et-Client-Header": {
         "in": "header",
-        "name": "Entur-Distribution-Channel",
+        "name": "Et-Client-Name",
         "schema": {
           "type": "string"
-        }
+        },
+        "example": "company-application"
+      },
+      "Item-Id": {
+        "name": "itemId",
+        "description": "The item ID.",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "example": "100"
       }
     },
     "schemas": {
-      "Order": {
+      "Item": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "example": "100"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "example": "Item 100"
           }
+        },
+        example: {
+          "id": "100",
+          "name": "Item 100"
         }
       },
       "Problem": {
         "type": "object",
         "properties": {
           "type": {
-            "type": "string"
+            "type": "string",
+            "example": "https://example.com/probs/invalid-parameter"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            example: "Invalid parameter"
           },
           "detail": {
-            "type": "string"
+            "type": "string",
+            example: "The parameter 'exampleParameter' is invalid."
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            example: "400"
           }
+        },
+        example: {
+            "type": "https://example.com/probs/invalid-parameter",
+            "title": "Invalid parameter",
+            "detail": "The parameter 'exampleParameter' is invalid.",
+            "status": "400"
         }
       }
     },
 
     "securitySchemes": {
-      "entur-jwt": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+      "enturJwt": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
     }
   },
   "paths": {
-    "/orders": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/Entur-Distribution-Channel"
-        }
-      ],
+    "/items": {
       "get": {
         "tags": [
-          "Orders"
+          "Items Public API"
         ],
-        "description": "Get orders",
-        "operationId": "getOrders",
+        "parameters": [
+          {
+            "name": "status",
+            "description": "Filters items to return on status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            example: "completed"
+          },
+          {
+            "$ref": "#/components/parameters/Et-Client-Header"
+          }
+        ],
+        "description": "Get items",
+        "operationId": "getItems",
         "responses": {
           "200": {
-            "description": "Get orders",
+            "description": "Get items",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Order"
+                    "$ref": "#/components/schemas/Item"
                   }
                 }
-              },
-              "application/xml": {
               }
             }
           }
@@ -106,17 +139,29 @@
       },
       "post": {
         "tags": [
-          "Orders"
+          "Items Internal API"
         ],
-        "description": "Create an order",
-        "operationId": "createOrder",
+        "security": [{ "enturJwt": [] }],
+        "description": "Create an item",
+        "operationId": "createItem",
+        "requestBody": {
+          "description": "Item to create",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": "Created",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Order"
+                  "$ref": "#/components/schemas/Item"
                 }
               }
             }
@@ -124,40 +169,30 @@
         }
       }
     },
-    "/orders/{orderId}": {
+    "/items/{itemId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Item-Id"
+        }
+      ],
       "get": {
         "parameters": [
           {
-            "name": "orderId",
-            "description": "The order ID.",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "test",
-            "description": "The order ID.",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/Et-Client-Header"
           }
         ],
         "tags": [
-          "Orders"
+          "Items Public API"
         ],
-        "description": "Get an order",
-        "operationId": "getOrder",
+        "description": "Get an item",
+        "operationId": "getItem",
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Order"
+                  "$ref": "#/components/schemas/Item"
                 }
               }
             }
@@ -165,7 +200,7 @@
           "404": {
             "description": "Not Found",
             "content": {
-              "application/problem+xml": {
+              "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/Problem"
                 }
@@ -175,29 +210,30 @@
         }
       },
       "put": {
-        "parameters": [
-          {
-            "name": "orderId",
-            "description": "The order ID.",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "tags": [
-          "Orders"
+          "Items Internal API"
         ],
-        "description": "updateOrder",
-        "operationId": "updateOrder",
+        "security": [{ "enturJwt": [] }],
+        "description": "updateItem",
+        "operationId": "updateItem",
+        "requestBody": {
+            "description": "Item to update",
+            "required": true,
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/Item"
+                }
+                }
+            }
+        },
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Order"
+                  "$ref": "#/components/schemas/Item"
                 }
               }
             }

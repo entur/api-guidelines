@@ -59,7 +59,7 @@ Throughout this document, rules are marked with the following indicators:
 ### 2.3 Authentication and Authorization
 
 #### 2.3.1 Open APIs
-It is required that all consumers identify themselves by using the header `ET-Client-Name`.  
+It is required that all consumers identify themselves by using the header `Et-Client-Name`.  
 The header value should be on the format `<company>-<application>`, e.g. `brakar-journeyplanner`.
 
 #### 2.3.1 Partner APIs
@@ -214,7 +214,7 @@ Example:
 
 
 ### 5.4 Character Encoding
-- :white_check_mark: You **MUST** encode all text in UTF-8
+- :eyes: You **MUST** encode all text in UTF-8
 - :eyes: Set the Content-Type header to for example `application/json; charset=utf-8`
   - Tip: test the api with international character (e.g. æ, ø, å)
 
