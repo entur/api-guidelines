@@ -151,15 +151,10 @@ The above example defines a security scheme named `enturJwt` that uses the Beare
 ### 4.2 Error Handling
 When an error occurs, the IETF standard for Problem Details for HTTP APIs [(RFC 9457)](https://www.rfc-editor.org/rfc/rfc9457.html) **SHOULD** be followed, with few additional guidelines:
 - :white_check_mark: Error responses **MUST** either use media type `application/problem+json`, OR `application/problem+xml` (if Accept header is `application/xml`).
-- :white_check_mark: The following fields MUST be included: `title`, `status`.
+- :white_check_mark: The fields `title` and `status` **MUST** be included.
 - :eyes: The `detail` field **SHOULD** be included when it provides additional useful information.
-- :eyes: The `type` field is **OPTIONAL**. If used, it should ideally be a meaningful URI, but **MAY** fallback to `about:blank`.
-- :eyes: Optional fields: `instance` (an absolute URI), and any custom fields (extensions).
-
-
-
-
-
+- :eyes: The `type` field **MAY** be included. If included it, **MUST** be an absolute URI.
+- :eyes: The `instance` **MAY** be included. If included it, **MUST** be an absolute URI.
 
 Example:
 > HTTP/1.1 403 Forbidden
@@ -167,7 +162,7 @@ Content-Type: application/problem+json
 Content-Language: en
 ```json
 {
-  "type": "about:blank",
+  "type": "https://example.com/request-endpoint",
   "title": "Access forbidden",
   "status": 403,
   "detail": "You do not have permission to access this resource..",
