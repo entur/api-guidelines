@@ -30,6 +30,7 @@
     "parameters": {
       "Et-Client-Header": {
         "in": "header",
+        "required": true,
         "name": "Et-Client-Name",
         "schema": {
           "type": "string"
@@ -45,6 +46,19 @@
           "type": "string"
         },
         "example": "100"
+      },
+      "Page": {
+        "description": "Results page you want to retrieve (0..N)",
+        "in": "query",
+        "required": true,
+        "name": "page",
+        "schema": { "type": "string", "example": 0 }
+      },
+      "Page-Size": {
+        "description": "Number of records per page.",
+        "in": "query",
+        "name": "size",
+        "schema": { "type": "string", "example": 20 }
       }
     },
     "schemas": {
@@ -86,10 +100,10 @@
           }
         },
         example: {
-            "type": "https://example.com/probs/invalid-parameter",
-            "title": "Invalid parameter",
-            "detail": "The parameter 'exampleParameter' is invalid.",
-            "status": "400"
+          "type": "https://example.com/probs/invalid-parameter",
+          "title": "Invalid parameter",
+          "detail": "The parameter 'exampleParameter' is invalid.",
+          "status": "400"
         }
       }
     },
@@ -106,17 +120,22 @@
         ],
         "parameters": [
           {
+            "$ref": "#/components/parameters/Et-Client-Header"
+          },
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/Page-Size"
+          },
+          {
             "name": "status",
             "description": "Filters items to return on status",
             "in": "query",
-            "required": false,
             "schema": {
               "type": "string"
             },
             example: "completed"
-          },
-          {
-            "$ref": "#/components/parameters/Et-Client-Header"
           }
         ],
         "description": "Get items",
@@ -217,15 +236,15 @@
         "description": "updateItem",
         "operationId": "updateItem",
         "requestBody": {
-            "description": "Item to update",
-            "required": true,
-            "content": {
-                "application/json": {
-                "schema": {
-                    "$ref": "#/components/schemas/Item"
-                }
-                }
+          "description": "Item to update",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
             }
+          }
         },
         "responses": {
           "200": {
