@@ -153,8 +153,8 @@ When an error occurs, the IETF standard for Problem Details for HTTP APIs [(RFC 
 - :white_check_mark: Error responses **MUST** either use media type `application/problem+json`, OR `application/problem+xml` (if Accept header is `application/xml`).
 - :white_check_mark: The fields `title` and `status` **MUST** be included.
 - :eyes: The `detail` field **SHOULD** be included when it provides additional useful information.
-- :eyes: The `type` field **MAY** be included. If included it, **MUST** be an absolute URI.
-- :eyes: The `instance` **MAY** be included. If included it, **MUST** be an absolute URI.
+- :eyes: The `type` field **MAY** be included. If included, it **MUST** be an absolute URI.
+- :eyes: The `instance` **MAY** be included. If included, it **MUST** be an absolute URI.
 
 Example:
 > HTTP/1.1 403 Forbidden
