@@ -95,15 +95,15 @@
             "example": "The parameter 'exampleParameter' is invalid."
           },
           "status": {
-            "type": "string",
-            "example": "400"
+            "type": "integer",
+            "example": 400
           }
         },
         "example": {
           "type": "https://example.com/probs/invalid-parameter",
           "title": "Invalid parameter",
           "detail": "The parameter 'exampleParameter' is invalid.",
-          "status": "400"
+          "status": 400
         }
       }
     },
