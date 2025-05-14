@@ -60,8 +60,17 @@ rules:
       field: example
       function: defined
 
+  entur-example-components-parameter:
+    message: "Components parameters SHOULD have example values."
+    severity: warn
+    recommended: false
+    given: $.components.parameters.*
+    then:
+      field: example
+      function: defined
+
   entur-example-schema-property:
-    message: "Properties in schema SHOULD have example values."
+    message: "Properties in components schema SHOULD have example values."
     severity: warn
     recommended: false
     given: $.components.schemas.*.properties.*
@@ -331,16 +340,6 @@ rules:
   # 5.4 Character Encoding - Not directly lintable for UTF-8
   # -------------------------------------------------------------------------
 
-
-  # Check for charset=utf-8 in Content-Type headers
-  entur-content-type-utf8:
-    message: "Content-Type header SHOULD specify charset=utf-8 for JSON responses"
-    severity: warn
-    given: $.paths.*.*.responses.*.content["application/json"].examples..headers["Content-Type"]
-    then:
-      function: pattern
-      functionOptions:
-        match: charset=utf-8
 
   # -------------------------------------------------------------------------
   # 5.5 HTTP Headers
