@@ -52,13 +52,13 @@
         "in": "query",
         "required": true,
         "name": "page",
-        "schema": { "type": "string", "example": 0 }
+        "schema": { "type": "integer", "example": 0 }
       },
       "Page-Size": {
         "description": "Number of records per page.",
         "in": "query",
         "name": "size",
-        "schema": { "type": "string", "example": 20 }
+        "schema": { "type": "integer", "example": 20 }
       }
     },
     "schemas": {
