@@ -1,0 +1,264 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Example Service",
+    "version": "1.0.0",
+    "description": "A long and descriptive description",
+    "termsOfService": "https://developer.entur.org/terms-of-service",
+    "contact": {
+      "name": "API Support",
+      "url": "https://entur.no",
+      "email": "support@entur.no"
+    }
+  },
+
+  "tags": [
+    {"name": "Items Public API"},
+    {"name": "Items Internal API"}
+  ],
+  "servers": [
+    {
+      "url": "https://api.entur.no/product/v1",
+      "description": "Production"
+    },
+    {
+      "url": "https://staging.api.entur.no/product/v1",
+      "description": "Staging"
+    }
+  ],
+  "components": {
+    "parameters": {
+      "Et-Client-Header": {
+        "in": "header",
+        "required": true,
+        "name": "Et-Client-Name",
+        "schema": {
+          "type": "string"
+        },
+        "example": "company-application"
+      },
+      "Item-Id": {
+        "name": "itemId",
+        "description": "The item ID.",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "example": "100"
+      },
+      "Page": {
+        "description": "Results page you want to retrieve (0..N)",
+        "in": "query",
+        "required": true,
+        "name": "page",
+        "schema": { "type": "integer", "example": 0 }
+      },
+      "Page-Size": {
+        "description": "Number of records per page.",
+        "in": "query",
+        "name": "size",
+        "schema": { "type": "integer", "example": 20 }
+      }
+    },
+    "schemas": {
+      "Item": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "100"
+          },
+          "name": {
+            "type": "string",
+            "example": "Item 100"
+          }
+        },
+        "example": {
+          "id": "100",
+          "name": "Item 100"
+        }
+      },
+      "Problem": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "https://example.com/probs/invalid-parameter"
+          },
+          "title": {
+            "type": "string",
+            "example": "Invalid parameter"
+          },
+          "detail": {
+            "type": "string",
+            "example": "The parameter 'exampleParameter' is invalid."
+          },
+          "status": {
+            "type": "integer",
+            "example": 400
+          }
+        },
+        "example": {
+          "type": "https://example.com/probs/invalid-parameter",
+          "title": "Invalid parameter",
+          "detail": "The parameter 'exampleParameter' is invalid.",
+          "status": 400
+        }
+      }
+    },
+
+    "securitySchemes": {
+      "enturJwt": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+    }
+  },
+  "paths": {
+    "/items": {
+      "get": {
+        "tags": [
+          "Items Public API"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Et-Client-Header"
+          },
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/Page-Size"
+          },
+          {
+            "name": "status",
+            "description": "Filters items to return on status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "completed"
+          }
+        ],
+        "description": "Get items",
+        "operationId": "getItems",
+        "responses": {
+          "200": {
+            "description": "Get items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Item"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Items Internal API"
+        ],
+        "security": [{ "enturJwt": [] }],
+        "description": "Create an item",
+        "operationId": "createItem",
+        "requestBody": {
+          "description": "Item to create",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/items/{itemId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Item-Id"
+        }
+      ],
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Et-Client-Header"
+          }
+        ],
+        "tags": [
+          "Items Public API"
+        ],
+        "description": "Get an item",
+        "operationId": "getItem",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Items Internal API"
+        ],
+        "security": [{ "enturJwt": [] }],
+        "description": "updateItem",
+        "operationId": "updateItem",
+        "requestBody": {
+          "description": "Item to update",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
