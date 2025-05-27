@@ -12,7 +12,7 @@ rules:
   # Core info requirements for all APIs
 
   entur-info-title:
-    message: "The OpenAPI info section MUST include a non-empty title."
+    message: "The OpenAPI info section MUST include a non-empty \"title\"."
     severity: error
     given: $
     then:
@@ -20,7 +20,7 @@ rules:
       function: truthy
 
   entur-info-version:
-    message: "The OpenAPI info section MUST include a non-empty version."
+    message: "The OpenAPI info section MUST include a non-empty \"version\"."
     severity: error
     given: $
     then:
@@ -41,7 +41,7 @@ rules:
 
   # HTTP Methods
   entur-operation-standard-methods:
-    message: "Operations SHOULD use standard HTTP methods (get, post, put, patch, delete)"
+    message: "Operations SHOULD use standard HTTP methods (`get`, `post`, `put`, `patch`, `delete`). Invalid operation: {{property}}."
     given: $.paths[*]
     severity: warn
     then:
@@ -56,15 +56,6 @@ rules:
     severity: warn
     recommended: false
     given: $.paths.*.*.parameters.*
-    then:
-      field: example
-      function: defined
-
-  entur-example-components-parameter:
-    message: "Components parameters SHOULD have example values."
-    severity: warn
-    recommended: false
-    given: $.components.parameters.*
     then:
       field: example
       function: defined
@@ -102,7 +93,7 @@ rules:
 
   # Security - HTTPS requirement
   entur-hosts-https-only:
-    message: "Servers MUST use HTTPS. Value: {{value}}"
+    message: "Servers MUST use HTTPS. Invalid URL: {{value}}"
     severity: error
     given: $.servers[*].url
     then:
@@ -111,7 +102,7 @@ rules:
         match: ^(https:)
 
   entur-hosts-not-localhost:
-    message: "Server URL MUST NOT use localhost or 127.0.0.1 as hostname."
+    message: "Server URLs MUST NOT use localhost or 127.0.0.1 as hostname. Invalid URL: {{value}}"
     severity: error
     given: $.servers[*].url
     then:
@@ -130,7 +121,7 @@ rules:
 
   # URL format requirements
   entur-paths-format:
-    message: "Paths MUST be in kebab-case (lower case and separated with hyphens), with single slashes, and no trailing slash at end of path."
+    message: "Paths MUST be in kebab-case (lower case and separated with hyphens), with single slashes, and no trailing slash at end of path. Invalid path: {{property}}."
     severity: error
     given: $.paths.*~
     then:
@@ -143,7 +134,7 @@ rules:
 
   # Field naming conventions
   entur-query-parameters-lower-camel-case:
-    message: "Query parameters MUST be lowerCamelCase. Value: {{value}}"
+    message: "Query parameter names MUST be lowerCamelCase. Invalid name: {{value}}"
     severity: error
     given: $.paths.*.*.parameters[?(@.in=='query')].name
     then:
@@ -152,7 +143,7 @@ rules:
         match: ^[a-z][a-zA-Z0-9]*$
 
   entur-path-parameters-camelCase-alphanumeric:
-    message: "Path parameter MUST be lowerCamelCase. Value: {{value}}"
+    message: "Path parameter names MUST be lowerCamelCase. Invalid name: {{value}}"
     severity: error
     given: $..parameters[?(@.in == 'path')].name
     then:
@@ -161,7 +152,7 @@ rules:
         match: ^[a-z][a-zA-Z0-9]*$
 
   entur-body-fields-lower-camel-case:
-    message: "Request and Response body fields MUST be lowerCamelCase."
+    message: "Request and Response body field names MUST be lowerCamelCase."
     severity: error
     given: $..[?(@property === 'properties')]
     then:
@@ -172,7 +163,7 @@ rules:
 
 # Server URL case requirements
   entur-server-urls-lowercase:
-    message: "Server URL MUST be in lowercase. Value: {{value}}"
+    message: "Server URLs MUST be in lowercase. Invalid URL: {{value}}"
     severity: error
     given: $.servers[*].url
     then:
@@ -348,7 +339,7 @@ rules:
 
   # Header naming conventions
   entur-headers-no-x-headers:
-    message: "HTTP headers SHOULD NOT include 'X-' prefix."
+    message: "HTTP headers SHOULD NOT have an 'X-' prefix. Invalid name: \"{{value}}\"."
     severity: warn
     given: "$..parameters[?(@.in == 'header')].name"
     then:
@@ -357,7 +348,7 @@ rules:
         notMatch: ^(x|X)-
 
   entur-headers-hyphenated-pascal-case:
-    message: "HTTP headers MUST be Hyphenated-Pascal-Case."
+    message: "HTTP header names MUST be in Hyphenated-Pascal-Case. Invalid name: \"{{value}}\"."
     severity: error
     given: "$..parameters[?(@.in == 'header')].name"
     then:
