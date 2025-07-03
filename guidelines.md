@@ -58,23 +58,20 @@ Throughout this document, rules are marked with the following indicators:
 
 ### 2.3 Authentication and Authorization
 
-#### 2.3.1 Open APIs
-It is required that all consumers identify themselves by using the header `Et-Client-Name`.  
-The header value should be on the format `<company>-<application>`, e.g. `brakar-journeyplanner`.
+#### 2.3.1 Open (publicly available) endpoints
+Open endpoints has no authentication, but consumers **MUST** identify themselves by using the header `Et-Client-Name`. The header value should be on the format `<company>-<application>`, e.g. `brakar-journeyplanner`.
 
-#### 2.3.1 Partner APIs
+#### 2.3.2 Partner- and Internal endpoints
 
-- :eyes: Used security schemes **MUST** be documented using `securitySchemes` and `security`.
-You use `securitySchemes` to define all security schemes your API supports, then use `security` to apply specific schemes to the whole API or individual operations.
-After you have defined the security schemes in the `securitySchemes` section, you can apply them to the whole API or individual operations by adding the `security` 
-section on the root level or operation level, respectively. When used on the root level, security applies the specified security schemes globally to all API operations, 
-unless overridden on the operation level.
+- :eyes: These endpoints are secured using JWT tokens. This **MUST** be documented using `securitySchemes` and `security`.
+You use `securitySchemes` inside `components` to define the `enturJwt` security scheme.
+You then add `security` either at the root level (if all operations are secured), or you add it under individual operations which are secured.
 
 Example:
 ```json
 {
 
-  "security": [{ "entur-jwt": [] }],
+  "security": [{ "enturJwt": [] }],
   
   "components": {
     "securitySchemes": {
@@ -83,17 +80,12 @@ Example:
   }
 }
 ```
-The above example defines a security scheme named `enturJwt` that uses the Bearer authentication scheme with JWT format. 
+
+In the above example a JWT is required for all endpoints. 
+
+You might wonder what the empty array is here `"enturJwt": []`. For some security schemes, that array will be a list of scopes required to access endpoints, but this is not used for JWT authentication, so it is always empty. 
 
 [More information on Authentication](https://swagger.io/docs/specification/v3_0/authentication/)
-
-
-#### 2.3.1 Internal APIs
-**TODO** 
-
-
-
- 
 
 
 ## 3. Naming & Structure Conventions
