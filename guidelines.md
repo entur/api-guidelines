@@ -64,18 +64,18 @@ Open endpoints has no authentication, but consumers **MUST** identify themselves
 #### 2.3.2 Partner- and Internal endpoints
 
 - :eyes: These endpoints are secured using JWT tokens. This **MUST** be documented using `securitySchemes` and `security`.
-You use `securitySchemes` inside `components` to define the `enturJwt` security scheme.
+You use `securitySchemes` inside `components` to define the `jwt` security scheme.
 You then add `security` either at the root level (if all operations are secured), or you add it under individual operations which are secured.
 
 Example:
 ```json
 {
 
-  "security": [{ "enturJwt": [] }],
+  "security": [{ "jwt": [] }],
   
   "components": {
     "securitySchemes": {
-      "enturJwt": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+      "jwt": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
     }
   }
 }
@@ -83,7 +83,7 @@ Example:
 
 In the above example a JWT is required for all endpoints. 
 
-You might wonder what the empty array is here `"enturJwt": []`. For some security schemes, that array will be a list of scopes required to access endpoints, but this is not used for JWT authentication, so it is always empty. 
+You might wonder what the empty array is here `"jwt": []`. For some security schemes, that array will be a list of scopes required to access endpoints, but this is not used for JWT authentication, so it is always empty. 
 
 [More information on Authentication](https://swagger.io/docs/specification/v3_0/authentication/)
 
