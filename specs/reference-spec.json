@@ -109,7 +109,7 @@
     },
 
     "securitySchemes": {
-      "enturJwt": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+      "jwt": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
     }
   },
   "paths": {
@@ -160,7 +160,7 @@
         "tags": [
           "Items Internal API"
         ],
-        "security": [{ "enturJwt": [] }],
+        "security": [{ "jwt": [] }],
         "description": "Create an item",
         "operationId": "createItem",
         "requestBody": {
@@ -232,7 +232,7 @@
         "tags": [
           "Items Internal API"
         ],
-        "security": [{ "enturJwt": [] }],
+        "security": [{ "jwt": [] }],
         "description": "updateItem",
         "operationId": "updateItem",
         "requestBody": {
