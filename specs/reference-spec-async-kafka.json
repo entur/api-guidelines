@@ -1,0 +1,202 @@
+{
+  "asyncapi": "3.0.0",
+  "info": {
+    "title": "Item Processing Service",
+    "version": "1.0.0",
+    "description": "A long and descriptive description",
+    "contact": {
+      "name": "API Support",
+      "url": "https://entur.no",
+      "email": "support@entur.no"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "tags": [
+      {"name": "Tag"}
+    ]
+  },
+  "servers": {
+    "kafka": {
+      "host": "test.mykafkacluster.org:8092",
+      "protocol": "kafka",
+      "bindings": {
+        "kafka": {
+          "schemaRegistryUrl": "http://localhost:8080/apis/registry/",
+          "schemaRegistryVendor": "apicurio",
+          "bindingVersion": "0.5.0"
+        }
+      }
+    }
+  },
+  "channels": {
+    "items/incoming": {
+      "address": "items-incoming",
+      "description": "Channel for receiving incoming items",
+      "messages": {
+        "itemMessage": {
+          "$ref": "#/components/messages/ItemMessage"
+        }
+      },
+      "servers": [
+        {
+          "$ref": "#/servers/kafka"
+        }
+      ]
+    },
+    "items/outgoing": {
+      "address": "items-outgoing",
+      "description": "Channel for sending processed items",
+      "messages": {
+        "processedItemMessage": {
+          "$ref": "#/components/messages/ProcessedItemMessage"
+        }
+      },
+      "servers": [
+        {
+          "$ref": "#/servers/kafka"
+        }
+      ]
+    }
+  },
+  "operations": {
+    "receiveItems": {
+      "action": "receive",
+      "description": "Receive an item",
+      "channel": {
+        "$ref": "#/channels/items~1incoming"
+      },
+      "bindings": {
+        "kafka": {
+            "bindingVersion": "0.5.0",
+            "groupId": {
+              "type": "string",
+              "enum": ["myGroupId"]
+            },
+            "clientId": {
+                "type": "string",
+                "enum": ["myClientId"]
+            }
+        }
+      },
+      "messages": [
+        {
+          "$ref": "#/channels/items~1incoming/messages/itemMessage"
+        }
+      ]
+    },
+    "sendProcessedItems": {
+      "action": "send",
+      "description": "Publish a processed item",
+      "channel": {
+        "$ref": "#/channels/items~1outgoing"
+      },
+      "bindings": {
+        "kafka": {
+          "bindingVersion": "0.5.0",
+          "groupId": {
+            "type": "string",
+            "enum": ["myGroupId"]
+          },
+          "clientId": {
+            "type": "string",
+            "enum": ["myClientId"]
+          }
+        }
+      },
+      "messages": [
+        {
+          "$ref": "#/channels/items~1outgoing/messages/processedItemMessage"
+        }
+      ]
+    }
+  },
+  "components": {
+    "messages": {
+      "ItemMessage": {
+        "bindings": {
+            "kafka": {
+              "key": {
+                "type": "string",
+                "example": "item-key"
+              },
+              "schemaIdLocation": "payload",
+              "schemaIdPayloadEncoding": "apicurio-newline",
+              "schemaLookupStrategy": "TopicIdStrategy",
+              "bindingVersion": "0.5.0"
+            }
+        },
+        "payload": {
+          "$ref": "#/components/schemas/Item"
+        }
+      },
+      "ProcessedItemMessage": {
+        "bindings": {
+          "kafka": {
+            "key": {
+              "type": "string",
+              "example": "item-key"
+            },
+            "schemaIdLocation": "payload",
+            "schemaIdPayloadEncoding": "apicurio-newline",
+            "schemaLookupStrategy": "TopicIdStrategy",
+            "bindingVersion": "0.5.0"
+          }
+        },
+        "payload": {
+          "$ref": "#/components/schemas/ProcessedItem"
+        }
+      }
+    },
+    "schemas": {
+      "Item": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "100"
+          },
+          "name": {
+            "type": "string",
+            "example": "Item 100"
+          }
+        },
+        "example": {
+          "id": "100",
+          "name": "Item 100"
+        }
+      },
+      "ProcessedItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "100"
+          },
+          "name": {
+            "type": "string",
+            "example": "Item 100"
+          },
+          "processedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-01-01T12:00:00Z"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["processed", "failed", "pending"],
+            "example": "processed"
+          }
+        },
+        "required": ["id", "processedAt", "status"],
+        "example": {
+          "id": "100",
+          "name": "Item 100",
+          "processedAt": "2023-01-01T12:00:00Z",
+          "status": "processed"
+        }
+      }
+    }
+  }
+}
