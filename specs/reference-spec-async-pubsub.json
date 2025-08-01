@@ -1,0 +1,180 @@
+{
+  "asyncapi": "3.0.0",
+  "info": {
+    "title": "Item Processing Service",
+    "version": "1.0.0",
+    "description": "A long and descriptive description",
+    "contact": {
+      "name": "API Support",
+      "url": "https://entur.no",
+      "email": "support@entur.no"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "tags": [
+      {"name": "Tag"}
+    ]
+  },
+  "servers": {
+    "pubsub": {
+      "host": "pubsub.googleapis.com",
+      "protocol": "googlepubsub"
+    }
+  },
+  "channels": {
+    "items/incoming": {
+      "address": "projects/your-project/topics/items-incoming",
+      "description": "Channel for receiving incoming items",
+      "bindings": {
+        "googlepubsub": {
+          "schemaSettings": {
+            "encoding": "json",
+            "name": "projects/your-project/schemas/message-avro"
+          }
+        }
+      },
+      "messages": {
+        "itemMessage": {
+          "$ref": "#/components/messages/ItemMessage"
+        }
+      },
+      "servers": [
+        {
+          "$ref": "#/servers/pubsub"
+        }
+      ]
+    },
+    "items/outgoing": {
+      "address": "projects/your-project/topics/items-outgoing",
+      "description": "Channel for sending processed items",
+      "bindings": {
+        "googlepubsub": {
+          "schemaSettings": {
+            "encoding": "json",
+            "name": "projects/your-project/schemas/message-avro"
+          }
+        }
+      },
+      "messages": {
+        "processedItemMessage": {
+          "$ref": "#/components/messages/ProcessedItemMessage"
+        }
+      },
+      "servers": [
+        {
+          "$ref": "#/servers/pubsub"
+        }
+      ]
+    }
+  },
+  "operations": {
+    "receiveItems": {
+      "action": "receive",
+      "description": "Receive an item",
+      "channel": {
+        "$ref": "#/channels/items~1incoming"
+      },
+      "messages": [
+        {
+          "$ref": "#/channels/items~1incoming/messages/itemMessage"
+        }
+      ]
+    },
+    "sendProcessedItems": {
+      "action": "send",
+      "description": "Publish a processed item",
+      "channel": {
+        "$ref": "#/channels/items~1outgoing"
+      },
+      "messages": [
+        {
+          "$ref": "#/channels/items~1outgoing/messages/processedItemMessage"
+        }
+      ]
+    }
+  },
+  "components": {
+    "messages": {
+      "ItemMessage": {
+        "bindings": {
+            "googlepubsub": {
+              "schema": {
+                "name": "projects/your-project/schemas/message-avro"
+              }
+            }
+        },
+        "name": "itemMessage",
+        "contentType": "application/json",
+        "payload": {
+          "$ref": "#/components/schemas/Item"
+        }
+      },
+      "ProcessedItemMessage": {
+        "bindings": {
+          "googlepubsub": {
+            "schema": {
+              "name": "projects/your-project/schemas/message-avro"
+            }
+          }
+        },
+        "name": "processedItemMessage",
+        "title": "Processed Item Message",
+        "contentType": "application/json",
+        "payload": {
+          "$ref": "#/components/schemas/ProcessedItem"
+        }
+      }
+    },
+    "schemas": {
+      "Item": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "100"
+          },
+          "name": {
+            "type": "string",
+            "example": "Item 100"
+          }
+        },
+        "example": {
+          "id": "100",
+          "name": "Item 100"
+        }
+      },
+      "ProcessedItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "100"
+          },
+          "name": {
+            "type": "string",
+            "example": "Item 100"
+          },
+          "processedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-01-01T12:00:00Z"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["processed", "failed", "pending"],
+            "example": "processed"
+          }
+        },
+        "required": ["id", "processedAt", "status"],
+        "example": {
+          "id": "100",
+          "name": "Item 100",
+          "processedAt": "2023-01-01T12:00:00Z",
+          "status": "processed"
+        }
+      }
+    }
+  }
+}
