@@ -142,11 +142,11 @@ You might wonder what the empty array is here `"jwt": []`. For some security sch
 
 ### 4.2 Error Handling
 When an error occurs, the IETF standard for Problem Details for HTTP APIs [(RFC 9457)](https://www.rfc-editor.org/rfc/rfc9457.html) **SHOULD** be followed, with few additional guidelines:
-- :white_check_mark: Error responses **MUST** either use media type `application/problem+json`, OR `application/problem+xml` (if Accept header is `application/xml`).
-- :white_check_mark: The fields `title` and `status` **MUST** be included.
-- :eyes: The `detail` field **SHOULD** be included when it provides additional useful information.
-- :eyes: The `type` field **MAY** be included. If included, it **MUST** be an absolute URI.
-- :eyes: The `instance` **MAY** be included. If included, it **MUST** be an absolute URI.
+- :white_check_mark: Error responses **MUST** either use media type `application/problem+json`, OR `application/problem+xml` (if Accept header is `application/xml`)
+- :white_check_mark: The fields `title` and `status` **MUST** be included
+- :eyes: The `detail` field **SHOULD** be included when it provides additional useful information
+- :eyes: The `type` field **MAY** be included. If included, it **MUST** be an absolute URI
+- :eyes: The `instance` **MAY** be included. If included, it **MUST** be an absolute URI
 
 Example:
 > HTTP/1.1 403 Forbidden
@@ -253,10 +253,29 @@ POST /api/v1/batch
 - :eyes: You **MAY** use HTTP headers such as Cache-Control, ETag, and Last-Modified
 
 Example:
-> HTTP/1.1 200 OK
+```http
+HTTP/1.1 200 OK
 Cache-Control: max-age=3600
 ETag: "abc123"
 Last-Modified: Fri, 13 Feb 2025 15:30:00 UTC
+```
+ 
+The client can then cache the result for 3600 seconds, and after that it can issue a conditional GET using the ETag and Last-Modified headers
+
+Example:
+```http
+GET /your-resource HTTP/1.1  
+If-None-Match: "abc123"  
+If-Modified-Since: Fri, 13 Feb 2025 15:30:00 UTC
+```
+
+If both If-None-Match and If-Modified-Since are sent, the server **MUST** ignore If-Modified-Since ([RFC7232 §3.3](https://datatracker.ietf.org/doc/html/rfc7232#section-3.3)).
+If the resource has not changed, the server can respond with 304 Not Modified.
+
+Example:
+```http
+HTTP/1.1 304 Not Modified
+```
 
 
 ### 6.5 Import & Export Formats
