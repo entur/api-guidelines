@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.1.0](https://github.com/entur/api-guidelines/compare/v1.0.1...v1.1.0) (2025-08-05)
+
+
+### Features
+
+* Api 362 - Reference spec ([f2a8e87](https://github.com/entur/api-guidelines/commit/f2a8e87eaef2e5b95119ae597f665d305b1c38b9))
+* API-362: ([b253406](https://github.com/entur/api-guidelines/commit/b253406a749684552074cb21149974937c59c890))
+* API-411: Added reference async specs for kafka and pubsub.  ([#55](https://github.com/entur/api-guidelines/issues/55)) ([60b5715](https://github.com/entur/api-guidelines/commit/60b571528945e90114aef8ddbce38145dd0803b9))
+
+
+### Bug Fixes
+
+* Added issues: write permission ([9959440](https://github.com/entur/api-guidelines/commit/9959440701fa2f93c8c1a553c1b05ff90b1e65e6))
+* Added issues: write permission ([41d3dd2](https://github.com/entur/api-guidelines/commit/41d3dd20ea0249fa7999c967a848957d14991181))
+* API-362: Added pagination. And some cleanup. ([aede2f9](https://github.com/entur/api-guidelines/commit/aede2f9688230274e0af24e3d36c5c51b9fdee7c))
+* API-362: Changed path "sales" to "product" ([5c75a4b](https://github.com/entur/api-guidelines/commit/5c75a4beca2147875992984c88746f8930407450))
+* API-362: Improved 4.2 Error Handling ([5d3ccaa](https://github.com/entur/api-guidelines/commit/5d3ccaa601a504cf2c927d7fe96d7bbf8de12b86))
+* API-362: page and size query params are integers, not strings. ([f81ed9f](https://github.com/entur/api-guidelines/commit/f81ed9fd16cede21c5cb2a98bcea8afb033da4dd))
+* API-362: quoting "example" properties ([7b7443c](https://github.com/entur/api-guidelines/commit/7b7443ce8d7369147ab8f25236796891908d358e))
+* API-362: Status is now integer ([60b5c22](https://github.com/entur/api-guidelines/commit/60b5c227f17ffb9b62eb70585d2d894d9a3aad38))
+* API-362: Typo ([613cf58](https://github.com/entur/api-guidelines/commit/613cf583dda8a0d0ff9209925a89dddfd9502b7d))
+* API-422: Allowing HTTP response 304 (Not Modified). ([be4cb49](https://github.com/entur/api-guidelines/commit/be4cb49615946267cc5966e6f18106c027707077))
+* API-422: Allowing HTTP response 304 (Not Modified). Updated section 6.4 Caching & Resource Expiration of the guidelines. ([01c73d7](https://github.com/entur/api-guidelines/commit/01c73d730ae12062c8dd0e5423558da59c06f643))
+* Improved messages by making them clearer and more informative. ([#52](https://github.com/entur/api-guidelines/issues/52)) ([6665e28](https://github.com/entur/api-guidelines/commit/6665e2837310b0dd6947231988beeb77a7c4e090))
+
 ## [1.0.1](https://github.com/entur/api-guidelines/compare/v1.0.0...v1.0.1) (2025-05-12)
 
 
