@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/entur/api-guidelines/compare/v1.1.0...v1.1.1) (2025-08-08)
+
+
+### Bug Fixes
+
+* API-435: Removed linting rule "entur-headers-no-x-headers". Updated guidelines to show that this is reviewed manually. ([5e05f02](https://github.com/entur/api-guidelines/commit/5e05f02b53cc94d69f6cdd36b7246b93215e3f90))
+* Removed linting rule "entur-headers-no-x-headers". ([6079ab2](https://github.com/entur/api-guidelines/commit/6079ab2a674fe747a7c201ae8387817c168eb1c2))
+
 ## [1.1.0](https://github.com/entur/api-guidelines/compare/v1.0.1...v1.1.0) (2025-08-05)
 
 
