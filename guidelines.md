@@ -208,7 +208,7 @@ Example:
 
 ### 5.5 HTTP Headers
 - :ballot_box_with_check: HTTP headers **MUST** use Hyphenated-Pascal-Case format (e.g., `Content-Type`, `Accept-Language`)
-- :white_check_mark: HTTP headers **SHOULD NOT** include the 'X-' prefix, following RFC 6648
+- :eyes: HTTP headers **SHOULD NOT** include the 'X-' prefix, following RFC 6648. Entur headers should have the prefix "Entur-". API:s are expected to use the prefix "Entur-" for custom headers by 2028.
 
 ## 6. Advanced Design Patterns
 <!-- More complex design patterns -->
