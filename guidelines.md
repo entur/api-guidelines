@@ -51,6 +51,8 @@ Throughout this document, rules are marked with the following indicators:
   - The specification is the primary reference for both development and documentation
   - Update the specification throughout development to reflect changes
 - :eyes: [Lint your API spec](README.md)
+- :eyes: Separate API specifications per target audience/visibility (public, partner, internal). An API spec **SHOULD** only contain endpoints for one target audience.
+This audience is used in the Developer Portal to organize APIs.
 - :eyes: Differentiate APIs based on the target audience:
   - Internal APIs - May have extended functionality and less stringent requirements, but **MUST** still be documented and tested
   - External APIs - **MUST** be carefully documented with a focus on stability, security, and consistency
