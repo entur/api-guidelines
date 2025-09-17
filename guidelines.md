@@ -170,12 +170,19 @@ Content-Language: en
 
 
 ### 5.1 Language & Spelling
-- :eyes: You **MAY** allow clients to specify preferred language via Accept-Language header or query parameter
+- :eyes: You **MAY** allow clients to specify a preferred language via the `Accept-Language` header or a query parameter.
+- :eyes: You **MAY** return the `Content-Language` header to inform clients of language used in response.
+- :ballot_box_with_check: `Accept-Language` and `Content-Language` values **MUST** be valid [IETF BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) language tags. BCP 47 uses ISO 639-1 codes when available, and ISO 639-3 codes if no two-letter code exist. E.g. "en", not "eng". 
+- :ballot_box_with_check: Macrolanguage tags (e.g., "no") **MUST NOT** be used - instead use the specific language variant (e.g., "nb" or "nn").
+
 - :eyes: British English spelling as defined in the Oxford English Dictionary **SHOULD** be used for consistency
 
 Example:
->GET /api/v1/info?lang=no
-Accept-Language: nob
+>GET /api/v1/info
+Accept-Language: nb
+
+>GET /api/v1/info?lang=nb
+ 
 
 
 ### 5.2 Date & Time

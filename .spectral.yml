@@ -313,9 +313,23 @@ rules:
 
 
   # -------------------------------------------------------------------------
-  # 5.1 Language & Spelling - Not directly lintable
+  # 5.1 Language & Spelling
   # -------------------------------------------------------------------------
 
+  language-headers:
+    message: "Accept-Language and Content-Language should follow IETF BCP 47. And macrolanguages like 'no' should not be used - use 'nb' or 'nn'."
+    severity: error
+    given:
+      - $..parameters[?(@.in=='header' && @.name=='Accept-Language')].example
+      - $..parameters[?(@.in=='header' && @.name=='Accept-Language')].schema.example
+      - $..parameters[?(@.in=='header' && @.name=='Accept-Language')].schema.default
+      - $..parameters[?(@.in=='header' && @.name=='Content-Language')].example
+      - $..parameters[?(@.in=='header' && @.name=='Content-Language')].schema.example
+      - $..parameters[?(@.in=='header' && @.name=='Content-Language')].schema.default
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "^(nob|nno|eng|nor|no)\\b"
 
   # -------------------------------------------------------------------------
   # 5.2 Date & Time - Requires runtime validation
@@ -346,6 +360,7 @@ rules:
       function: pattern
       functionOptions:
         match: ^([A-Z][a-z0-9]*)(-[A-Z][a-z0-9]*)*$
+
 
 # =============================================================================
   # 6. Advanced Design Patterns
