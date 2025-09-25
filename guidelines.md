@@ -60,20 +60,37 @@ This audience is used in the Developer Portal to organize APIs.
 
 ### 2.3 Authentication and Authorization
 
-#### 2.3.1 Open (publicly available) endpoints
-Open endpoints has no authentication, but consumers **MUST** identify themselves by using the header `Et-Client-Name`. The header value should be on the format `<company>-<application>`, e.g. `brakar-journeyplanner`.
+#### 2.3.1 About security in OpenAPI specs
+You use `securitySchemes` inside `components` to define security schemes. You then add `security` either at the root level of the spec (to apply security to all operations), 
+or you add it under individual operations which are secured (this replaces the root config).
 
-#### 2.3.2 Partner- and Internal endpoints
-
-- :eyes: These endpoints are secured using JWT tokens. This **MUST** be documented using `securitySchemes` and `security`.
-You use `securitySchemes` inside `components` to define the `jwt` security scheme.
-You then add `security` either at the root level (if all operations are secured), or you add it under individual operations which are secured.
+#### 2.3.2 For all endpoints
+- :white_check_mark: All endpoints **MUST** require that consumers identify themselves by using the header `ET-Client-Name`. The header value should be on the format `<party>-<application>`, e.g. `brakar-journeyplanner`.
+This **MUST** be documented using `securitySchemes` and `security`. The security scheme name **MUST** be `et-client-name`, while the _header_ name **MUST** be `ET-Client-Name`. 
 
 Example:
 ```json
 {
 
-  "security": [{ "jwt": [] }],
+  "security": [{ "et-client-name": [] }],
+  
+  "components": {
+    "securitySchemes": {
+      "et-client-name": {"type": "apiKey", "name": "ET-Client-Name", "in": "header"}
+    }
+  }
+}
+```
+
+#### 2.3.3 Partner- and Internal endpoints
+- :eyes: These endpoints are secured using JWT tokens. This **MUST** be documented using `securitySchemes` and `security`.
+- :eyes: The scheme name **SHOULD** be `jwt`.
+
+Example:
+```json
+{
+
+  "security": [{ "et-client-name": [], "jwt": [] }],
   
   "components": {
     "securitySchemes": {
@@ -83,9 +100,7 @@ Example:
 }
 ```
 
-In the above example a JWT is required for all endpoints. 
-
-You might wonder what the empty array is here `"jwt": []`. For some security schemes, that array will be a list of scopes required to access endpoints, but this is not used for JWT authentication, so it is always empty. 
+Note that, since the `et-client-name` scheme is required for all endpoints, it must also be present even when there is a jwt, hence `"security": [{ "et-client-name": [], "jwt": [] }],`.
 
 [More information on Authentication](https://swagger.io/docs/specification/v3_0/authentication/)
 

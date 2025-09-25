@@ -26,17 +26,9 @@
       "description": "Staging"
     }
   ],
+  "security": [{"et-client-name": [] }],
   "components": {
     "parameters": {
-      "Et-Client-Header": {
-        "in": "header",
-        "required": true,
-        "name": "Et-Client-Name",
-        "schema": {
-          "type": "string"
-        },
-        "example": "company-application"
-      },
       "Item-Id": {
         "name": "itemId",
         "description": "The item ID.",
@@ -109,7 +101,8 @@
     },
 
     "securitySchemes": {
-      "jwt": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+      "jwt": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" },
+      "et-client-name": {"type": "apiKey", "name": "ET-Client-Name", "in": "header"}
     }
   },
   "paths": {
@@ -119,9 +112,6 @@
           "Items Public API"
         ],
         "parameters": [
-          {
-            "$ref": "#/components/parameters/Et-Client-Header"
-          },
           {
             "$ref": "#/components/parameters/Page"
           },
@@ -160,7 +150,7 @@
         "tags": [
           "Items Internal API"
         ],
-        "security": [{ "jwt": [] }],
+        "security": [{ "et-client-name": [], "jwt": [] }],
         "description": "Create an item",
         "operationId": "createItem",
         "requestBody": {
@@ -195,11 +185,6 @@
         }
       ],
       "get": {
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Et-Client-Header"
-          }
-        ],
         "tags": [
           "Items Public API"
         ],
@@ -232,7 +217,7 @@
         "tags": [
           "Items Internal API"
         ],
-        "security": [{ "jwt": [] }],
+        "security": [{ "et-client-name": [], "jwt": [] }],
         "description": "updateItem",
         "operationId": "updateItem",
         "requestBody": {
