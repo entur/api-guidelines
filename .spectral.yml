@@ -111,6 +111,84 @@ rules:
         notMatch: "https?://(localhost|127\\.0\\.0\\.1)(/|$)"
       invert: true
 
+  # -------------------------------------------------------------------------
+  # 2.3 Authentication and Authorization
+  # -------------------------------------------------------------------------
+
+  entur-et-client-name-scheme-valid:
+    message: "Missing or invalid et-client-name security scheme."
+    severity: error
+    given: $.components.securitySchemes
+    then:
+      field: et-client-name
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: [type, in, name]
+          properties:
+            type: { const: apiKey }
+            in:   { const: header }
+            name: { const: ET-Client-Name }
+
+  entur-root-security-must-include-et-client-name:
+    message: "Root security, if present, must include et-client-name."
+    severity: error
+    given: $.security
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            type: object
+            required: [et-client-name]
+            properties:
+              et-client-name:
+                type: array
+
+  entur-op-security-must-include-et-client-name:
+    message: "Operations that define security must include et-client-name."
+    severity: error
+    given: $.paths[*][get,put,post,delete,patch,options,head,trace]
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          if:
+            required: [security]
+          then:
+            properties:
+              security:
+                type: array
+                contains:
+                  type: object
+                  required: [et-client-name]
+
+  # require security somewhere: root OR per operation
+  entur-security-required:
+    message: Security must be set, at root or per operation.
+    severity: error
+    given: $
+    then:
+      function: schema
+      functionOptions:
+        allErrors: true
+        schema:
+          anyOf:
+            - required: [security]
+            - properties:
+                paths:
+                  type: object
+                  patternProperties:
+                    '^/':
+                      type: object
+                      patternProperties:
+                        '^(get|put|post|delete|options|head|patch|trace)$':
+                          type: object
+                          required: [security]
+
   # =============================================================================
   # 3. Naming & Structure Conventions
   # =============================================================================
@@ -360,6 +438,7 @@ rules:
       function: pattern
       functionOptions:
         match: ^([A-Z][a-z0-9]*)(-[A-Z][a-z0-9]*)*$
+
 
 
 # =============================================================================
