@@ -17,14 +17,18 @@ Welcome to this API guide, designed to ensure a consistent and robust approach t
 This guide is for developers, architects, and technical designers who work on the design, implementation, and maintenance of APIs. By following these guidelines, we ensure APIs are easy to understand, consistent in structure, and simple to integrate with other systems.
 
 
-### 1.3 Requirement Levels
+### 1.3 Contributing
+For details on how to contribute to these guidelines, see the [contributing guide](CONTRIBUTING.md).
+
+
+### 1.4 Requirement Levels
 Throughout this document, these requirement levels are used:
 - **MUST**: This is an absolute requirement
 - **SHOULD**: There may be valid reasons to ignore this requirement, but implications must be understood and carefully weighed
 - **MAY**: This is optional
 
 
-### 1.4 Linter Coverage
+### 1.5 Linter Coverage
 Throughout this document, rules are marked with the following indicators:
 - :white_check_mark: Automatically enforced by [linter](README.md)
 - :ballot_box_with_check: Partially checked by [linter](README.md)
