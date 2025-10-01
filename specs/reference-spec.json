@@ -18,11 +18,11 @@
   ],
   "servers": [
     {
-      "url": "https://api.entur.no/product/v1",
+      "url": "https://api.entur.io/product/v1",
       "description": "Production"
     },
     {
-      "url": "https://staging.api.entur.no/product/v1",
+      "url": "https://api.staging.entur.io/product/v1",
       "description": "Staging"
     }
   ],
