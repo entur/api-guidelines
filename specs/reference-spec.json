@@ -138,6 +138,7 @@
             "example": "completed"
           }
         ],
+        "summary": "Get items",
         "description": "Get items",
         "operationId": "getItems",
         "responses": {
@@ -161,6 +162,7 @@
           "Items Internal API"
         ],
         "security": [{ "jwt": [] }],
+        "summary": "Create an item",
         "description": "Create an item",
         "operationId": "createItem",
         "requestBody": {
@@ -203,6 +205,7 @@
         "tags": [
           "Items Public API"
         ],
+        "summary": "Get an item",
         "description": "Get an item",
         "operationId": "getItem",
         "responses": {
@@ -233,7 +236,8 @@
           "Items Internal API"
         ],
         "security": [{ "jwt": [] }],
-        "description": "updateItem",
+        "summary": "Update an item",
+        "description": "Update an item",
         "operationId": "updateItem",
         "requestBody": {
           "description": "Item to update",

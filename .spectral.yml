@@ -89,6 +89,14 @@ rules:
       field: example
       function: defined
 
+  entur-operation-summary:
+    message: "Operations SHOULD have a non-empty summary field."
+    severity: warn
+    given: $.paths.*[get,post,put,patch,delete,options,head,trace]
+    then:
+      field: summary
+      function: truthy
+
   # openapi spec version 3
   entur-openapi-version-3:
     message: "OpenAPI specification must use version 3.x"
