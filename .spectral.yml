@@ -19,6 +19,15 @@ rules:
       field: info.title
       function: truthy
 
+  entur-info-title-no-api:
+    message: "API titles SHOULD NOT contain the word 'api'."
+    severity: warn
+    given: $.info.title
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "/\\bapi\\b/i"
+
   entur-info-version:
     message: "The OpenAPI info section MUST include a non-empty \"version\"."
     severity: error
