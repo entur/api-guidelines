@@ -121,8 +121,8 @@ rules:
         match: ^(https:)
 
   entur-hosts-not-localhost:
-    message: "Server URLs MUST NOT use localhost or 127.0.0.1 as hostname. Invalid URL: {{value}}"
-    severity: error
+    message: "Server URLs SHOULD NOT use localhost or 127.0.0.1 as hostname. Invalid URL: {{value}}"
+    severity: warn
     given: $.servers[*].url
     then:
       function: pattern
