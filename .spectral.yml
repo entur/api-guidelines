@@ -29,12 +29,14 @@ rules:
         notMatch: "/\\bapi\\b/i"
 
   entur-info-version:
-    message: "The OpenAPI info section MUST include a non-empty \"version\"."
+    message: "The OpenAPI info.version MUST be a valid semantic version (MAJOR.MINOR.PATCH format, e.g. 1.0.0)."
     severity: error
     given: $
     then:
       field: info.version
-      function: truthy
+      function: pattern
+      functionOptions:
+        match: "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
 
   info-description: error
 
