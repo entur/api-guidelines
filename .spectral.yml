@@ -28,6 +28,7 @@ rules:
       functionOptions:
         notMatch: "/\\bapi\\b/i"
 
+
   entur-info-version:
     message: "The OpenAPI info.version MUST be a valid semantic version (MAJOR.MINOR.PATCH format, e.g. 1.0.0)."
     severity: error
