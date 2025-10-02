@@ -107,6 +107,14 @@ rules:
                         - required: ["example"]
                         - required: ["examples"]
 
+  request-body-description:
+    message: "Request bodies SHOULD have a description."
+    severity: warn
+    given: $.paths.*.*.requestBody
+    then:
+      field: description
+      function: truthy
+
   response-body-examples:
     message: "Response bodies SHOULD include at least one example."
     severity: warn
