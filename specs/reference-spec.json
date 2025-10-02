@@ -32,6 +32,7 @@
         "in": "header",
         "required": true,
         "name": "Et-Client-Name",
+        "description": "Entur Client Header",
         "schema": {
           "type": "string"
         },

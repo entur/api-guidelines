@@ -71,6 +71,14 @@ rules:
       field: example
       function: defined
 
+  entur-parameter-description:
+    message: "Parameters SHOULD have a description."
+    severity: warn
+    given: $.paths.*.*.parameters.*
+    then:
+      field: description
+      function: truthy
+
   entur-example-schema-property:
     message: "Properties in components schema SHOULD have example values."
     severity: warn
