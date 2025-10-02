@@ -80,14 +80,44 @@ rules:
       field: example
       function: defined
 
-  entur-example-schema:
-    message: "Schemas SHOULD have an example."
+  request-body-examples:
+    message: "Request bodies SHOULD include at least one example."
     severity: warn
-    recommended: false
-    given: $.components.schemas.*
+    given: $.paths.*.*.requestBody.content.*
     then:
-      field: example
-      function: defined
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ["example"]
+            - required: ["examples"]
+            - allOf:
+                - required: ["schema"]
+                - properties:
+                    schema:
+                      anyOf:
+                        - required: ["example"]
+                        - required: ["examples"]
+
+  response-body-examples:
+    message: "Response bodies SHOULD include at least one example."
+    severity: warn
+    given: $.paths.*.*.responses.*.content.*
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ["example"]
+            - required: ["examples"]
+            - allOf:
+                - required: ["schema"]
+                - properties:
+                    schema:
+                      anyOf:
+                        - required: ["example"]
+                        - required: ["examples"]
+
 
   entur-operation-summary:
     message: "Operations SHOULD have a non-empty summary field."

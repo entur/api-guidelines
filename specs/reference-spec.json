@@ -79,6 +79,22 @@
           "name": "Item 100"
         }
       },
+      "Items": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Item"
+        },
+        "example": [
+          {
+            "id": "100",
+            "name": "Item 100"
+          },
+          {
+            "id": "101",
+            "name": "Item 101"
+          }
+        ]
+      },
       "Problem": {
         "type": "object",
         "properties": {
@@ -147,10 +163,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Item"
-                  }
+                  "$ref": "#/components/schemas/Items"
                 }
               }
             }
