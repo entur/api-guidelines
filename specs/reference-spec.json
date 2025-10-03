@@ -13,8 +13,7 @@
   },
 
   "tags": [
-    {"name": "Items Public API"},
-    {"name": "Items Internal API"}
+    {"name": "Items"}
   ],
   "servers": [
     {
@@ -133,7 +132,7 @@
     "/items": {
       "get": {
         "tags": [
-          "Items Public API"
+          "Items"
         ],
         "parameters": [
           {
@@ -173,7 +172,7 @@
       },
       "post": {
         "tags": [
-          "Items Internal API"
+          "Items"
         ],
         "security": [{ "jwt": [] }],
         "summary": "Create an item",
@@ -217,7 +216,7 @@
           }
         ],
         "tags": [
-          "Items Public API"
+          "Items"
         ],
         "summary": "Get an item",
         "description": "Get an item",
@@ -247,7 +246,7 @@
       },
       "put": {
         "tags": [
-          "Items Internal API"
+          "Items"
         ],
         "security": [{ "jwt": [] }],
         "summary": "Update an item",
