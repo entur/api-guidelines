@@ -47,7 +47,6 @@ Throughout this document, rules are marked with the following indicators:
 - :white_check_mark: You **MUST** use the OpenAPI V3 spec to define APIs
 - :white_check_mark: Encryption: All communication **MUST** be over HTTPS
 - :white_check_mark: You **SHOULD** not use localhost (or 127.0.0.1) host names in `servers`.
-- :eyes: The order of the environments in servers list **SHOULD** be: Prod, Dev, Staging.
 
 
 ### 2.2 Development Approach
