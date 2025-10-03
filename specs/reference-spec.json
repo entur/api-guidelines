@@ -155,7 +155,7 @@
           }
         ],
         "summary": "Get items",
-        "description": "Get items",
+        "description": "Get items matching a status filter, with pagination support.",
         "operationId": "getItems",
         "responses": {
           "200": {
@@ -176,7 +176,7 @@
         ],
         "security": [{ "jwt": [] }],
         "summary": "Create an item",
-        "description": "Create an item",
+        "description": "Create a new item, given in request body.",
         "operationId": "createItem",
         "requestBody": {
           "description": "Item to create",
@@ -219,7 +219,7 @@
           "Items"
         ],
         "summary": "Get an item",
-        "description": "Get an item",
+        "description": "Get an item with given id.",
         "operationId": "getItem",
         "responses": {
           "200": {
@@ -250,7 +250,7 @@
         ],
         "security": [{ "jwt": [] }],
         "summary": "Update an item",
-        "description": "Update an item",
+        "description": "Update an item according to given item request body.",
         "operationId": "updateItem",
         "requestBody": {
           "description": "Item to update",
