@@ -117,7 +117,7 @@ You might wonder what the empty array is here `"jwt": []`. For some security sch
   - Example: `https://api.entur.io/sales/v1/orders?distributionChannelId=1`
  
 #### 3.2.2 API Spec Versioning
-- :white_check_mark: The info.version field **MUST** be set and follow the semver format (e.g. `1.0.0`).
+- :white_check_mark: The info.version field **MUST** be set and follow the semver format (e.g. `1.0.0`). This field can be used to communicate changes in the api, together with a changelog.
 
 ### 3.3 Backward Compatibility
 - :eyes: You **MUST** not remove or modify existing fields or endpoints
