@@ -40,13 +40,13 @@ Throughout this document, rules are marked with the following indicators:
 
 
 ### 2.1 General Design Principles
-- Consistency - Make sure the API is easy to understand and predictable
-- :white_check_mark: HTTP Methods - API endpoints **MUST** use standard HTTP methods (GET, POST, PUT, PATCH, DELETE)
+- :eyes: Consistency - Make sure the API is easy to understand and predictable 
+- :white_check_mark: HTTP Methods - API operations **MUST** use standard HTTP methods (GET, POST, PUT, PATCH, DELETE)
 - :white_check_mark: Data Format - API endpoints **SHOULD** support the JSON data format, unless there is a good reason not to
 - :white_check_mark: Documentation - All functionality **SHOULD** be documented with examples and descriptions
 - :white_check_mark: You **MUST** use the OpenAPI V3 spec to define APIs
 - :white_check_mark: Encryption: All communication **MUST** be over HTTPS
-- :white_check_mark: No localhost (or 127.0.0.1) host names
+- :white_check_mark: You **SHOULD** not use localhost (or 127.0.0.1) host names in `servers`.
 
 
 ### 2.2 Development Approach
@@ -109,18 +109,27 @@ You might wonder what the empty array is here `"jwt": []`. For some security sch
 - :white_check_mark: Server URL **MUST** be in lowercase
 - :white_check_mark: Paths **SHOULD NOT** contain "api" in the name
 
-
 ### 3.2 Versioning
+
+#### 3.2.1 API Versioning
 - :eyes: URL Based Versioning - You **MUST** include the version number in the URL
 - :eyes: Best Practices on Version Info - You **SHOULD** place the version number immediately after the domain, and before the resource path itself
   - Example: `https://api.entur.io/sales/v1/orders?distributionChannelId=1`
-
+ 
+#### 3.2.2 API Spec Versioning
+- :white_check_mark: The info.version field **MUST** be set and follow the semver format (e.g. `1.0.0`). This field can be used to communicate changes in the api, together with a changelog.
 
 ### 3.3 Backward Compatibility
 - :eyes: You **MUST** not remove or modify existing fields or endpoints
 - :eyes: You **MUST** introduce new versions for changes that break previous contracts
 - :eyes: You **MUST** clearly document which features are deprecated and provide guidance for migration
 
+### 3.4 Tags Naming
+:eyes: Tags should be used as a logical grouping that reflects functional domains, use cases or data types, not internal architecture.
+- Bad example: `internal`, `partner`, `production`, `route-service-v2`, `misc`, `other`
+- Good example, when using tags for functional domains: `Journey Planning`, `Realtime Departures`
+- Good example, when using tags for use-cases : `Search`, `Booking`
+- Good example, when using tags for data types : `Routes`, `Departures`
 
 ## 4. Communication Standards
 <!-- HTTP standards and protocols -->
