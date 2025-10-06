@@ -179,7 +179,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        notMatch: \bapi\b
+        notMatch: "^(?!\/api-docs$).*\\bapi\\b.*$"
 
   # -------------------------------------------------------------------------
   # 3.2 Versioning - Not directly lintable
