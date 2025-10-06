@@ -13,16 +13,15 @@
   },
 
   "tags": [
-    {"name": "Items Public API"},
-    {"name": "Items Internal API"}
+    {"name": "Items"}
   ],
   "servers": [
     {
-      "url": "https://api.entur.no/product/v1",
+      "url": "https://api.entur.io/product/v1",
       "description": "Production"
     },
     {
-      "url": "https://staging.api.entur.no/product/v1",
+      "url": "https://api.staging.entur.io/product/v1",
       "description": "Staging"
     }
   ],
@@ -32,6 +31,7 @@
         "in": "header",
         "required": true,
         "name": "Et-Client-Name",
+        "description": "Entur Client Header. It is required that all consumers identify themselves by using this header. Entur will deploy strict rate-limiting policies on API-consumers who do not identify with a header and reserves the right to block unidentified consumers. The structure of ET-Client-Name should be: <company>-<application> for companies, and <personal name>-<application> for individuals.",
         "schema": {
           "type": "string"
         },
@@ -79,6 +79,22 @@
           "name": "Item 100"
         }
       },
+      "Items": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Item"
+        },
+        "example": [
+          {
+            "id": "100",
+            "name": "Item 100"
+          },
+          {
+            "id": "101",
+            "name": "Item 101"
+          }
+        ]
+      },
       "Problem": {
         "type": "object",
         "properties": {
@@ -116,7 +132,7 @@
     "/items": {
       "get": {
         "tags": [
-          "Items Public API"
+          "Items"
         ],
         "parameters": [
           {
@@ -138,7 +154,8 @@
             "example": "completed"
           }
         ],
-        "description": "Get items",
+        "summary": "Get items",
+        "description": "Get items matching a status filter, with pagination support.",
         "operationId": "getItems",
         "responses": {
           "200": {
@@ -146,10 +163,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Item"
-                  }
+                  "$ref": "#/components/schemas/Items"
                 }
               }
             }
@@ -158,10 +172,11 @@
       },
       "post": {
         "tags": [
-          "Items Internal API"
+          "Items"
         ],
         "security": [{ "jwt": [] }],
-        "description": "Create an item",
+        "summary": "Create an item",
+        "description": "Create a new item, given in request body.",
         "operationId": "createItem",
         "requestBody": {
           "description": "Item to create",
@@ -201,9 +216,10 @@
           }
         ],
         "tags": [
-          "Items Public API"
+          "Items"
         ],
-        "description": "Get an item",
+        "summary": "Get an item",
+        "description": "Get an item with given id.",
         "operationId": "getItem",
         "responses": {
           "200": {
@@ -230,10 +246,11 @@
       },
       "put": {
         "tags": [
-          "Items Internal API"
+          "Items"
         ],
         "security": [{ "jwt": [] }],
-        "description": "updateItem",
+        "summary": "Update an item",
+        "description": "Update an item according to given item request body.",
         "operationId": "updateItem",
         "requestBody": {
           "description": "Item to update",

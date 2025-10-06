@@ -19,13 +19,25 @@ rules:
       field: info.title
       function: truthy
 
+  entur-info-title-no-api:
+    message: "API titles SHOULD NOT contain the word 'api'."
+    severity: warn
+    given: $.info.title
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "/\\bapi\\b/i"
+
+
   entur-info-version:
-    message: "The OpenAPI info section MUST include a non-empty \"version\"."
+    message: "The OpenAPI info.version MUST be a valid semantic version (MAJOR.MINOR.PATCH format, e.g. 1.0.0)."
     severity: error
     given: $
     then:
       field: info.version
-      function: truthy
+      function: pattern
+      functionOptions:
+        match: "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
 
   info-description: error
 
@@ -60,6 +72,14 @@ rules:
       field: example
       function: defined
 
+  entur-parameter-description:
+    message: "Parameters SHOULD have a description."
+    severity: warn
+    given: $.paths.*.*.parameters.*
+    then:
+      field: description
+      function: truthy
+
   entur-example-schema-property:
     message: "Properties in components schema SHOULD have example values."
     severity: warn
@@ -69,18 +89,64 @@ rules:
       field: example
       function: defined
 
-  entur-example-schema:
-    message: "Schemas SHOULD have an example."
+  request-body-examples:
+    message: "Request bodies SHOULD include at least one example."
     severity: warn
-    recommended: false
-    given: $.components.schemas.*
+    given: $.paths.*.*.requestBody.content.*
     then:
-      field: example
-      function: defined
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ["example"]
+            - required: ["examples"]
+            - allOf:
+                - required: ["schema"]
+                - properties:
+                    schema:
+                      anyOf:
+                        - required: ["example"]
+                        - required: ["examples"]
+
+  request-body-description:
+    message: "Request bodies SHOULD have a description."
+    severity: warn
+    given: $.paths.*.*.requestBody
+    then:
+      field: description
+      function: truthy
+
+  response-body-examples:
+    message: "Response bodies SHOULD include at least one example."
+    severity: warn
+    given: $.paths.*.*.responses.*.content.*
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ["example"]
+            - required: ["examples"]
+            - allOf:
+                - required: ["schema"]
+                - properties:
+                    schema:
+                      anyOf:
+                        - required: ["example"]
+                        - required: ["examples"]
+
+
+  entur-operation-summary:
+    message: "Operations SHOULD have a non-empty summary field."
+    severity: warn
+    given: $.paths.*[get,post,put,patch,delete,options,head,trace]
+    then:
+      field: summary
+      function: truthy
 
   # openapi spec version 3
   entur-openapi-version-3:
-    description: "OpenAPI specification must use version 3.x"
+    message: "OpenAPI specification must use version 3.x"
     severity: error
     given: "$"
     then:
@@ -102,8 +168,8 @@ rules:
         match: ^(https:)
 
   entur-hosts-not-localhost:
-    message: "Server URLs MUST NOT use localhost or 127.0.0.1 as hostname. Invalid URL: {{value}}"
-    severity: error
+    message: "Server URLs SHOULD NOT use localhost or 127.0.0.1 as hostname. Invalid URL: {{value}}"
+    severity: warn
     given: $.servers[*].url
     then:
       function: pattern
@@ -362,7 +428,7 @@ rules:
         match: ^([A-Z][a-z0-9]*)(-[A-Z][a-z0-9]*)*$
 
 
-# =============================================================================
+  # =============================================================================
   # 6. Advanced Design Patterns
   # =============================================================================
 
