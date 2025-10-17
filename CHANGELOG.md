@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.0.0](https://github.com/entur/api-guidelines/compare/v1.1.1...v2.0.0) (2025-10-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* Added new lint rule (language-headers, Error)
+
+### Features
+
+* Added new lint rule (language-headers, Error) ([53a8105](https://github.com/entur/api-guidelines/commit/53a8105134a41511f6b0ae43f6979f603ee0c59d))
+
+
+### Bug Fixes
+
+* API-534: Allow exact path "api-docs", while still failing for an… ([00717dc](https://github.com/entur/api-guidelines/commit/00717dcb5f08e8faf1485cf132f2e756a24b7b43))
+* API-534: Allow exact path "api-docs", while still failing for any other path containing word "api". ([dfe41c8](https://github.com/entur/api-guidelines/commit/dfe41c891fb64d7c83b7df7add6cc2df910481db))
+
 ## [1.1.1](https://github.com/entur/api-guidelines/compare/v1.1.0...v1.1.1) (2025-08-08)
 
 
