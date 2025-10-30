@@ -89,7 +89,7 @@ rules:
       field: example
       function: defined
 
-  request-body-examples:
+  entur-request-body-examples:
     message: "Request bodies SHOULD include at least one example."
     severity: warn
     given: $.paths.*.*.requestBody.content.*
@@ -108,7 +108,7 @@ rules:
                         - required: ["example"]
                         - required: ["examples"]
 
-  request-body-description:
+  entur-request-body-description:
     message: "Request bodies SHOULD have a description."
     severity: warn
     given: $.paths.*.*.requestBody
@@ -116,7 +116,7 @@ rules:
       field: description
       function: truthy
 
-  response-body-examples:
+  entur-response-body-examples:
     message: "Response bodies SHOULD include at least one example."
     severity: warn
     given: $.paths.*.*.responses.*.content.*
@@ -382,7 +382,7 @@ rules:
   # 5.1 Language & Spelling
   # -------------------------------------------------------------------------
 
-  language-headers:
+  entur-language-headers:
     message: "Accept-Language and Content-Language should follow IETF BCP 47. And macrolanguages like 'no' should not be used - use 'nb' or 'nn'."
     severity: error
     given:
