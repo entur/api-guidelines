@@ -168,6 +168,18 @@
               }
             }
           }
+        },
+        "x-entur-permissions": {
+          "description": "You need access to read organisations, and create items.",
+          "all": [
+            "organisations:les",
+            {
+              "any": [
+                "items:les",
+                "items-global:les"
+              ]
+            }
+          ]
         }
       },
       "post": {
@@ -200,6 +212,17 @@
               }
             }
           }
+        },
+        "x-entur-permissions": {
+          "all": [
+            "organisations:les",
+            {
+              "any": [
+                "items:opprett",
+                "items-global:opprett"
+              ]
+            }
+          ]
         }
       }
     },
