@@ -94,6 +94,75 @@ You might wonder what the empty array is here `"jwt": []`. For some security sch
 [More information on Authentication](https://swagger.io/docs/specification/v3_0/authentication/)
 
 
+#### 2.3.3 Documenting permissions for Partner endpoints
+
+- :ballot_box_with_check: Endpoints that require permissions **MUST** be documented with the `x-entur-permissions` extension.
+
+Example:
+```json
+{
+  ...,
+  "paths": {
+    "/items": {
+      "get": {
+        "operationId": "getItems",
+        ...,
+        "x-entur-permissions": {
+          "items:les"
+        }
+      },
+      "post": {
+        "operationId": "createItem",
+        ...,
+        "x-entur-permissions": {
+          "items:opprett"
+        }
+      }
+    }
+  }
+}
+```
+
+where `items:les` means that you need the access `les` on the operation `items`.
+
+You can also specify that your endpoint requires multiple permissions, for example:
+```json
+{
+  "x-entur-permissions": {
+    "all": [
+      "organisations:les",
+      {
+        "any": [
+          "items:opprett",
+          "items-global:opprett"
+        ]
+      }
+    ]
+  }
+}
+```
+
+This means that the endpoint requires `organisations:les`, as well as either `items:opprett` or `items-global:opprett`.
+
+If you need to explain the required permissions in more detail, you can declare a `description` field at the root.
+
+```json
+{
+  "x-entur-permissions": {
+    "description": "To call this endpoint you need access to read organisations, as well as creating items for your organisation.",
+    "all": [
+      "organisations:les",
+      {
+        "any": [
+          "items:opprett",
+          "items-global:opprett"
+        ]
+      }
+    ]
+  }
+}
+```
+
 ## 3. Naming & Structure Conventions
 <!-- How to organize and label resources -->
 

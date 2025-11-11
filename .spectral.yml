@@ -176,6 +176,57 @@ rules:
       functionOptions:
         notMatch: "https?://(localhost|127\\.0\\.0\\.1)(/|$)"
       invert: true
+  
+  # -------------------------------------------------------------------------
+  # 2.3 Authentication and authorization
+  # -------------------------------------------------------------------------
+
+  entur-permissions:
+    message: "x-entur-permissions must match the schema"
+    severity: error
+    given: $.paths.*[get,post,put,patch,delete,options,head,trace].x-entur-permissions
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          allOf:
+            - type: object
+              properties:
+                description:
+                  type: string
+            - $ref: "#/$defs/permission-node"
+          $defs:
+            permission-node:
+              oneOf:
+                - $ref: "#/$defs/permission-leaf"
+                - $ref: "#/$defs/permission-all"
+                - $ref: "#/$defs/permission-any"
+
+            permission-leaf:
+              type: string
+              pattern: "^[0-9a-zA-ZæøåØÆÅ][0-9a-zA-ZæøåØÆÅ.\\-]{0,99}:(les|opprett|endre|slett)$"
+
+            permission-all:
+              type: object
+              required:
+                - all
+              properties:
+                all:
+                  type: array
+                  items:
+                    - $ref: "#/$defs/permission-node"
+
+            permission-any:
+              type: object
+              required:
+                - any
+              properties:
+                any:
+                  type: array
+                  items:
+                    - $ref: "#/$defs/permission-node"
+
+
 
   # =============================================================================
   # 3. Naming & Structure Conventions
