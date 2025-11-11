@@ -68,10 +68,7 @@ This audience is used in the Developer Portal to organize APIs.
 You use `securitySchemes` inside `components` to define security schemes. You then add `security` either at the root level of the spec (to apply security to all operations), 
 or you add it under individual operations which are secured (this replaces the root config).
 
-#### 2.3.2 For all endpoints
-- :white_check_mark: All endpoints **MUST** require that consumers identify themselves by using the header `ET-Client-Name`. The header value should be on the format `<party>-<application>`, e.g. `brakar-journeyplanner`.
-
-#### 2.3.3 Partner- and Internal endpoints
+#### 2.3.2 Partner- and Internal endpoints
 - :eyes: These endpoints are secured using JWT tokens. This **MUST** be documented using `securitySchemes` and `security`.
 You use `securitySchemes` inside `components` to define the `jwt` security scheme.
 You then add `security` either at the root level (if all operations are secured), or you add it under individual operations which are secured.
@@ -230,6 +227,9 @@ Example:
 ### 5.5 HTTP Headers
 - :ballot_box_with_check: HTTP headers **MUST** use Hyphenated-Pascal-Case format (e.g., `Content-Type`, `Accept-Language`)
 - :eyes: HTTP headers **SHOULD NOT** include the 'X-' prefix, following RFC 6648. Entur headers should have the prefix "Entur-". API:s are expected to use the prefix "Entur-" for custom headers by 2028.
+
+#### 5.5.1 ET-Client-Name`
+- :white_check_mark: All endpoints **MUST** require that consumers identify themselves by using the header `ET-Client-Name`. The header value should be on the format `<party>-<application>`, e.g. `brakar-journeyplanner`.
 
 ## 6. Advanced Design Patterns
 <!-- More complex design patterns -->
