@@ -69,9 +69,7 @@ You use `securitySchemes` inside `components` to define security schemes. You th
 or you add it under individual operations which are secured (this replaces the root config).
 
 #### 2.3.2 Partner- and Internal endpoints
-- :eyes: These endpoints are secured using JWT tokens. This **MUST** be documented using `securitySchemes` and `security`.
-You use `securitySchemes` inside `components` to define the `jwt` security scheme.
-You then add `security` either at the root level (if all operations are secured), or you add it under individual operations which are secured.
+- :eyes: These endpoints are secured using JWT tokens. This **MUST** be documented using a `jwt` scheme.
 
 Example:
 ```json
