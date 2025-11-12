@@ -108,14 +108,14 @@ Example:
         "operationId": "getItems",
         ...,
         "x-entur-permissions": {
-          "items:les"
+          "value": "items:les"
         }
       },
       "post": {
         "operationId": "createItem",
         ...,
         "x-entur-permissions": {
-          "items:opprett"
+          "value": "items:opprett"
         }
       }
     }
@@ -129,15 +129,17 @@ You can also specify that your endpoint requires multiple permissions, for examp
 ```json
 {
   "x-entur-permissions": {
-    "all": [
-      "organisations:les",
-      {
-        "any": [
-          "items:opprett",
-          "items-global:opprett"
-        ]
-      }
-    ]
+    "value": {
+      "all": [
+        "organisations:les",
+        {
+          "any": [
+            "items:opprett",
+            "items-global:opprett"
+          ]
+        }
+      ]
+    }
   }
 }
 ```
@@ -150,15 +152,17 @@ If you need to explain the required permissions in more detail, you can declare 
 {
   "x-entur-permissions": {
     "description": "To call this endpoint you need access to read organisations, as well as creating items for your organisation.",
-    "all": [
-      "organisations:les",
-      {
-        "any": [
-          "items:opprett",
-          "items-global:opprett"
-        ]
-      }
-    ]
+    "value": {
+      "all": [
+        "organisations:les",
+        {
+          "any": [
+            "items:opprett",
+            "items-global:opprett"
+          ]
+        }
+      ]
+    }
   }
 }
 ```

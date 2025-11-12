@@ -189,12 +189,14 @@ rules:
       function: schema
       functionOptions:
         schema:
-          allOf:
-            - type: object
-              properties:
-                description:
-                  type: string
-            - $ref: "#/$defs/permission-node"
+          type: object
+          required:
+            - value
+          properties:
+            description:
+              type: string
+            value:
+              $ref: "#/$defs/permission-node"
           $defs:
             permission-node:
               oneOf:
