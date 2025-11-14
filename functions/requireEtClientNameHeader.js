@@ -1,4 +1,4 @@
-const METHODS = ['get', 'post', 'put', 'patch', 'delete'];
+const METHODS = ['get', 'post', 'put', 'patch', 'delete', 'options', 'head', 'trace'];
 
 const isEtClientNameParam = (param) => {
   if (!param || typeof param !== 'object') {
@@ -22,11 +22,12 @@ module.exports = (targetVal, _opts, context) => {
   const pathHasHeader = hasHeader(targetVal.parameters);
   const results = [];
 
-  for (const method of METHODS) {
-    const operation = targetVal[method];
-    if (!operation || typeof operation !== 'object') {
+  for (const property in targetVal) {
+    if (!METHODS.includes(property)) {
       continue;
     }
+
+    const operation = targetVal[property];
 
     if (pathHasHeader || hasHeader(operation.parameters)) {
       continue;
@@ -34,7 +35,7 @@ module.exports = (targetVal, _opts, context) => {
 
     results.push({
       message: context?.rule?.message,
-      path: [...context.path, method, 'parameters'],
+      path: [...context.path, property, 'parameters'],
     });
   }
 
