@@ -1,0 +1,5 @@
+# API Guidelines Ruleset
+# This ruleset is used to validate spec before upload to portal
+
+# OpenAPI Specification version 3.x
+extends: [spectral:oas]
