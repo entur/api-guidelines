@@ -6,7 +6,7 @@
 extends: [spectral:oas]
 functionsDir: ./functions
 functions:
-  - requireEtClientNameHeader
+  - allowEtClientNameHeader
 
 rules:
   # =============================================================================
@@ -475,11 +475,11 @@ rules:
   # Required ET-Client-Name header
 
   entur-require-et-client-name-header:
-    message: "All operations MUST require header \"ET-Client-Name\" (at path or operation level)."
-    severity: error
+    message: "All operations SHOULD allow header \"ET-Client-Name\" (at path or operation level)."
+    severity: warn
     given: $.paths[*]
     then:
-      function: requireEtClientNameHeader
+      function: allowEtClientNameHeader
 
   # Header naming conventions
   entur-headers-hyphenated-pascal-case:

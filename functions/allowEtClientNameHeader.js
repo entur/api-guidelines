@@ -7,8 +7,7 @@ const isEtClientNameParam = (param) => {
 
   return (
     param.name === 'ET-Client-Name' &&
-    param.in === 'header' &&
-    param.required === true
+    param.in === 'header'
   );
 };
 
