@@ -300,7 +300,7 @@ Example:
 - :eyes: HTTP headers **SHOULD NOT** include the 'X-' prefix, following RFC 6648. Entur headers should have the prefix "Entur-". API:s are expected to use the prefix "Entur-" for custom headers by 2028.
 
 #### 5.5.1 ET-Client-Name
-- :white_check_mark: All endpoints **MUST** require that consumers identify themselves by using the header `ET-Client-Name`. The header value should be on the format `<party>-<application>`, e.g. `brakar-journeyplanner`.
+- :white_check_mark: All endpoints **SHOULD** allow that consumers identify themselves by using the header `ET-Client-Name`. The header value should be on the format `<party>-<application>`, e.g. `brakar-journeyplanner`.
 
 ## 6. Advanced Design Patterns
 <!-- More complex design patterns -->
