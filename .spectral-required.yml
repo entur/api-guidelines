@@ -1,0 +1,4 @@
+# API Guidelines Ruleset
+
+# OpenAPI Specification version 3.x
+extends: [spectral:oas]
