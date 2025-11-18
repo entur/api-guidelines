@@ -1,5 +1,37 @@
 # Changelog
 
+## [2.0.0](https://github.com/entur/api-guidelines/compare/v1.1.1...v2.0.0) (2025-11-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* API-523: Added rule that ET-Client-Name header must be required on all operations. And Excluded that header from the entur-headers-hyphenated-pascal-case rule.
+* Added new lint rule (language-headers, Error)
+
+### Features
+
+* Added new lint rule (language-headers, Error) ([53a8105](https://github.com/entur/api-guidelines/commit/53a8105134a41511f6b0ae43f6979f603ee0c59d))
+* API-523: Added rule that ET-Client-Name header must be required on all operations. And Excluded that header from the entur-headers-hyphenated-pascal-case rule. ([0ff84d7](https://github.com/entur/api-guidelines/commit/0ff84d79b4be056b238e6346c84c09eef266fe42))
+* API-548 Add extension x-entur-permissions to declare required permissions ([e22bbd7](https://github.com/entur/api-guidelines/commit/e22bbd7557ee8f5b0ed4c014d173e7b50805939b))
+* API-548 Add x-entur-permissions to linter ([bcc0249](https://github.com/entur/api-guidelines/commit/bcc0249b714e1146c6f7a833f24c7751428fd516))
+* API-568: Added minimal, required ruleset, used for validating s… ([29c225c](https://github.com/entur/api-guidelines/commit/29c225ce1dd7efb9c1d6c3f63ce47087d2ec7738))
+* API-568: Added minimal, required ruleset, used for validating specs. ([c4463b8](https://github.com/entur/api-guidelines/commit/c4463b8e12ba2b7116371d2d563102d489e1d626))
+* API-568: Cleanup ([54210d1](https://github.com/entur/api-guidelines/commit/54210d17eef2ebd6cf8ac818cdfad5a16a0adfc3))
+
+
+### Bug Fixes
+
+* Added missing entur- prefix to some rules ([46344f7](https://github.com/entur/api-guidelines/commit/46344f7d02e26e523dc31664fd74aa708ffbd772))
+* Added missing entur- prefix to some rules ([416a06e](https://github.com/entur/api-guidelines/commit/416a06e667d05fe726a2096f148171e79fe0ee8a))
+* API-523: Cleaned up code a bit in how operations are found on path objects. ([71486fd](https://github.com/entur/api-guidelines/commit/71486fdaf06b3cebd7fc5673294a173ada4fd0e3))
+* API-523: Header "ET-Client-Name" no longer needs to be required. And if missing, it is a warning. ([fdb75e8](https://github.com/entur/api-guidelines/commit/fdb75e8511ad0c5e5de032cbc61991a2cb896243))
+* API-523: Header "ET-Client-Name" no longer needs to be required. And if missing, it is a warning. ([0863f0f](https://github.com/entur/api-guidelines/commit/0863f0f5867108182c693af0e30c1c7eb7f7797a))
+* API-523: Header "ET-Client-Name" no longer needs to be required.… ([6c9c80b](https://github.com/entur/api-guidelines/commit/6c9c80b234fe94f4746bd578d27b790a03832878))
+* API-534: Allow exact path "api-docs", while still failing for an… ([00717dc](https://github.com/entur/api-guidelines/commit/00717dcb5f08e8faf1485cf132f2e756a24b7b43))
+* API-534: Allow exact path "api-docs", while still failing for any other path containing word "api". ([dfe41c8](https://github.com/entur/api-guidelines/commit/dfe41c891fb64d7c83b7df7add6cc2df910481db))
+* API-548 Fix structure of x-entur-permissions ([b2b8908](https://github.com/entur/api-guidelines/commit/b2b8908b220e192454f1f21543759a36485f4237))
+* API-548 Fix structure of x-entur-permissions ([6fae433](https://github.com/entur/api-guidelines/commit/6fae4335aaae554b2e43dfabc213aa196e3d9f67))
+
 ## [1.1.1](https://github.com/entur/api-guidelines/compare/v1.1.0...v1.1.1) (2025-08-08)
 
 
