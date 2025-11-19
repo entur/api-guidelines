@@ -3,12 +3,13 @@
 ## [2.0.0](https://github.com/entur/api-guidelines/compare/v1.1.1...v2.0.0) (2025-11-18)
 
 ### ⚠ BREAKING CHANGES
+
 * Added new lint rule (language-headers, Error)
 
 ### Features
 
 * API-523: Added rule that ET-Client-Name header should be allowed on all operations. And Excluded that header from the entur-headers-hyphenated-pascal-case rule.
-* API-548 Add x-entur-permissions to linter ([bcc0249](https://github.com/entur/api-guidelines/commit/bcc0249b714e1146c6f7a833f24c7751428fd516))
+* API-548 Add extension x-entur-permissions to declare required permissions
 
 ### Bug Fixes
 
