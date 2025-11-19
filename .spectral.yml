@@ -10,9 +10,16 @@ functions:
 
 rules:
   # =============================================================================
-  # 1. Introduction
+  # 1. Introduction - Not lintable
   # =============================================================================
-  # Core info requirements for all APIs
+
+  # =============================================================================
+  # 2. Core Principles
+  # =============================================================================
+
+  # -------------------------------------------------------------------------
+  # 2.1 General Design Principles
+  # -------------------------------------------------------------------------
 
   entur-info-title:
     message: "The OpenAPI info section MUST include a non-empty \"title\"."
@@ -31,28 +38,7 @@ rules:
       functionOptions:
         notMatch: "/\\bapi\\b/i"
 
-
-  entur-info-version:
-    message: "The OpenAPI info.version MUST be a valid semantic version (MAJOR.MINOR.PATCH format, e.g. 1.0.0)."
-    severity: error
-    given: $
-    then:
-      field: info.version
-      function: pattern
-      functionOptions:
-        match: "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
-
   info-description: error
-
-
-  # =============================================================================
-  # 2. Core Principles
-  # =============================================================================
-
-  # -------------------------------------------------------------------------
-  # 2.1 General Design Principles
-  # -------------------------------------------------------------------------
-
 
   # HTTP Methods
   entur-operation-standard-methods:
@@ -304,9 +290,18 @@ rules:
         notMatch: "^(?!\/api-docs$).*\\bapi\\b.*$"
 
   # -------------------------------------------------------------------------
-  # 3.2 Versioning - Not directly lintable
+  # 3.2 Versioning
   # -------------------------------------------------------------------------
 
+  entur-info-version:
+    message: "The OpenAPI info.version MUST be a valid semantic version (MAJOR.MINOR.PATCH format, e.g. 1.0.0)."
+    severity: error
+    given: $
+    then:
+      field: info.version
+      function: pattern
+      functionOptions:
+        match: "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
 
   # -------------------------------------------------------------------------
   # 3.3 Backward Compatibility - Not directly lintable
