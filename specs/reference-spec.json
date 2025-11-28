@@ -49,17 +49,6 @@
         "in": "query",
         "name": "size",
         "schema": { "type": "integer", "example": 20 }
-      },
-      "ET-Client-Name": {
-        "name": "ET-Client-Name",
-        "description": "Entur Client Header. It is required that all consumers identify themselves by using this header. Entur will deploy strict rate-limiting policies on API-consumers who do not identify with a header and reserves the right to block unidentified consumers. The structure of ET-Client-Name should be: <company>-<application> for companies, and <personal name>-<application> for individuals.",
-        "in": "header",
-        "required": true,
-        "schema": {
-          "type": "string",
-          "minLength": 1
-        },
-        "example": "company-application"
       }
     },
     "schemas": {
@@ -130,11 +119,6 @@
   },
   "paths": {
     "/items": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/ET-Client-Name"
-        }
-      ],
       "get": {
         "tags": [
           "Items"
@@ -226,9 +210,6 @@
       "parameters": [
         {
           "$ref": "#/components/parameters/Item-Id"
-        },
-        {
-          "$ref": "#/components/parameters/ET-Client-Name"
         }
       ],
       "get": {

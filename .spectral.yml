@@ -4,9 +4,6 @@
 
 # OpenAPI Specification version 3.x
 extends: [spectral:oas]
-functionsDir: ./functions
-functions:
-  - allowEtClientNameHeader
 
 rules:
   # =============================================================================
@@ -467,14 +464,14 @@ rules:
   # 5.5 HTTP Headers
   # -------------------------------------------------------------------------
 
-  # Required ET-Client-Name header
+  # ET-Client-Name header placement
 
-  entur-require-et-client-name-header:
-    message: "All operations SHOULD allow header \"ET-Client-Name\" (at path or operation level)."
+  entur-not-et-client-name-header:
+    message: "Do not declare header \"ET-Client-Name\"."
     severity: warn
-    given: $.paths[*]
+    given: "$.paths[*]..parameters[?(@.in == 'header' && @.name == 'ET-Client-Name')].name"
     then:
-      function: allowEtClientNameHeader
+      function: falsy
 
   # Header naming conventions
   entur-headers-hyphenated-pascal-case:
