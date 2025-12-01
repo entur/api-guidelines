@@ -467,7 +467,7 @@ rules:
   # ET-Client-Name header placement
 
   entur-not-et-client-name-header:
-    message: "Declaring header \"ET-Client-Name\" is not necessary" eller noe sånn?"
+    message: "Declaring header \"ET-Client-Name\" is not necessary."
     severity: warn
     given: "$.paths[*]..parameters[?(@.in == 'header' && @.name == 'ET-Client-Name')].name"
     then:
