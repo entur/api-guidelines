@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.1](https://github.com/entur/api-guidelines/compare/v2.0.0...v2.0.1) (2025-12-02)
+
+
+### Bug Fixes
+
+* API-571: Added info about "info.title" linting in guidelines. Moved linting rules to correct sections, so that it matches guidelines. ([#77](https://github.com/entur/api-guidelines/issues/77)) ([beec7fe](https://github.com/entur/api-guidelines/commit/beec7fe086a65c31cb6796647b6143874cd4d646))
+* API-578: Header "ET-Client-Name" not necessary. ([#79](https://github.com/entur/api-guidelines/issues/79)) ([45c5c4d](https://github.com/entur/api-guidelines/commit/45c5c4d9303f751c5b95230833d8afcb24d5cdc0))
+
 ## [2.0.0](https://github.com/entur/api-guidelines/compare/v1.1.1...v2.0.0) (2025-11-18)
 
 ### ⚠ BREAKING CHANGES
