@@ -20,7 +20,7 @@ Or using yarn:
 `yarn global add @stoplight/spectral-cli`
 
 #### Running Spectral CLI
-`spectral lint api-spec.json --ruleset https://raw.githubusercontent.com/entur/api-guidelines/refs/tags/v0.1.0/.spectral.yml`
+`spectral lint api-spec.json --ruleset https://raw.githubusercontent.com/entur/api-guidelines/refs/tags/v2/.spectral.yml`
 
 
 ### Running the linter in your IDE
