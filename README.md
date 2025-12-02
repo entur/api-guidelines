@@ -19,8 +19,11 @@ Using npm:
 Or using yarn:  
 `yarn global add @stoplight/spectral-cli`
 
-#### Running Spectral CLI
+#### Running Spectral CLI with Entur linting rules
 `spectral lint api-spec.json --ruleset https://raw.githubusercontent.com/entur/api-guidelines/refs/tags/v2/.spectral.yml`
+
+#### Running Spectral CLI with linting rules which must pass without Errors in order to publish spec to developer portal
+`spectral lint api-spec.json --ruleset https://raw.githubusercontent.com/entur/api-guidelines/refs/tags/v2/.spectral-required.yml`
 
 
 ### Running the linter in your IDE
@@ -39,8 +42,8 @@ Here's an example of a Spectral Git hook using Husky:
 {
   "husky": {
     "hooks": {
-      "pre-commit": "spectral lint specs/*.{json,yml,yaml} --ruleset https://raw.githubusercontent.com/entur/api-guidelines/refs/tags/v0.1.0/.spectral.yml",
-      "pre-push": "spectral lint specs/*.{json,yml,yaml} --ruleset https://raw.githubusercontent.com/entur/api-guidelines/refs/tags/v0.1.0/.spectral.yml",
+      "pre-commit": "spectral lint specs/*.{json,yml,yaml} --ruleset https://raw.githubusercontent.com/entur/api-guidelines/refs/tags/v2/.spectral.yml",
+      "pre-push": "spectral lint specs/*.{json,yml,yaml} --ruleset https://raw.githubusercontent.com/entur/api-guidelines/refs/tags/v2/.spectral.yml",
       "...": "..."
     }
   }
