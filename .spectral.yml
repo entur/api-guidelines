@@ -464,8 +464,7 @@ rules:
   # 5.5 HTTP Headers
   # -------------------------------------------------------------------------
 
-  # ET-Client-Name header placement
-
+  # ET-Client-Name header not necessary
   entur-not-et-client-name-header:
     message: "Declaring header \"ET-Client-Name\" is not necessary."
     severity: warn
