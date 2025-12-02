@@ -302,6 +302,7 @@ Example:
 
 #### 5.5.1 ET-Client-Name
 - :white_check_mark: All endpoints **SHOULD** allow that consumers identify themselves by using the header `ET-Client-Name`. The header value should be on the format `<party>-<application>`, e.g. `brakar-journeyplanner`.
+  **However**, this header is added automatically to specs when the developer portal is built (using an [OpenAPI Overlay](https://github.com/entur/developer-portal/blob/efd23abd039903b53cb5d80e8c6a41dd86437b9e/overlays/et-client-name.yml)), so specs should **not** define this header.
 
 ## 6. Advanced Design Patterns
 <!-- More complex design patterns -->
