@@ -37,6 +37,23 @@ rules:
 
   info-description: error
 
+  entur-info-metadata-id:
+    message: "The OpenAPI info section SHOULD include \"x-entur-metadata.id\"."
+    severity: warn
+    given: $.info
+    then:
+      field: x-entur-metadata.id
+      function: truthy
+
+  entur-info-metadata-id-kebab-case:
+    message: "The \"x-entur-metadata.id\" MUST be in lower-kebab-case format. Invalid value: {{value}}"
+    severity: error
+    given: $.info.x-entur-metadata.id
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[a-z0-9]+(-[a-z0-9]+)*$
+
   # HTTP Methods
   entur-operation-standard-methods:
     message: "Operations SHOULD use standard HTTP methods (`get`, `post`, `put`, `patch`, `delete`). Invalid operation: {{property}}."

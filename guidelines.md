@@ -197,11 +197,34 @@ If you need to explain the required permissions in more detail, you can declare 
 - Good example, when using tags for use-cases : `Search`, `Booking`
 - Good example, when using tags for data types : `Routes`, `Departures`
 
-## 4. Communication Standards
+## 4. Entur Metadata
+
+### 4.1 OpenAPI spec id 
+- :white_check_mark: OpenAPI specs **SHOULD** use the `x-entur-metadata` extension in the `info` section to document the spec id.
+
+Example:
+```json
+{
+  "info": {
+    "x-entur-metadata": {
+      "id": "my-service-id"
+    }
+  }
+}
+```
+#### 4.1.1 Choosing an id
+The id is used to uniquely identify a service - each id results in an entry in the Developer Portal API catalogue, and an entry in the linting results.
+Because of this, the id should not change over time. The current api title (in kebab-case) could be a good id - but, of course, you should not update the id if the title changes in the future.
+The id should not have a suffix (or prefix) like `-id`
+
+- :white_check_mark: The id should be in lower kebab-case and contain only dashes, digits and letters (a-z).
+
+
+## 5. Communication Standards
 <!-- HTTP standards and protocols -->
 
 
-### 4.1 HTTP Status Codes
+### 5.1 HTTP Status Codes
 
 - :white_check_mark: Request body is only allowed for PUT, POST and PATCH
 
@@ -221,7 +244,7 @@ If you need to explain the required permissions in more detail, you can declare 
 | 503  | Service Unavailable   |  :white_check_mark:   |:white_check_mark:       |:white_check_mark:      |:white_check_mark:        |:white_check_mark:         |:white_check_mark:
 
 
-### 4.2 Error Handling
+### 5.2 Error Handling
 When an error occurs, the IETF standard for Problem Details for HTTP APIs [(RFC 9457)](https://www.rfc-editor.org/rfc/rfc9457.html) **SHOULD** be followed, with few additional guidelines:
 - :white_check_mark: Error responses **MUST** either use media type `application/problem+json`, OR `application/problem+xml` (if Accept header is `application/xml`)
 - :white_check_mark: The fields `title` and `status` **MUST** be included
@@ -246,11 +269,11 @@ Content-Language: en
 ```
 
 
-## 5. Data Formatting Standards
+## 6. Data Formatting Standards
 <!-- Standardizing data formats -->
 
 
-### 5.1 Language & Spelling
+### 6.1 Language & Spelling
 - :eyes: You **MAY** allow clients to specify a preferred language via the `Accept-Language` header or a query parameter.
 - :eyes: You **MAY** return the `Content-Language` header to inform clients of language used in response.
 - :ballot_box_with_check: `Accept-Language` and `Content-Language` values **MUST** be valid [IETF BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) 
@@ -268,7 +291,7 @@ Accept-Language: nb
  
 
 
-### 5.2 Date & Time
+### 6.2 Date & Time
 - :eyes: You **SHOULD** use the ISO 8601 standard for all date and timestamps
 
 Example:
@@ -276,7 +299,7 @@ Example:
 
 
 
-### 5.3 Currency Representation
+### 6.3 Currency Representation
 - :eyes: Prices should be specified as floating-point numbers, represented as strings
 - :eyes: Request: Max 18 digits total; max 5 decimals (follows ISO 20022)
 - :eyes: Response: Always serialized with the standard number of decimals. For NOK, this means 2, since øre is the smallest unit.
@@ -290,25 +313,25 @@ Example:
 ```
 
 
-### 5.4 Character Encoding
+### 6.4 Character Encoding
 - :eyes: You **MUST** encode all text in UTF-8
 - :eyes: Set the Content-Type header to for example `application/json; charset=utf-8`
   - Tip: test the api with international character (e.g. æ, ø, å)
 
 
-### 5.5 HTTP Headers
+### 6.5 HTTP Headers
 - :ballot_box_with_check: HTTP headers **MUST** use Hyphenated-Pascal-Case format (e.g., `Content-Type`, `Accept-Language`)
 - :eyes: HTTP headers **SHOULD NOT** include the 'X-' prefix, following RFC 6648. Entur headers should have the prefix "Entur-". API:s are expected to use the prefix "Entur-" for custom headers by 2028.
 
-#### 5.5.1 ET-Client-Name
+#### 6.5.1 ET-Client-Name
 - :white_check_mark: All endpoints **SHOULD** allow that consumers identify themselves by using the header `ET-Client-Name`. The header value should be on the format `<party>-<application>`, e.g. `brakar-journeyplanner`.
   **However**, this header is added automatically to specs when the developer portal is built (using an [OpenAPI Overlay](https://github.com/entur/developer-portal/blob/efd23abd039903b53cb5d80e8c6a41dd86437b9e/overlays/et-client-name.yml)), so specs should **not** define this header.
 
-## 6. Advanced Design Patterns
+## 7. Advanced Design Patterns
 <!-- More complex design patterns -->
 
 
-### 6.1 Filtering, Sorting & Pagination
+### 7.1 Filtering, Sorting & Pagination
 - :eyes: You **MAY** allow filtering, sorting, and pagination to retrieve specific data
 - :eyes: If you implement pagination, you **MUST** use either query parameters "page" (zero based page to get) and "size" (number of items per page), 
   **OR** query parameters offset (zero based) and limit (number of items)  
@@ -321,14 +344,14 @@ Example:
 > GET /api/v1/bus-stops?city=Oslo&sort=name,asc&sort=something,desc&page=0&size=20
 
 
-### 6.2 Partial Responses
+### 7.2 Partial Responses
 - :eyes: You **MAY** let clients choose which fields to include to reduce data transfer
 
 
 Example:
 > GET /api/v1/bus-stops?fields=id,name,location
 
-### 6.3 Batch Operations
+### 7.3 Batch Operations
 - :eyes: When multiple operations need to be handled in a single call, the API **SHOULD** support batch operations
 
 Example:
@@ -343,7 +366,7 @@ POST /api/v1/batch
 ```
 
 
-### 6.4 Caching & Resource Expiration
+### 7.4 Caching & Resource Expiration
 - :eyes: You **MAY** use HTTP headers such as Cache-Control, ETag, and Last-Modified
 
 Example:
@@ -372,7 +395,7 @@ HTTP/1.1 304 Not Modified
 ```
 
 
-### 6.5 Import & Export Formats
+### 7.5 Import & Export Formats
 - :eyes: You **SHOULD** support JSON, unless you have a good reason not to.
 - :white_check_mark: Use the HTTP Accept header to specify desired response format
 
@@ -384,7 +407,7 @@ Accept: application/json
 ```
 
 
-### 6.6 Validation
+### 7.6 Validation
 - :eyes: You **SHOULD** validate all incoming data and return detailed error messages with appropriate HTTP status codes
 - :eyes: Error messages **SHOULD** be specific enough to guide the client toward fixing the issue
 - :eyes: Validation errors **SHOULD** return 400 Bad Request status code
@@ -410,7 +433,7 @@ Example:
 }
 ```
 
-### 6.7 HATEOAS
+### 7.7 HATEOAS
 - :eyes: You **MAY** include links to related resources in responses to enable easy API navigation
 
 Example:
@@ -425,14 +448,14 @@ Example:
 }
 ```
 
-## 7. Alternative Approaches
+## 8. Alternative Approaches
 
 
-### 7.1 When to Consider Non-RESTful Designs
+### 8.1 When to Consider Non-RESTful Designs
 There may be situations where a pure REST architecture is not the best solution. In such cases, consider alternative design patterns. The choice should be justified based on performance requirements, complexity, and consistency with other systems, as well as overall guidelines in the architect's intent.
 
 
-#### Alternative Design Patterns:
+#### 8.1.1 Alternative Design Patterns:
 - **GraphQL**: For flexible queries where the client can specify exactly what data is needed
 - **Event-driven architecture**: For asynchronous or event-based scenarios
 - **WebSocket**: For real-time bidirectional communication
