@@ -160,6 +160,28 @@ If you need to explain the required permissions in more detail, you can declare 
 }
 ```
 
+### 2.4. Entur Metadata
+
+#### 2.4.1 OpenAPI spec id
+- :white_check_mark: OpenAPI specs **SHOULD** use the `id` property in the `x-entur-metadata` extension in the `info` section to document the spec id. 
+
+Example:
+```json
+{
+  "info": {
+    "x-entur-metadata": {
+      "id": "my-service"
+    }
+  }
+}
+```
+**Choosing an id**
+The id is used to uniquely identify a service - each id results in an entry in the Developer Portal API catalogue, and an entry in the linting results.
+Because of this, the id should not change over time. The current api title (in kebab-case) could be a good id - but, of course, you should not update the id if the title changes in the future.
+The id should not have a `-id` suffix (or prefix).
+
+- :white_check_mark: If the id is present, it **MUST** be in lower kebab-case and contain only dashes, digits and letters (a-z).
+
 ## 3. Naming & Structure Conventions
 <!-- How to organize and label resources -->
 

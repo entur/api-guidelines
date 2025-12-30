@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Example Service",
+    "title": "Example",
     "version": "1.0.0",
     "description": "A long and descriptive description",
     "termsOfService": "https://developer.entur.org/terms-of-service",
@@ -9,6 +9,9 @@
       "name": "API Support",
       "url": "https://entur.no",
       "email": "support@entur.no"
+    },
+    "x-entur-metadata": {
+      "id": "example"
     }
   },
 
