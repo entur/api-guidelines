@@ -40,9 +40,9 @@ rules:
   entur-info-metadata-id:
     message: "The OpenAPI info section SHOULD include \"x-entur-metadata.id\"."
     severity: warn
-    given: $.info
+    given: $
     then:
-      field: x-entur-metadata.id
+      field: info.x-entur-metadata.id
       function: truthy
 
   entur-info-metadata-id-kebab-case:
