@@ -207,7 +207,7 @@ Example:
 {
   "info": {
     "x-entur-metadata": {
-      "id": "my-service-id"
+      "id": "my-service"
     }
   }
 }
