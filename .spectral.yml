@@ -70,7 +70,8 @@ rules:
     message: "Properties in components schema SHOULD have example values."
     severity: warn
     recommended: false
-    given: $.components.schemas.*.properties.*
+    #For schema properties where type is not array, or items is not a ref. (Array with ref to other schema does not need an example)
+    given: $.components.schemas.*.properties[?(@.type != 'array' || !@.items.$ref)]
     then:
       field: example
       function: defined
