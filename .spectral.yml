@@ -5,6 +5,9 @@
 # OpenAPI Specification version 3.x
 extends: [spectral:oas]
 
+functions:
+  - requireExampleOrRef
+
 rules:
   # =============================================================================
   # 1. Introduction - Not lintable
@@ -81,19 +84,7 @@ rules:
     severity: warn
     given: $.paths.*.*.requestBody.content.*
     then:
-      function: schema
-      functionOptions:
-        schema:
-          anyOf:
-            - required: ["example"]
-            - required: ["examples"]
-            - allOf:
-                - required: ["schema"]
-                - properties:
-                    schema:
-                      anyOf:
-                        - required: ["example"]
-                        - required: ["examples"]
+      function: requireExampleOrRef
 
   entur-request-body-description:
     message: "Request bodies SHOULD have a description."
@@ -108,19 +99,7 @@ rules:
     severity: warn
     given: $.paths.*.*.responses.*.content.*
     then:
-      function: schema
-      functionOptions:
-        schema:
-          anyOf:
-            - required: ["example"]
-            - required: ["examples"]
-            - allOf:
-                - required: ["schema"]
-                - properties:
-                    schema:
-                      anyOf:
-                        - required: ["example"]
-                        - required: ["examples"]
+      function: requireExampleOrRef
 
 
   entur-operation-summary:
