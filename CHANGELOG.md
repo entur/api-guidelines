@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.0.2](https://github.com/entur/api-guidelines/compare/v2.0.1...v2.0.2) (2026-01-14)
+
+
+### Bug Fixes
+
+* Allowing HTTP response code 423 for delete, post, put, patch. ([#87](https://github.com/entur/api-guidelines/issues/87)) ([5bc3566](https://github.com/entur/api-guidelines/commit/5bc3566a1c767a5423e6c893735dd43cc7c72455))
+* ETU-66692: Added custom function requireExampleOrRef which looks for examples in components referenced in schema.items (when schema.type == 'array'). ([#84](https://github.com/entur/api-guidelines/issues/84)) ([1d47976](https://github.com/entur/api-guidelines/commit/1d47976846e1f1f87e14204931d00a79a9fda6bc))
+* ETU-66692: schema properties which have type: array and  items { $ref } no longer needs an example. ([5358854](https://github.com/entur/api-guidelines/commit/53588546e810621df578ab733d71d49d833dddb0))
+* Severity of rule 'entur-rfc-9457-content-type' changed to warning. ([#86](https://github.com/entur/api-guidelines/issues/86)) ([60395da](https://github.com/entur/api-guidelines/commit/60395daad535bd67eacccf9190156e478b6b8102))
+
 ## [2.0.1](https://github.com/entur/api-guidelines/compare/v2.0.0...v2.0.1) (2025-12-02)
 
 
