@@ -216,6 +216,15 @@ rules:
       functionOptions:
         match: ^[a-z0-9]+(-[a-z0-9]+)*$
 
+  entur-info-metadata-parent-id-kebab-case:
+    message: "The \"x-entur-metadata.parentId\" MUST be in lower-kebab-case format. Invalid value: {{value}}"
+    severity: error
+    given: $.info.x-entur-metadata.parentId
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[a-z0-9]+(-[a-z0-9]+)*$
+
 
   # =============================================================================
   # 3. Naming & Structure Conventions
