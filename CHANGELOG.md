@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.1.0](https://github.com/entur/api-guidelines/compare/v2.0.2...v2.1.0) (2026-01-29)
+
+
+### Features
+
+* ETU-66252 Add guidelines for merging apis ([f6065e4](https://github.com/entur/api-guidelines/commit/f6065e4e338eba5b65b93b19d413a0535da6676a))
+* ETU-66252 Add guidelines for merging specs ([0d545a1](https://github.com/entur/api-guidelines/commit/0d545a1f3ae075dac1f80698b1c87299aebc6ab1))
+* ETU-66252 Add lint rule that parentId is formatted correctly ([46845a2](https://github.com/entur/api-guidelines/commit/46845a260c9b604cdb9c0936aabcdb1923d1e6ef))
+
+
+### Bug Fixes
+
+* Clarify that x-entur-metadata.id should identify spec, not service ([#90](https://github.com/entur/api-guidelines/issues/90)) ([7e1cfe3](https://github.com/entur/api-guidelines/commit/7e1cfe3d82943a1fde2d1a7e00015db13545b684))
+
 ## [2.0.2](https://github.com/entur/api-guidelines/compare/v2.0.1...v2.0.2) (2026-01-14)
 
 

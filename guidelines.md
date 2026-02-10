@@ -163,24 +163,75 @@ If you need to explain the required permissions in more detail, you can declare 
 ### 2.4. Entur Metadata
 
 #### 2.4.1 OpenAPI spec id
-- :white_check_mark: OpenAPI specs **SHOULD** use the `id` property in the `x-entur-metadata` extension in the `info` section to document the spec id. 
+- :white_check_mark: OpenAPI specifications **SHOULD** use the `id` property in the `x-entur-metadata` extension in the `info` section. 
 
 Example:
 ```json
 {
   "info": {
     "x-entur-metadata": {
-      "id": "my-service"
+      "id": "my-specification"
     }
   }
 }
 ```
 **Choosing an id**
-The id is used to uniquely identify a service - each id results in an entry in the Developer Portal API catalogue, and an entry in the linting results.
+The id is used to uniquely identify a specification - each id results in an entry in the Developer Portal API catalogue, and an entry in the linting results.
 Because of this, the id should not change over time. The current api title (in kebab-case) could be a good id - but, of course, you should not update the id if the title changes in the future.
 The id should not have a `-id` suffix (or prefix).
 
 - :white_check_mark: If the id is present, it **MUST** be in lower kebab-case and contain only dashes, digits and letters (a-z).
+
+#### 2.4.2 Merging specifications
+Sometimes it is useful to develop some API endpoints separately, but still document them externally as a single specification. To achieve this, you can use the `x-entur-metadata` field `parentId`. This field may contain a reference the `x-entur-metadata.id` field in another published specification.
+
+Nesting is not supported. `parentId` must refer to a specification that does not itself declare a `parentId`.
+
+If there are problems with the merging, for example conflicts between the schemas, none of the specifications will be exposed.
+
+<details>
+<summary>Example</summary>
+For example, say you have three microservices, `alpha`, `beta` and `gamma`:
+
+Microservice `alpha` publishes the specification:
+```json
+{
+  "info": {
+    "x-entur-metadata": {
+      "id": "alpha"
+    }
+  },
+  ...
+}
+```
+Microservice `beta` publishes the specification:
+```json
+{
+  "info": {
+    "x-entur-metadata": {
+      "id": "beta",
+      "parentId": "alpha"
+    }
+  },
+  ...
+}
+```
+Microservice `gamma` publishes the specification:
+```json
+{
+  "info": {
+    "x-entur-metadata": {
+      "id": "gamma",
+      "parentId": "alpha"
+    }
+  },
+  ...
+}
+```
+
+Here, only 1 specification will be shown on the Developer Portal, which is a combination of `alpha`, `beta` and `gamma`. Since `alpha` is the parent specification, the combined specification will use `alpha` as the base, so fields like `info.title` will be picked from there.
+</details>
+
 
 ## 3. Naming & Structure Conventions
 <!-- How to organize and label resources -->
