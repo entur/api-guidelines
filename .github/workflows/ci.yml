@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-pr:
+    uses: entur/gha-meta/.github/workflows/verify-pr.yml@v1
+  
+  lint-reference-spec:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install Spectral
+        run: npm install -g @stoplight/spectral-cli
+      - name: Lint OpenAPI
+        shell: bash
+        run: |
+          set -o errexit
+          set -o nounset
+          set -o pipefail
+        
+          annotations=$(mktemp)
+          markdown=$(mktemp)
+          spectral lint ./specs/reference-spec.json --ruleset ".spectral.yml" -F hint -f github-actions -o.github-actions "$annotations" -f markdown -o.markdown="$markdown" && rc=$? || rc=$?
+
+          #Return code 2 means that spectral command failed to run (not linting errors), so fail workflow.
+          if [ "$rc" -eq 2 ]; then
+            echo "::error::Spectral execution error (exit code $rc)."
+            exit $rc
+          fi
+
+          if [ "$rc" -eq 1 ]; then
+            cat $annotations
+            cat $markdown >> $GITHUB_STEP_SUMMARY
+            echo
+            echo "::error::There were linting errors (exit code $rc)."
+            exit $rc
+          fi
+
+  lint-reference-spec-with-errors:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install Spectral
+        run: npm install -g @stoplight/spectral-cli
+      - name: Lint OpenAPI
+        shell: bash
+        run: |
+          set -o errexit
+          set -o nounset
+          set -o pipefail
+        
+          annotations=$(mktemp)
+          markdown=$(mktemp)
+          spectral lint ./specs/reference-spec-with-errors.json --ruleset ".spectral.yml" -F hint -f github-actions -o.github-actions "$annotations" -f markdown -o.markdown="$markdown" && rc=$? || rc=$?
+
+          #Return code 2 means that spectral command failed to run (not linting errors), so fail workflow.
+          if [ "$rc" -eq 2 ]; then
+            echo "::error::Spectral execution error (exit code $rc)."
+            exit $rc
+          fi
+
+          if [ "$rc" -ne 1 ]; then
+            echo "::error::There were no linting errors when there should be (exit code $rc)."
+            exit $rc
+          else
+            cat $annotations
+            cat $markdown >> $GITHUB_STEP_SUMMARY
+          fi
