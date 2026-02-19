@@ -26,7 +26,7 @@ jobs:
         
           annotations=$(mktemp)
           markdown=$(mktemp)
-          spectral lint ./specs/reference-spec.json --ruleset ".spectral.yml" -F hint -f github-actions -o.github-actions "$annotations" -f markdown -o.markdown="$markdown" && rc=$? || rc=$?
+          spectral lint ./specs/reference-spec.json --ruleset ".spectral.yml" --show-documentation-url -F hint -f github-actions -o.github-actions "$annotations" -f markdown -o.markdown="$markdown" && rc=$? || rc=$?
 
           #Return code 2 means that spectral command failed to run (not linting errors), so fail workflow.
           if [ "$rc" -eq 2 ]; then
@@ -59,7 +59,7 @@ jobs:
         
           annotations=$(mktemp)
           markdown=$(mktemp)
-          spectral lint ./specs/reference-spec-with-errors.json --ruleset ".spectral.yml" -F hint -f github-actions -o.github-actions "$annotations" -f markdown -o.markdown="$markdown" && rc=$? || rc=$?
+          spectral lint ./specs/reference-spec-with-errors.json --ruleset ".spectral.yml" --show-documentation-url -F hint -f github-actions -o.github-actions "$annotations" -f markdown -o.markdown="$markdown" && rc=$? || rc=$?
 
           #Return code 2 means that spectral command failed to run (not linting errors), so fail workflow.
           if [ "$rc" -eq 2 ]; then
