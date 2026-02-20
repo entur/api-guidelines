@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Items",
+    "title": "Items API",
     "version": "1.0.0",
     "description": "A long and descriptive description",
     "termsOfService": "https://developer.entur.org/terms-of-service",
@@ -11,9 +11,9 @@
       "email": "support@entur.no"
     },
     "x-entur-metadata": {
-      "id": "items",
-      "owner": "team-api",
-      "audience": "partner"
+      "id": "Items",
+      "owner": "api",
+      "audience": "public"
     }
   },
 
