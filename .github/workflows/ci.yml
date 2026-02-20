@@ -73,4 +73,6 @@ jobs:
           else
             cat $annotations
             cat $markdown >> $GITHUB_STEP_SUMMARY
+            echo
+            echo "::error file=specs/reference-spec,line=10,title=Syntax Error::Missing semicolon %0ADocumentation: https://github.com"
           fi
