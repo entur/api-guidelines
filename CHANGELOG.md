@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/entur/api-guidelines/compare/v2.1.0...v2.2.0) (2026-02-20)
+
+
+### Features
+
+* Add ci workflow to check that linting works ([#93](https://github.com/entur/api-guidelines/issues/93)) ([4c719cb](https://github.com/entur/api-guidelines/commit/4c719cb93295a590ffb658c4de105c8d7c0a2a0f))
+
 ## [2.1.0](https://github.com/entur/api-guidelines/compare/v2.0.2...v2.1.0) (2026-01-29)
 
 
