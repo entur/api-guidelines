@@ -4,7 +4,7 @@
 
 
 ## 1. Introduction
-Welcome to this API guide, designed to ensure a consistent and robust approach to developing [RESTful](https://en.wikipedia.org/wiki/REST) APIs. REST (Representational State Transfer) is an architectural style that uses standard HTTP methods to create scalable, lightweight, and maintainable services.
+Welcome to Enturs API guidelines, designed to ensure a consistent and robust approach to developing [RESTful](https://en.wikipedia.org/wiki/REST) APIs. REST (Representational State Transfer) is an architectural style that uses standard HTTP methods to create scalable, lightweight, and maintainable services.
 
 
 ### 1.1 Purpose of the Entur API guidelines
@@ -30,8 +30,8 @@ Throughout this document, these requirement levels are used:
 
 ### 1.5 Linter Coverage
 Throughout this document, rules are marked with the following indicators:
-- :white_check_mark: Automatically enforced by [linter](README.md)
-- :ballot_box_with_check: Partially checked by [linter](README.md)
+- :white_check_mark: Automatically enforced by [linter](README.md#linting-your-api)
+- :ballot_box_with_check: Partially checked by [linter](README.md#linting-your-api)
 - :eyes: Requires manual review
 
 
@@ -43,8 +43,8 @@ Throughout this document, rules are marked with the following indicators:
 - :eyes: Consistency - Make sure the API is easy to understand and predictable 
 - :white_check_mark: HTTP Methods - API operations **MUST** use standard HTTP methods (GET, POST, PUT, PATCH, DELETE)
 - :white_check_mark: Data Format - API endpoints **SHOULD** support the JSON data format, unless there is a good reason not to
+- :white_check_mark: APIs **MUST** be documented using [OpenAPI 3.x](https://spec.openapis.org/oas/v3.1.2.html)
 - :white_check_mark: Documentation - All functionality **SHOULD** be documented with examples and descriptions
-- :white_check_mark: You **MUST** use the OpenAPI V3 spec to define APIs
 - :white_check_mark: Encryption: All communication **MUST** be over HTTPS
 - :white_check_mark: You **SHOULD** not use localhost (or 127.0.0.1) host names in `info.servers`.
 - :white_check_mark: `info.title` **MUST** be non-empty and **MUST** not contain the word 'api'. 
@@ -55,7 +55,7 @@ Throughout this document, rules are marked with the following indicators:
   - Create the API specification before implementing the API
   - The specification is the primary reference for both development and documentation
   - Update the specification throughout development to reflect changes
-- :eyes: [Lint your API spec](README.md)
+- :eyes: [Lint your API spec](README.md#linting-your-api)
 - :eyes: Separate API specifications per target audience/visibility (public, partner, internal). An API spec **SHOULD** only contain endpoints for one target audience.
 This audience is used in the Developer Portal to organize APIs.
 - :eyes: Differentiate APIs based on the target audience:
@@ -66,9 +66,11 @@ This audience is used in the Developer Portal to organize APIs.
 ### 2.3 Authentication and Authorization
 
 #### 2.3.1 About security in OpenAPI specs
-You use `securitySchemes` inside `components` to define security schemes. You then add `security` either at the root level of the spec (to apply security to all operations), 
-or you add it under individual operations which are secured (this replaces the root config).
+Use `securitySchemes` inside `components` to define security schemes. Then, refer to schemes using `security` either at the root level of the spec,to apply security to all operations, or under individual operations which are secured, which replaces the root config.
 
+See:
+- https://spec.openapis.org/oas/v3.1.2.html#security-scheme-object
+- https://spec.openapis.org/oas/v3.1.2.html#security-requirement-object
 #### 2.3.2 Partner- and Internal endpoints
 - :eyes: These endpoints are secured using JWT tokens. This **MUST** be documented using a `jwt` scheme.
 
@@ -118,7 +120,7 @@ Example:
 
 where `items:les` means that you need the access `les` on the operation `items`.
 
-You can also specify that your endpoint requires multiple permissions, for example:
+You can also specify that an endpoint requires multiple permissions, for example:
 ```json
 {
   "x-entur-permissions": {
@@ -160,21 +162,34 @@ If you need to explain the required permissions in more detail, you can declare 
 }
 ```
 
-### 2.4. Entur Metadata
+### 2.4 Entur Metadata
+All OpenAPI specifications published to Enturs developer portal must declare a block `x-entur-metadata` in the `info` section of the specification.
 
-#### 2.4.1 OpenAPI spec id
-- :white_check_mark: OpenAPI specifications **SHOULD** use the `id` property in the `x-entur-metadata` extension in the `info` section. 
+Field name|Type    |Description
+----------|--------|-----------
+id        |`string`|**REQUIRED**. Unique id for this specification. [Read more](#241-identifying-a-specification).
+audience  |`string`|**REQUIRED**. Who this specification is targeted to. Must be one of `"open"`, `"partner"`, `"internal"`
+owner     |`string`|**REQUIRED**. The Entur team responsible for this specification. [Read more](#242-specification-owner).
+parentId  |`string`|Id of the parent specification, used when merging. [Read more](#243-merging-specifications).
 
 Example:
-```json
+```
 {
   "info": {
     "x-entur-metadata": {
-      "id": "my-specification"
+      "id": "items",
+      "owner": "team-api",
+      "audience": "partner"
     }
   }
 }
 ```
+
+
+
+#### 2.4.1 Identifying a specification
+- :white_check_mark: OpenAPI specifications **SHOULD** use the `id` property in the `x-entur-metadata` extension in the `info` section. 
+
 **Choosing an id**
 The id is used to uniquely identify a specification - each id results in an entry in the Developer Portal API catalogue, and an entry in the linting results.
 Because of this, the id should not change over time. The current api title (in kebab-case) could be a good id - but, of course, you should not update the id if the title changes in the future.
@@ -182,12 +197,23 @@ The id should not have a `-id` suffix (or prefix).
 
 - :white_check_mark: If the id is present, it **MUST** be in lower kebab-case and contain only dashes, digits and letters (a-z).
 
-#### 2.4.2 Merging specifications
+#### 2.4.2 Specification owner
+- :white_check_mark: OpenAPI specifications **SHOULD** use the `owner` property in the `x-entur-metadata` extension in the `info` section.
+
+The owner field declares which team is responsible for maintaining a specification. It should follow the same format as the `owner` field in the [platform orchestrator](https://github.com/entur/tf-gcp-apps/blob/main/docs/manifests/GoogleCloudApplication.md#metadataowner-owner).
+
+#### 2.4.3 Merging specifications
 Sometimes it is useful to develop some API endpoints separately, but still document them externally as a single specification. To achieve this, you can use the `x-entur-metadata` field `parentId`. This field may contain a reference the `x-entur-metadata.id` field in another published specification.
 
 Nesting is not supported. `parentId` must refer to a specification that does not itself declare a `parentId`.
 
 If there are problems with the merging, for example conflicts between the schemas, none of the specifications will be exposed.
+
+##### Limitations
+There are some limitations when merging specifications:
+- `servers.url` in all specs must be a subpath of the declared `servers.url` in the "parent specification". The merged specification will use the `servers` definition from the parent specification, and the subpath of the other specifications will be added to the operation paths. If `servers` are not compatible, none of the specifications will be published.
+- Root level `security` must be identical in all specs to be merged.
+- If there are multiple non-equal schemas with the same name, they will be namespaced with the `x-entur-metadata.id` field. So if multiple specs declare a schema `Item` that differ from each other, there will be one schema `Item_alpha` and one schema `Item_beta`.
 
 <details>
 <summary>Example</summary>
@@ -311,7 +337,7 @@ Content-Language: en
   "type": "https://example.com/request-endpoint",
   "title": "Access forbidden",
   "status": 403,
-  "detail": "You do not have permission to access this resource..",
+  "detail": "You do not have permission to access this resource.",
   "instance": "https://example.com/something/something",
   "balance": 30,                        //Custom field
   "recommended-action": "Something."    //Custom field
@@ -366,16 +392,26 @@ Example:
 ### 5.4 Character Encoding
 - :eyes: You **MUST** encode all text in UTF-8
 - :eyes: Set the Content-Type header to for example `application/json; charset=utf-8`
-  - Tip: test the api with international character (e.g. æ, ø, å)
+  - Tip: test the api with international characters (e.g. æ, ø, å)
 
 
 ### 5.5 HTTP Headers
 - :ballot_box_with_check: HTTP headers **MUST** use Hyphenated-Pascal-Case format (e.g., `Content-Type`, `Accept-Language`)
-- :eyes: HTTP headers **SHOULD NOT** include the 'X-' prefix, following RFC 6648. Entur headers should have the prefix "Entur-". API:s are expected to use the prefix "Entur-" for custom headers by 2028.
+- :eyes: Custom HTTP headers **SHOULD** use the prefix `Entur-`, with some exceptions.
 
-#### 5.5.1 ET-Client-Name
-- :white_check_mark: All endpoints **SHOULD** allow that consumers identify themselves by using the header `ET-Client-Name`. The header value should be on the format `<party>-<application>`, e.g. `brakar-journeyplanner`.
-  **However**, this header is added automatically to specs when the developer portal is built (using an [OpenAPI Overlay](https://github.com/entur/developer-portal/blob/efd23abd039903b53cb5d80e8c6a41dd86437b9e/overlays/et-client-name.yml)), so specs should **not** define this header.
+#### 5.5.1 Known Custom HTTP Headers
+##### `ET-Client-Name`
+- :white_check_mark: All endpoints **SHOULD** allow consumers to identify themselves using the request header `ET-Client-Name`.
+The header is added automatically to all endpoints in a specification before publication to the developer portal.
+
+##### `Entur-POS`
+Used to declare which "point-of-sale" a request is coming from.
+
+##### `Entur-Distribution-Channel`
+Used to declare which distribution channel (sales channel) a request is coming from.
+
+##### `X-Correlation-Id`
+A "de-facto" standard for correlating a request throughout a microservice architecture. At Entur, this header is handled by our logging library [cloud-logging](https://github.com/entur/cloud-logging). It is automatically added to all endpoints in a specification before publication to the developer portal.
 
 ## 6. Advanced Design Patterns
 <!-- More complex design patterns -->
