@@ -1,4 +1,8 @@
 # API Guidelines Ruleset
+# Specs must produce no errors with this ruleset in order to publish to developer-portal
 
 # OpenAPI Specification version 3.x
 extends: [spectral:oas]
+
+rules:
+  no-$ref-siblings: "off"
