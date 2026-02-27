@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/entur/api-guidelines/compare/v2.2.0...v2.2.1) (2026-02-27)
+
+
+### Bug Fixes
+
+* Disable no-$ref-siblings rule from required ruleset ([#95](https://github.com/entur/api-guidelines/issues/95)) ([5f8e8b7](https://github.com/entur/api-guidelines/commit/5f8e8b78700a895e09db3493e168b1eb6ecb693a))
+
 ## [2.2.0](https://github.com/entur/api-guidelines/compare/v2.1.0...v2.2.0) (2026-02-23)
 
 
