@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.2](https://github.com/entur/api-guidelines/compare/v2.2.1...v2.2.2) (2026-03-10)
+
+
+### Bug Fixes
+
+* Add 201 as allowed response to PUT ([#97](https://github.com/entur/api-guidelines/issues/97)) ([3ac6331](https://github.com/entur/api-guidelines/commit/3ac63319ac6102dc7c865009bec3d119c1548daf))
+
 ## [2.2.1](https://github.com/entur/api-guidelines/compare/v2.2.0...v2.2.1) (2026-02-27)
 
 
