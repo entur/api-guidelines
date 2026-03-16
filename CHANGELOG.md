@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.3](https://github.com/entur/api-guidelines/compare/v2.2.2...v2.2.3) (2026-03-16)
+
+
+### Bug Fixes
+
+* **ETU-69733:** Add 302 as valid response code for GET ([#99](https://github.com/entur/api-guidelines/issues/99)) ([56f3999](https://github.com/entur/api-guidelines/commit/56f39993319c4376f67af84b44e2bd7c3769771a))
+
 ## [2.2.2](https://github.com/entur/api-guidelines/compare/v2.2.1...v2.2.2) (2026-03-10)
 
 
