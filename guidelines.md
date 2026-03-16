@@ -310,6 +310,7 @@ Here, only 1 specification will be shown on the Developer Portal, which is a com
 | 201  | Created               |                  |:white_check_mark:|:white_check_mark:|                  |                  |
 | 202  | Accepted              |                  |:white_check_mark:|                  |                  |                  |
 | 204  | No Content            |                  |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+| 302  | Found                 |:white_check_mark:|                  |                  |                  |                  |
 | 303  | See Other             |                  |:white_check_mark:|                  |                  |                  |
 | 400  | Bad Request           |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 | 401  | Unauthorized          |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
