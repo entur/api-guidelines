@@ -403,7 +403,6 @@ rules:
 
   # HTTP method responses validation
   entur-get-responses-validation:
-    message: "Invalid response code: {{value}}. GET responses MUST use one of these response codes: 200, 304, 400, 401, 403, 404, 500, 503"
     documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#41-http-status-codes"
     severity: error
     given: $.paths.*.get.responses
