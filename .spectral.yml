@@ -403,54 +403,59 @@ rules:
 
   # HTTP method responses validation
   entur-get-responses-validation:
-    message: "Invalid response code: {{property}}. GET responses MUST use one of these response codes: 200, 304, 400, 401, 403, 404, 500, 503"
+    message: "Invalid response code: {{value}}. GET responses MUST use one of these response codes: 200, 304, 400, 401, 403, 404, 500, 503"
     documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#41-http-status-codes"
     severity: error
-    given: $.paths.*.get.responses.*~
+    given: $.paths.*.get.responses
     then:
+      field: "@key"
       function: enumeration
       functionOptions:
-        values: ["200", "302", "304", "400", "401", "403", "404", "500", "503"]
+        values: ["200", "302", "304", "400", "401", "403", "404", "500", "503", "default"]
 
   entur-delete-responses-validation:
-    message: "Invalid response code: {{property}}. DELETE responses MUST use one of these response codes: 200, 204, 400, 401, 403, 404, 409, 500, 503"
+    message: "Invalid response code: {{value}}. DELETE responses MUST use one of these response codes: 200, 204, 400, 401, 403, 404, 409, 500, 503"
     documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#41-http-status-codes"
     severity: error
-    given: $.paths.*.delete.responses.*~
+    given: $.paths.*.delete.responses
     then:
+      field: "@key"
       function: enumeration
       functionOptions:
-        values: ["200", "204", "400", "401", "403", "404", "409", "500", "503"]
+        values: ["200", "204", "400", "401", "403", "404", "409", "500", "503", "default"]
 
   entur-post-responses-validation:
-    message: "Invalid response code: {{property}}. POST responses MUST use one of these response codes: 200, 201, 202, 204, 303, 400, 401, 403, 404, 409, 500, 503"
+    message: "Invalid response code: {{value}}. POST responses MUST use one of these response codes: 200, 201, 202, 204, 303, 400, 401, 403, 404, 409, 500, 503"
     documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#41-http-status-codes"
     severity: error
-    given: $.paths.*.post.responses.*~
+    given: $.paths.*.post.responses
     then:
+      field: "@key"
       function: enumeration
       functionOptions:
-        values: ["200", "201", "202", "204", "303", "400", "401", "403", "404", "409", "500", "503"]
+        values: ["200", "201", "202", "204", "303", "400", "401", "403", "404", "409", "500", "503", "default"]
 
   entur-put-responses-validation:
-    message: "Invalid response code: {{property}}. PUT responses MUST use one of these response codes: 200, 204, 400, 401, 403, 404, 409, 500, 503"
+    message: "Invalid response code: {{value}}. PUT responses MUST use one of these response codes: 200, 204, 400, 401, 403, 404, 409, 500, 503"
     documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#41-http-status-codes"
     severity: error
-    given: $.paths.*.put.responses.*~
+    given: $.paths.*.put.responses
     then:
+      field: "@key"
       function: enumeration
       functionOptions:
-        values: ["200", "201", "204", "400", "401", "403", "404", "409", "500", "503"]
+        values: ["200", "201", "204", "400", "401", "403", "404", "409", "500", "503", "default"]
 
   entur-patch-responses-validation:
-    message: "Invalid response code: {{property}}. PATCH responses MUST use one of these response codes: 200, 204, 400, 401, 403, 404, 409, 500, 503"
+    message: "Invalid response code: {{value}}. PATCH responses MUST use one of these response codes: 200, 204, 400, 401, 403, 404, 409, 500, 503"
     documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#41-http-status-codes"
     severity: error
-    given: $.paths.*.patch.responses.*~
+    given: $.paths.*.patch.responses
     then:
+      field: "@key"
       function: enumeration
       functionOptions:
-        values: ["200", "204", "400", "401", "403", "404", "409", "500", "503"]
+        values: ["200", "204", "400", "401", "403", "404", "409", "500", "503", "default"]
 
 
   # -------------------------------------------------------------------------
