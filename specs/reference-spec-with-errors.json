@@ -224,7 +224,7 @@
         "description": "Get an item with given id.",
         "operationId": "getItem",
         "responses": {
-          "200": {
+          "201": {
             "description": "OK",
             "content": {
               "application/json": {
