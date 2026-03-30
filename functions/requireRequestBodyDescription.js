@@ -11,8 +11,14 @@ module.exports = (targetVal) => {
   // Check if the resolved schema has a description
   if (targetVal.content) {
     for (const mediaType of Object.values(targetVal.content)) {
-      if (mediaType.schema && mediaType.schema.description) {
-        return;
+      if (mediaType.schema) {
+        if (mediaType.schema.description) {
+          return;
+        }
+        // Check if schema is an array with items that have a description
+        if (mediaType.schema.type === 'array' && mediaType.schema.items && mediaType.schema.items.description) {
+          return;
+        }
       }
     }
   }
