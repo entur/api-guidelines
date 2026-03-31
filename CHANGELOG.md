@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.2.4](https://github.com/entur/api-guidelines/compare/v2.2.3...v2.2.4) (2026-03-31)
+
+
+### Bug Fixes
+
+* `entur-request-body-description` updated to allow description on schema referenced in `content.*.schema`. ([a3211ff](https://github.com/entur/api-guidelines/commit/a3211ff4c3016874e701c884a372c130c1c33ef7))
+* Allow header "Entur-POS" since it is standard ([#102](https://github.com/entur/api-guidelines/issues/102)) ([7480b19](https://github.com/entur/api-guidelines/commit/7480b19a3734f55fc516e80a2bbe70da36ca4d6c))
+* **ETU-69952:** Add default as allowed response code ([#103](https://github.com/entur/api-guidelines/issues/103)) ([39294d5](https://github.com/entur/api-guidelines/commit/39294d5f9c26853b730cf4b462edeb082ac0fb67))
+
 ## [2.2.3](https://github.com/entur/api-guidelines/compare/v2.2.2...v2.2.3) (2026-03-16)
 
 
