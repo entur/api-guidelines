@@ -566,7 +566,7 @@ rules:
     message: "HTTP header names MUST be in Hyphenated-Pascal-Case. Invalid name: \"{{value}}\"."
     documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#55-http-headers"
     severity: error
-    given: "$..parameters[?(@.in == 'header' && @.name != 'ET-Client-Name')].name"
+    given: "$..parameters[?(@.in == 'header' && @.name != 'ET-Client-Name' && @.name != 'Entur-POS')].name"
     then:
       function: pattern
       functionOptions:
