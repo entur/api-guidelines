@@ -10,17 +10,28 @@ module.exports = (targetVal) => {
 
   // Check if the resolved schema has a description
   if (targetVal.content) {
-    for (const mediaType of Object.values(targetVal.content)) {
-      if (mediaType.schema) {
-        if (mediaType.schema.description) {
-          return;
-        }
-        // Check if schema is an array with items that have a description
-        if (mediaType.schema.type === 'array' && mediaType.schema.items && mediaType.schema.items.description) {
-          return;
-        }
+    for (const [mediaTypeName, mediaType] of Object.entries(targetVal.content)) {
+      if (!mediaType.schema) {
+        return [{ message: `Request body SHOULD have a description, either directly or on the referenced schema. Media type "${mediaTypeName}" has no schema.` }];
       }
+
+      const schema = mediaType.schema;
+
+      // Direct description on schema
+      if (schema.description) {
+        continue;
+      }
+
+      // Array schema with items that have a description
+      if (schema.type === 'array' && schema.items && schema.items.description) {
+        continue;
+      }
+
+      return [{ message: `Request body SHOULD have a description, either directly or on the referenced schema. Media type "${mediaTypeName}" is missing a description.` }];
     }
+
+    // All media types have descriptions
+    return;
   }
 
   return [{ message: 'Request body SHOULD have a description, either directly or on the referenced schema.' }];
