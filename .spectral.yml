@@ -7,6 +7,7 @@ extends: [spectral:oas]
 
 functions:
   - requireExampleOrRef
+  - requireRequestBodyDescription
 
 rules:
   # =============================================================================
@@ -94,13 +95,12 @@ rules:
       function: requireExampleOrRef
 
   entur-request-body-description:
-    message: "Request bodies SHOULD have a description."
+    message: "Request bodies SHOULD have a description, either directly or on the referenced schema."
     documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#21-general-design-principles"
     severity: warn
     given: $.paths.*.*.requestBody
     then:
-      field: description
-      function: truthy
+      function: requireRequestBodyDescription
 
   entur-response-body-examples:
     message: "Response bodies SHOULD include at least one example."
