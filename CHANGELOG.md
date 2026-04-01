@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/entur/api-guidelines/compare/v2.2.4...v3.0.0) (2026-04-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* **ETU-66996:** Add entur extensions as errors to spectral rulesets ([#101](https://github.com/entur/api-guidelines/issues/101))
+
+### Features
+
+* **ETU-66996:** Add entur extensions as errors to spectral rulesets ([#101](https://github.com/entur/api-guidelines/issues/101)) ([dfd9a72](https://github.com/entur/api-guidelines/commit/dfd9a728fd15313e810b79c7f919a79701d67729))
+
 ## [2.2.4](https://github.com/entur/api-guidelines/compare/v2.2.3...v2.2.4) (2026-03-31)
 
 
