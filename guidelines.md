@@ -286,7 +286,7 @@ API spec versioning is done automatically when [publishing the spec](https://git
 The version is set based on the [CalVer](https://calver.org/) versioning convention, and uses the format YYYY.MM.MICRO. When the spec is
 published, the current year and month is used, and MICRO is set to "00". If a version already exists for the given year and month, "01" is used (and so on).
 If the published spec is equal to the current spec, no new version is created. Because versioning is done automatically, the value in `info.version` is ignored, 
-but must be set in order for linting to pass, therefore a placeholder value like `1.0.0` might be used.
+but must be set in order for linting to pass, therefore a placeholder value like `1.0.0` may be used.
 
 ### 3.3 Backward Compatibility
 - :eyes: You **MUST** not remove or modify existing fields or endpoints
