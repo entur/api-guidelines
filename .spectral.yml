@@ -362,16 +362,6 @@ rules:
   # 3.2 Versioning
   # -------------------------------------------------------------------------
 
-  entur-info-version:
-    message: "The OpenAPI info.version MUST be a valid semantic version (MAJOR.MINOR.PATCH format, e.g. 1.0.0)."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#32-versioning"
-    severity: error
-    given: $
-    then:
-      field: info.version
-      function: pattern
-      functionOptions:
-        match: "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
 
   # -------------------------------------------------------------------------
   # 3.3 Backward Compatibility - Not directly lintable
@@ -519,7 +509,7 @@ rules:
 
   entur-language-headers:
     message: "Accept-Language and Content-Language should follow IETF BCP 47. And macrolanguages like 'no' should not be used - use 'nb' or 'nn'."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#41-language--spelling"
+    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#51-language--spelling"
     severity: error
     given:
       - $..parameters[?(@.in=='header' && @.name=='Accept-Language')].example
