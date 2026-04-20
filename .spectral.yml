@@ -42,6 +42,7 @@ rules:
         notMatch: "/\\bapi\\b/i"
 
   info-description: error
+  info-contact: off
 
   # HTTP Methods
   entur-operation-standard-methods:
