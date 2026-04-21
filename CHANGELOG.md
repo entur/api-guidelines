@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.1](https://github.com/entur/api-guidelines/compare/v3.0.0...v3.0.1) (2026-04-21)
+
+
+### Bug Fixes
+
+* ETU-70915: Turn off rule "info-contact" ([#109](https://github.com/entur/api-guidelines/issues/109)) ([b9e2e29](https://github.com/entur/api-guidelines/commit/b9e2e2931d76df96b11c36b360940fe7289447c8))
+* Set API-spec version automatically (using CalVer convention) ([3f21893](https://github.com/entur/api-guidelines/commit/3f21893d84fa449ce2180490aba5e93a0385e8cf))
+
 ## [3.0.0](https://github.com/entur/api-guidelines/compare/v2.2.4...v3.0.0) (2026-04-01)
 
 
