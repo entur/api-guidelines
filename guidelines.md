@@ -188,14 +188,17 @@ Example:
 
 
 #### 2.4.1 Identifying a specification
-- :white_check_mark: OpenAPI specifications **SHOULD** use the `id` property in the `x-entur-metadata` extension in the `info` section. 
+- :white_check_mark: OpenAPI specifications **MUST** use the `id` property in the `x-entur-metadata` extension in the `info` section.
+- :white_check_mark: It **MUST** be in lower kebab-case and contain only dashes, digits and letters (a-z).
+- :eyes: It **SHOULD NOT** have a `-id` suffix (or prefix).
 
 **Choosing an id**
-The id is used to uniquely identify a specification - each id results in an entry in the Developer Portal API catalogue, and an entry in the linting results.
-Because of this, the id should not change over time. The current api title (in kebab-case) could be a good id - but, of course, you should not update the id if the title changes in the future.
-The id should not have a `-id` suffix (or prefix).
+The id is used to uniquely identify a specification. Each id results in an entry in the Developer Portal API catalogue and an entry in the linting results. It is also used to create the URL where the specification is available for download from the Developer Portal.
+Because of this, the id should not change over time, and it should be suitable for external use. The current api title (in kebab-case) could be a good id, but you should not update the id if the title changes in the future.
 
-- :white_check_mark: If the id is present, it **MUST** be in lower kebab-case and contain only dashes, digits and letters (a-z).
+[See also 3.2.2 API spec versioning](#322-api-spec-versioning).
+
+
 
 #### 2.4.2 Specification owner
 - :white_check_mark: OpenAPI specifications **SHOULD** use the `owner` property in the `x-entur-metadata` extension in the `info` section.
@@ -283,6 +286,7 @@ Here, only 1 specification will be shown on the Developer Portal, which is a com
  
 #### 3.2.2 API Spec Versioning
 API spec versioning is done automatically when [publishing the spec](https://github.com/entur/gha-api/blob/main/README-publish.md).
+If the published specification has an [Entur id](#241-identifying-a-specification) that has been published before, it will be considered a new version of the same spec.
 The version is set based on the [CalVer](https://calver.org/) versioning convention, and uses the format YYYY.MM.MICRO. When the spec is
 published, the current year and month is used, and MICRO is set to "00". If a version already exists for the given year and month, "01" is used (and so on).
 If the published spec is equal to the current spec, no new version is created. Because versioning is done automatically, the value in `info.version` is ignored, 
