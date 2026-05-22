@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.2](https://github.com/entur/api-guidelines/compare/v3.0.1...v3.0.2) (2026-05-22)
+
+
+### Bug Fixes
+
+* Clarify x-entur-metadata.id docs, and relation to versioning ([#110](https://github.com/entur/api-guidelines/issues/110)) ([6d75bba](https://github.com/entur/api-guidelines/commit/6d75bbac5c36a061c0bb23661ec10e1fdc600abc))
+
 ## [3.0.1](https://github.com/entur/api-guidelines/compare/v3.0.0...v3.0.1) (2026-04-21)
 
 
