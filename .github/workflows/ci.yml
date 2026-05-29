@@ -74,3 +74,34 @@ jobs:
             cat $annotations
             cat $markdown >> $GITHUB_STEP_SUMMARY
           fi
+
+  # This invalid spec should still pass validate, since it has no critical errors
+  validate-reference-spec-with-errors:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install Spectral
+        run: npm install -g @stoplight/spectral-cli
+      - name: Lint OpenAPI
+        shell: bash
+        run: |
+          set -o errexit
+          set -o nounset
+          set -o pipefail
+        
+          annotations=$(mktemp)
+          markdown=$(mktemp)
+          spectral lint ./specs/valid-reference-spec-with-errors.json --ruleset ".spectral-required.yml" --show-documentation-url -F hint -f github-actions -o.github-actions "$annotations" -f markdown -o.markdown="$markdown" && rc=$? || rc=$?
+
+          #Return code 2 means that spectral command failed to run (not linting errors), so fail workflow.
+          if [ "$rc" -eq 2 ]; then
+            echo "::error::Spectral execution error (exit code $rc)."
+            exit $rc
+          fi
+
+          if [ "$rc" -eq 1 ]; then
+            echo "::error::There were linting errors when there should not be (exit code $rc)."
+            exit $rc
+          fi
