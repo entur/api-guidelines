@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.3](https://github.com/entur/api-guidelines/compare/v3.0.2...v3.0.3) (2026-05-29)
+
+
+### Bug Fixes
+
+* Disable example validity rules for required ruleset ([#112](https://github.com/entur/api-guidelines/issues/112)) ([34fc342](https://github.com/entur/api-guidelines/commit/34fc34259321f3c80fb0bbbbd5620b1dae385f6e))
+
 ## [3.0.2](https://github.com/entur/api-guidelines/compare/v3.0.1...v3.0.2) (2026-05-22)
 
 
