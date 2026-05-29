@@ -6,6 +6,9 @@ extends: [spectral:oas]
 
 rules:
   no-$ref-siblings: "off"
+  # These generate too many false positives
+  oas3-valid-media-example: "off"
+  oas3-valid-schema-example: "off"
 
   # -------------------------------------------------------------------------
   # 2.3 Authentication and authorization

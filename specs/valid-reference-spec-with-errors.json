@@ -11,8 +11,9 @@
       "email": "support@entur.no"
     },
     "x-entur-metadata": {
-      "owner": "team-Api",
-      "audience": "public"
+      "id": "items",
+      "owner": "team-api",
+      "audience": "open"
     }
   },
 
