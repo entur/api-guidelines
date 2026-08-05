@@ -15,8 +15,7 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v6
-      - name: Install Spectral
-        run: npm install -g @stoplight/spectral-cli
+      - uses: entur/gha-api/.github/actions/setup-spectral@v6
       - name: Lint OpenAPI
         shell: bash
         run: |
@@ -48,8 +47,7 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v6
-      - name: Install Spectral
-        run: npm install -g @stoplight/spectral-cli
+      - uses: entur/gha-api/.github/actions/setup-spectral@v6
       - name: Lint OpenAPI
         shell: bash
         run: |
@@ -82,8 +80,7 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v6
-      - name: Install Spectral
-        run: npm install -g @stoplight/spectral-cli
+      - uses: entur/gha-api/.github/actions/setup-spectral@v6
       - name: Lint OpenAPI
         shell: bash
         run: |
