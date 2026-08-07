@@ -292,12 +292,7 @@ published, the current year and month is used, and MICRO is set to "00". If a ve
 If the published spec is equal to the current spec, no new version is created. Because versioning is done automatically, the value in `info.version` is ignored, 
 but must be set in order for linting to pass, therefore a placeholder value like `1.0.0` may be used.
 
-### 3.3 Backward Compatibility
-- :eyes: You **MUST** not remove or modify existing fields or endpoints
-- :eyes: You **MUST** introduce new versions for changes that break previous contracts
-- :eyes: You **MUST** clearly document which features are deprecated and provide guidance for migration
-
-### 3.4 Tags Naming
+### 3.3 Tags Naming
 :eyes: Tags should be used as a logical grouping that reflects functional domains, use cases or data types, not internal architecture.
 - Bad example: `internal`, `partner`, `production`, `route-service-v2`, `misc`, `other`
 - Good example, when using tags for functional domains: `Journey Planning`, `Realtime Departures`
