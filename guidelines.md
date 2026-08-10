@@ -263,46 +263,67 @@ Here, only 1 specification will be shown on the Developer Portal, which is a com
 
 
 ### 2.5 Lifecycle
-All APIs, and endpoints within an API, follow a lifecycle with different stages that have different properties.
-
-1. Design and development: The shape of the API is being figured out. Changes happen often.
-2. Testing: Feedback is gathered. Changes happen, and more design and development may be necessary.
-3. Stabilization and production use: The API is relied upon by consumers. Changes may happen, as long as they are not breaking.
-4. Deprecation: The API is marked as deprecated and consumers are encouraged to move to a new version. Only critical changes will happen.
-5. Sunsetting: The API is removed.
-
-The following sections describe a standardized way to declare an API's lifecycle status in its specification. Following this standard has several benefits:
+All APIs, and endpoints within an API, follow a lifecycle with different stages that have different properties. The following sections describe a standardized way to declare an API's lifecycle status in its specification. Following this standard has several benefits:
 - It is easier for consumers to understand what they can expect from an API in terms of stability.
-- It is easier to enforce Enturs common deprecation rules.
+- It is easier to enforce Enturs common policy on backwards compatibility and deprecation.
+
+Lifecycle status may be declared both for the entire API specification, or for individual operations (endpoints). At the API level, use the following extension fields in the `info` block:
+
+Field name        |Type     |Description
+------------------|---------|-----------
+x-stability-level |`string` | The current lifecycle status of the API. Must be one of: `draft`, `beta`, `stable`. Default value is `stable`. 
+x-deprecated      |`boolean`| `true` if the API is deprecated. Default value is `false`.
+x-sunset          |`string` | The date at which the API will be discontinued, in the format `YYYY-MM-DD`.
+
+For individual operations, use the following extension fields in an [Operation object](https://spec.openapis.org/oas/v3.1.2.html#operation-object). All of the fields inherit default values from the API level.
+
+Field name        |Type     |Description
+------------------|---------|-----------
+deprecated        |`boolean`| Already exists in the OAS. `true` if the endpoint is deprecated. Default value is `info.x-deprecated`.
+x-stability-level |`string` | The current lifecycle status of the endpoint. Must be one of: `draft`, `beta`, `stable`. Default value is `info.x-stability-level`. 
+x-sunset          |`string` | The date at which the endpoint will be removed, in the format `YYYY-MM-DD`. Default value is `info.x-sunset`.
+
+Below is a description of what values these fields should have during an API's or endpoint's lifecycle.
 
 #### 2.5.1 Design and development
+The shape of the API is being figured out. Changes happen often. The API may not even be implemented yet.
 - :ballot_box_with_check: The field `x-stability-level` **MUST** have the value `draft`
-- :ballot_box_with_check: The field `deprecated` **MUST** be empty or have the value `false`
+- :ballot_box_with_check: The field `deprecated`/`x-deprecated` **MUST** have the value `false` (or be empty)
 - :ballot_box_with_check: The field `x-sunset` **MUST** be empty
+- :ballot_box_with_check: You **MAY** make [breaking changes](#I-breaking-changes)
 
 #### 2.5.2 Testing and feedback
+Changes happen, and more design and development may be necessary.
 - :ballot_box_with_check: The field `x-stability-level` **MUST** have the value `beta`
-- :ballot_box_with_check: The field `deprecated` **MUST** be empty or have the value `false`
+- :ballot_box_with_check: The field `deprecated`/`x-deprecated` **MUST** have the value `false` (or be empty)
 - :ballot_box_with_check: The field `x-sunset` **MUST** be empty
+- :ballot_box_with_check: You **MAY** make [breaking changes](#I-breaking-changes)
 
 #### 2.5.3 Production use
-- :ballot_box_with_check: The field `x-stability-level` **MUST** have the value `stable` or be empty
-- :ballot_box_with_check: The field `deprecated` **MUST** be empty or have the value `false`
+The API is relied upon by consumers. Changes may happen, as long as they are not breaking.
+- :ballot_box_with_check: The field `x-stability-level` **MUST** have the value `stable` (or be empty)
+- :ballot_box_with_check: The field `deprecated`/`x-deprecated` **MUST** have the value `false` (or be empty)
 - :ballot_box_with_check: The field `x-sunset` **MUST** be empty
-- :eyes: You **MUST NOT** make [breaking changes](#I-breaking-changes)
+- :ballot_box_with_check: You **MUST NOT** make [breaking changes](#I-breaking-changes)
 
 #### 2.5.4 Deprecation
-- :ballot_box_with_check: The field `deprecated` **MUST** have the value `true`
-- :ballot_box_with_check: The field `x-sunset` **MUST** filled with a date that follows Enturs rules for deprecation.
-- :ballot_box_with_check: The field `x-stability-level` **MUST** be empty
+The API is marked as deprecated and consumers are encouraged to move to a new version. Only critical changes will happen.
+- :ballot_box_with_check: The field `x-stability-level` **MUST** have the value `stable` (or be empty)
+- :ballot_box_with_check: The field `deprecated`/`x-deprecated` **MUST** have the value `true`
+- :ballot_box_with_check: The field `x-sunset` **MUST** be filled with a date that follows Enturs [rules for deprecation](#II-deprecation-rules)
+- :ballot_box_with_check: You **MUST NOT** make [breaking changes](#I-breaking-changes)
 
 #### 2.5.5 Sunsetting
-- :ballot_box_with_check: When the date in `x-sunset` has passed, the endpoint or API **SHOULD** be removed. Otherwise, the value should be changed.
+The API is removed.
+- :ballot_box_with_check: When the date in `x-sunset` has passed, the endpoint or API **SHOULD** be removed. If the API is not ready to be removed yet, the value should be updated.
 
-#### 2.5.6 *Notes*
-- When an entire API has an `x-stability-level` other than `stable`, individual endpoints may not declare an `x-stability-level`
-- When an entire API has `x-deprecated: true`, individual endpoints may not declare `x-stability-level` or `deprecated`.
-- `deprecated: true` must not be set together with any other value for `x-stability-level` than `stable`.
+#### 2.5.6 Notes
+- :ballot_box_with_check: Individual endpoints **MAY** override `x-stability-level` to an earlier stage in the lifecycle than the API, but **NOT** later.
+  - For example, if `stable` is declared at the API level, endpoints may be `draft`, `beta` or `stable`, but if `beta` is declared at the API level, endpoints may only be `draft` or `beta`.
+- :ballot_box_with_check: Individual endpoints **MUST NOT** set `deprecated` to `false`, if the API has set `x-deprecated` to `true`.
+- :ballot_box_with_check: Individual endpoints **MAY** override `x-sunset` to an earlier date than the API, but **NOT** later.
+- :ballot_box_with_check: You **MAY** use the property `deprecated` on other components in the specification, such as on parameters, headers, schemas or schema properties. However, this should only be used to indicate that the component will be removed in the next version of the API. Removal of a deprecated component is still considered to be a [breaking change](#i-breaking-changes).
+
 
 ## 3. Naming & Structure Conventions
 <!-- How to organize and label resources -->
@@ -604,3 +625,5 @@ There may be situations where a pure REST architecture is not the best solution.
 
 ## I. Breaking changes
 Here we should write about what we mean with breaking changes.
+
+## II. Deprecation rules

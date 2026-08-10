@@ -6,6 +6,8 @@
 extends: [spectral:oas]
 
 functions:
+  - date
+  - conditionallyDefined
   - requireExampleOrRef
   - requireRequestBodyDescription
 
@@ -281,6 +283,76 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z0-9]+(-[a-z0-9]+)*$
+
+  # -------------------------------------------------------------------------
+  # 2.5 Lifecycle
+  # -------------------------------------------------------------------------
+
+  ## On API level
+  entur-stability-level-api:
+    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#25-lifecycle"
+    severity: error
+    given: $.info.x-stability-level
+    then:
+      function: enumeration
+      functionOptions:
+        values: [draft, beta, stable]
+
+  entur-deprecation-api:
+    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#254-deprecation"
+    severity: error
+    given: $.info.x-deprecated
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: boolean
+
+  entur-sunset-api:
+    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#254-deprecation"
+    severity: error
+    given: $.info
+    then:
+      function: conditionallyDefined
+      functionOptions:
+        field: x-sunset
+        conditionalField: x-deprecated
+        havingValue: true
+
+  entur-sunset-format-api:
+    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#254-deprecation"
+    severity: error
+    given: $.info.x-sunset
+    then:
+      function: date
+
+  # On individual operation level
+  entur-stability-level-operation:
+    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#25-lifecycle"
+    severity: error
+    given: $.paths.*[get,post,put,patch,delete,options,head,trace].x-stability-level
+    then:
+      function: enumeration
+      functionOptions:
+        values: [draft, beta, stable]
+
+  entur-sunset-operation:
+    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#254-deprecation"
+    severity: info # This one should be an error, but for an introduction period, make it just info.
+    given: $.paths.*[get,post,put,patch,delete,options,head,trace]
+    then:
+      function: conditionallyDefined
+      functionOptions:
+        field: x-sunset
+        conditionalField: deprecated
+        havingValue: true
+
+  entur-sunset-format-operation:
+    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#254-deprecation"
+    severity: error
+    given: $.paths.*[get,post,put,patch,delete,options,head,trace].x-sunset
+    then:
+      function: date
 
 
   # =============================================================================
