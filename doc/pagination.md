@@ -6,10 +6,10 @@ This document describes the two pagination strategies that should be used in Ent
 
 This strategy is based on these query parameters:
 
-| Parameter | Type    | Description                              |
-|-----------|---------|------------------------------------------|
-| `page`    | integer | Zero-based index of the page to retrieve |
-| `size`    | integer | Number of items per page                 |
+| Parameter | Type    | Description                                                        |
+|-----------|---------|--------------------------------------------------------------------|
+| `page`    | integer | Zero-based index of the page to retrieve. **MUST** be named `page` |
+| `size`    | integer | Number of items per page. **MUST** be named `size`                 |
 
 **Example request:**
 
@@ -24,21 +24,21 @@ In the example above, items 21–40 are returned (page index `1` × size `20` = 
 
 The response format will vary between APIs, but a typical response at least include the items along with the total number of items that can be paginated:
 
-```json
-{
-  "items": [ ... ],
-  "totalCount": 137
-}
-```
+The response **MUST** contain the following fields:
+
+| Parameter | Type    | Description                                                                       |
+|-----------|---------|-----------------------------------------------------------------------------------|
+| `items`  | array   | Name **SHOULD** be `items` unless there is a specific reason to use another name. |
+| `totalCount`    | integer | The total number of items across all pages.                                       |
 
 ## 2. Cursor / Keyset Pagination
 
 This strategy is based on these query parameters:
 
-| Parameter | Type    | Description                                    |
-|-----------|---------|------------------------------------------------|
-| `cursor`  | string  | An opaque string pointing to next item to get. |
-| `size`    | integer | Number of items per page                       |
+| Parameter | Type    | Description                                                                |
+|-----------|---------|----------------------------------------------------------------------------|
+| `cursor`  | string  | An opaque string pointing to next item to get. **MUST** be baned `cursor` |
+| `size`    | integer | Number of items per page. **MUST** be baned `size`                        |
 
 Cursor-based pagination is based on a `cursor` that is created when handling requests from the client, and it is returned to the client (in the response body).
 The cursor points to the next item coming after the items that you are returning.
