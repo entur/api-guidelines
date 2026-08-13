@@ -26,19 +26,19 @@ The response format will vary between APIs, but a typical response at least incl
 
 The response **MUST** contain the following fields:
 
-| Parameter | Type    | Description                                                                       |
-|-----------|---------|-----------------------------------------------------------------------------------|
-| `items`  | array   | Name **SHOULD** be `items` unless there is a specific reason to use another name. |
-| `totalCount`    | integer | The total number of items across all pages.                                       |
+| Parameter | Type    | Description                                                                        |
+|-----------|---------|------------------------------------------------------------------------------------|
+| `items`  | array   | **SHOULD** be anmed `items` unless there is a specific reason to use another name. |
+| `totalCount`    | integer | The total number of items across all pages. **MUST** be named `totalCount`               |
 
 ## 2. Cursor / Keyset Pagination
 
 This strategy is based on these query parameters:
 
-| Parameter | Type    | Description                                                                |
-|-----------|---------|----------------------------------------------------------------------------|
-| `cursor`  | string  | An opaque string pointing to next item to get. **MUST** be baned `cursor` |
-| `size`    | integer | Number of items per page. **MUST** be baned `size`                        |
+| Parameter | Type    | Description                                                               |
+|-----------|---------|---------------------------------------------------------------------------|
+| `cursor`  | string  | An opaque string pointing to next item to get. **MUST** be named `cursor` |
+| `size`    | integer | Number of items per page. **MUST** be named `size`                        |
 
 Cursor-based pagination is based on a `cursor` that is created when handling requests from the client, and it is returned to the client (in the response body).
 The cursor points to the next item coming after the items that you are returning.
@@ -76,11 +76,11 @@ If the cursor contains data that you do not want to expose, the cursor may be en
 
 The response **MUST** contain the following fields:
 
-| Parameter | Type    | Description                                                                       |
-|-----------|---------|-----------------------------------------------------------------------------------|
-| `items`  | array   | Name **SHOULD** be `items` unless there is a specific reason to use another name. |
-| `cursor`  | string  | An opaque string pointing to next item to get.                                    |
-| `hasMore`    | boolean | Are there more items, or did the last request return all remaining items?         |
+| Parameter | Type    | Description                                                                        |
+|-----------|---------|------------------------------------------------------------------------------------|
+| `items`  | array   | **SHOULD** be named `items` unless there is a specific reason to use another name. |
+| `cursor`  | string  | An opaque string pointing to next item to get. **MUST** be named `cursor`                                     |
+| `hasMore`    | boolean | Are there more items, or did the last request return all remaining items?  **MUST** be named `hasMore`         |
 
 
 ## 3. Choosing a Strategy
