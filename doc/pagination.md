@@ -4,7 +4,7 @@ This document describes the two pagination strategies that should be used in Ent
 
 ## 1. Page + Size Pagination (Offset-based)
 
-This strategy is based on clients sending in two query parameters:
+This strategy is based on these query parameters:
 
 | Parameter | Type    | Description                              |
 |-----------|---------|------------------------------------------|
@@ -32,6 +32,13 @@ The response format will vary between APIs, but a typical response at least incl
 ```
 
 ## 2. Cursor / Keyset Pagination
+
+This strategy is based on these query parameters:
+
+| Parameter | Type    | Description                                    |
+|-----------|---------|------------------------------------------------|
+| `cursor`  | string  | An opaque string pointing to next item to get. |
+| `size`    | integer | Number of items per page                       |
 
 Cursor-based pagination is based on a `cursor` that is created when handling requests from the client, and it is returned to the client (in the response body).
 The cursor points to the next item coming after the items that you are returning.
@@ -67,16 +74,14 @@ If the cursor contains data that you do not want to expose, the cursor may be en
 
 ### 2.1 Response format
 
-The response format will vary between APIs, but it will include the items along with cursor, and may also contain flags telling the client if there are more items in either direction:
+The response **MUST** contain the following fields:
 
-```json
-{
-  "items": [ ... ],
-  "cursor": "eyJpZCI6MTIwfQ",
-  "hasNextPage": true,
-  "hasPreviousPage": true
-}
-```
+| Parameter | Type    | Description                                                                       |
+|-----------|---------|-----------------------------------------------------------------------------------|
+| `items`  | array   | Name **SHOULD** be `items` unless there is a specific reason to use another name. |
+| `cursor`  | string  | An opaque string pointing to next item to get.                                    |
+| `hasMore`    | boolean | Are there more items, or did the last request return all remaining items?         |
+
 
 ## 3. Choosing a Strategy
 
