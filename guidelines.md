@@ -624,6 +624,20 @@ There may be situations where a pure REST architecture is not the best solution.
 ## Appendix
 
 ## I. Breaking changes
-Here we should write about what we mean with breaking changes.
+A breaking change in an API is a change that  "breaks" a clients integration with the API, without the client having made any changes on their end. The nature of breaking changes vary depending on the type of integration. For REST APIs, it is the OpenAPI specification that specifies the contract with the client. In practice, this means that if a client fetches the OpenAPI specification for a service and integrates with it, changes to the service that invalidates that specification, is considered breaking. In other words, changes should be _backwards compatible_ with regards to the specification.
+
+Examples of breaking changes:
+
+- Removal of a non-nullable field in a response (or making it nullable)
+- Adding a new required field in a request (or making a nullable field required)
+- Changing the physical datatype of a field, for example for string to number
+- Removal of an endpoint without following the [deprecation rules](#ii-deprecation-rules)
+- Adding new values to an `enum` property in a response. An `enum` is a contract specifying that a field will only have one of the following values. If the API starts to return new values, then the old specification is no longer valid, breaking backwards compatibility. In many cases, we want to be able to add new values later, indicating to the client that the field might have one of these known values, but that they should also be ready to handle unknown values. This can be expressed in OpenAPI by using a normal string, with example values.
+
+However, an OpenAPI specification will never be a complete description of the behavior of an API. Some behavior will only be apparent when observing the output of the API, and clients _will_ make assumptions based on the observed behavior. Examples:
+- The order of items in an array. A client may observe that elements in an array are sorted alphabetically and, even though this is not specified, assume that it will continue to be. Changing the sort order may then break a clients integration, even though the contract is not technically broken.
+- When exceptions are thrown. A client may observe that a given scenario returns an HTTP exception code, and assume that it will continue to do so, even though this is not explicitly documented in the specification.
+
+These types of changes are harder to detect. They _should_ be avoided, but sometimes clients may make unreasonable assumptions that can't be taken into consideration. In the end, it is up to the API producer to judge whether a change should be considered breaking or not, and how to communicate the change to consumers. However, the amount of such breakages can be minimized through well-thought out and predictable API design that follows common guidelines.
 
 ## II. Deprecation rules
