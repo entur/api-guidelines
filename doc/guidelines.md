@@ -18,7 +18,7 @@ This guide is for developers, architects, and technical designers who work on th
 
 
 ### 1.3 Contributing
-For details on how to contribute to these guidelines, see the [contributing guide](CONTRIBUTING.md).
+For details on how to contribute to these guidelines, see the [contributing guide](../CONTRIBUTING.md).
 
 
 ### 1.4 Requirement Levels
@@ -30,8 +30,8 @@ Throughout this document, these requirement levels are used:
 
 ### 1.5 Linter Coverage
 Throughout this document, rules are marked with the following indicators:
-- :white_check_mark: Automatically enforced by [linter](README.md#linting-your-api)
-- :ballot_box_with_check: Partially checked by [linter](README.md#linting-your-api)
+- :white_check_mark: Automatically enforced by [linter](../README.md#linting-your-api)
+- :ballot_box_with_check: Partially checked by [linter](../README.md#linting-your-api)
 - :eyes: Requires manual review
 
 
@@ -55,7 +55,7 @@ Throughout this document, rules are marked with the following indicators:
   - Create the API specification before implementing the API
   - The specification is the primary reference for both development and documentation
   - Update the specification throughout development to reflect changes
-- :eyes: [Lint your API spec](README.md#linting-your-api)
+- :eyes: [Lint your API spec](../README.md#linting-your-api)
 - :eyes: Separate API specifications per target audience/visibility (public, partner, internal). An API spec **SHOULD** only contain endpoints for one target audience.
 This audience is used in the Developer Portal to organize APIs.
 - :eyes: Differentiate APIs based on the target audience:
@@ -426,27 +426,38 @@ A "de-facto" standard for correlating a request throughout a microservice archit
 <!-- More complex design patterns -->
 
 
-### 6.1 Filtering, Sorting & Pagination
-- :eyes: You **MAY** allow filtering, sorting, and pagination to retrieve specific data
-- :eyes: If you implement pagination, you **MUST** use either query parameters "page" (zero based page to get) and "size" (number of items per page), 
-  **OR** query parameters offset (zero based) and limit (number of items)  
-- :eyes: If you implement sorting, you **SHOULD** use query parameter "sort". Sorting can be done on multiple levels, and sort order (desc / asc) is also specified, like so: `sort=<field1>,<asc|desc>&sort=<field2>,<asc|desc>`
-- **TODO**: Requirements for response format for pagination and sorting
+### 6.1 Pagination
+:eyes: You **MUST** use one of these approaches: 
+- Query parameters "page" (zero based page to get) and "size" (number of items per page).  
+  Example:
+  > GET /api/v1/bus-stops?city=Oslo&page=0&size=20
 
-The requirements above are based on the Spring way of doing things: https://docs.spring.io/spring-data/rest/reference/paging-and-sorting.html
+- Keyset pagination
+  This approach, aka Cursor pagination  
+  Example:
+  > GET /api/v1/bus-stops?city=Oslo&
+
+See [pagination](pagination.md) for more details on each approach and when to use which.     
+
+
+### 6.2 Sorting
+- :eyes: If you implement sorting, you **SHOULD** use query parameter "sort".
+You **MAY** also allow sorting on multiple levels, and allow specifying sort order (desc / asc).
+In your service, always use a secondary sorting on a unique id, so that two entries with the same primary sorting 
+(e.g. created date) are always sorted in the same order.
 
 Example:
-> GET /api/v1/bus-stops?city=Oslo&sort=name,asc&sort=something,desc&page=0&size=20
+> GET /api/v1/bus-stops?city=Oslo&sort=name,asc&sort=something,desc
 
 
-### 6.2 Partial Responses
+### 6.3 Partial Responses
 - :eyes: You **MAY** let clients choose which fields to include to reduce data transfer
 
 
 Example:
 > GET /api/v1/bus-stops?fields=id,name,location
 
-### 6.3 Batch Operations
+### 6.4 Batch Operations
 - :eyes: When multiple operations need to be handled in a single call, the API **SHOULD** support batch operations
 
 Example:
@@ -461,7 +472,7 @@ POST /api/v1/batch
 ```
 
 
-### 6.4 Caching & Resource Expiration
+### 6.5 Caching & Resource Expiration
 - :eyes: You **MAY** use HTTP headers such as Cache-Control, ETag, and Last-Modified
 
 Example:
@@ -490,7 +501,7 @@ HTTP/1.1 304 Not Modified
 ```
 
 
-### 6.5 Import & Export Formats
+### 6.6 Import & Export Formats
 - :eyes: You **SHOULD** support JSON, unless you have a good reason not to.
 - :white_check_mark: Use the HTTP Accept header to specify desired response format
 
@@ -502,7 +513,7 @@ Accept: application/json
 ```
 
 
-### 6.6 Validation
+### 6.7 Validation
 - :eyes: You **SHOULD** validate all incoming data and return detailed error messages with appropriate HTTP status codes
 - :eyes: Error messages **SHOULD** be specific enough to guide the client toward fixing the issue
 - :eyes: Validation errors **SHOULD** return 400 Bad Request status code
@@ -528,7 +539,7 @@ Example:
 }
 ```
 
-### 6.7 HATEOAS
+### 6.8 HATEOAS
 - :eyes: You **MAY** include links to related resources in responses to enable easy API navigation
 
 Example:

@@ -1,7 +1,7 @@
 # API Guidelines
 
 ## Human-readable API Guidelines
-A human-readable version of the API Guidelines at Entur can be found [here](guidelines.md). The rest of this document describes how to do automatic checks on your API using a linter. 
+A human-readable version of the API Guidelines at Entur can be found [here](doc/guidelines.md). The rest of this document describes how to do automatic checks on your API using a linter. 
 
 ## Linting your API
 By "linting your API", we mean [linting](https://en.wikipedia.org/wiki/Lint_(software)) the [OpenAPI specification](https://swagger.io/specification/) of your API.
