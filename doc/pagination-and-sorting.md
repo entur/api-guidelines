@@ -45,7 +45,7 @@ This strategy is based on these query parameters:
 Cursor-based pagination is based on a `cursor` that is created when handling requests from the client, and it is returned to the client (in the response body).
 The cursor points to the next item coming after the items that you are returning.
 
-Pagination direction, number of items to get and filters are **not** embedded in the cursor — they are sent separately by the client. 
+Sorting parameters, number of items (`size`) to get and filters are **not** embedded in the cursor — they are sent separately by the client. 
 This allows the client to change direction or filters independently without obtaining a new cursor.
 
 On the next request from the client, the cursor is sent back to the service (along with any other parameters). 
