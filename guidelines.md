@@ -18,7 +18,7 @@ This guide is for developers, architects, and technical designers who work on th
 
 
 ### 1.3 Contributing
-For details on how to contribute to these guidelines, see the [contributing guide](../CONTRIBUTING.md).
+For details on how to contribute to these guidelines, see the [contributing guide](CONTRIBUTING.md).
 
 
 ### 1.4 Requirement Levels
@@ -30,8 +30,8 @@ Throughout this document, these requirement levels are used:
 
 ### 1.5 Linter Coverage
 Throughout this document, rules are marked with the following indicators:
-- :white_check_mark: Automatically enforced by [linter](../README.md#linting-your-api)
-- :ballot_box_with_check: Partially checked by [linter](../README.md#linting-your-api)
+- :white_check_mark: Automatically enforced by [linter](README.md#linting-your-api)
+- :ballot_box_with_check: Partially checked by [linter](README.md#linting-your-api)
 - :eyes: Requires manual review
 
 
@@ -55,7 +55,7 @@ Throughout this document, rules are marked with the following indicators:
   - Create the API specification before implementing the API
   - The specification is the primary reference for both development and documentation
   - Update the specification throughout development to reflect changes
-- :eyes: [Lint your API spec](../README.md#linting-your-api)
+- :eyes: [Lint your API spec](README.md#linting-your-api)
 - :eyes: Separate API specifications per target audience/visibility (public, partner, internal). An API spec **SHOULD** only contain endpoints for one target audience.
 This audience is used in the Developer Portal to organize APIs.
 - :eyes: Differentiate APIs based on the target audience:
@@ -442,7 +442,7 @@ A "de-facto" standard for correlating a request throughout a microservice archit
 :eyes: If you implement sorting, you **MUST** use query parameter "sort":
 > GET /api/v1/bus-stops?city=Oslo&sort=name,asc&sort=something,desc
 
-See [pagination and sorting](pagination-and-sorting.md) for more details.     
+See [pagination and sorting](doc/pagination-and-sorting.md) for more details.     
 
 ### 6.2 Partial Responses
 - :eyes: You **MAY** let clients choose which fields to include to reduce data transfer

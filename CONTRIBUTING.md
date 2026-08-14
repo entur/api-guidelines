@@ -9,7 +9,7 @@ Contributions to the guidelines are welcome! Follow the steps below.
 git clone https://github.com/entur/api-guidelines.git
 ```
 - Create a feature branch.
-- Update [guidelines](doc/guidelines.md) and/or [API spec linting rules](.spectral.yml) as needed.
+- Update [guidelines](guidelines.md) and/or [API spec linting rules](.spectral.yml) as needed.
 - Create a pull request to the `main` branch and include `team-api`as reviewers.
 
  ## For external users
