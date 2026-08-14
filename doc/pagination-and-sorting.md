@@ -1,8 +1,10 @@
-# Pagination Strategies
+# Pagination and Sorting
 
-This document describes the two pagination strategies that should be used in Entur APIs, and a guide for when to use which strategy. 
+## Pagination
 
-## 1. Page + Size Pagination (Offset-based)
+When implementing pagination, you **MUST** use either Offset Pagination or Cursor Pagination, on the formats detailed below.  
+
+### Offset Pagination
 
 This strategy is based on these query parameters:
 
@@ -20,7 +22,7 @@ GET /api/v1/bus-stops?city=Oslo&page=1&size=20
 When handling the request, the service skips `page * size` items and returns the next `size` items.
 In the example above, items 21–40 are returned (page index `1` × size `20` = skip the first 20 items).
 
-### 1.1 Response format
+#### Response format
 
 The response format will vary between APIs, but a typical response at least include the items along with the total number of items that can be paginated:
 
@@ -31,7 +33,7 @@ The response **MUST** contain the following fields:
 | `items`  | array   | **SHOULD** be named `items` unless there is a specific reason to use another name. |
 | `totalCount`    | integer | The total number of items across all pages. **MUST** be named `totalCount`         |
 
-## 2. Cursor / Keyset Pagination
+### Cursor / Keyset Pagination
 
 This strategy is based on these query parameters:
 
@@ -62,17 +64,17 @@ The response includes a cursor for the next page. To fetch the next page:
 GET /api/v1/bus-stops?city=Oslo&size=20&cursor=eyJpZCI6MTAwfQ
 ```
 
-### Cursor key selection
+#### Cursor key selection
 
 The cursor must encode a value (or set of values) that uniquely and stably identifies a position in the sorted result set. 
 The cursor should a unique id for the next item, which can be used as a starting point for the service when getting items. The id is typically an id for a row in a database table.
 The cursor may also contain a timestamp for the row, which is useful if the row could be deleted, so that the id can not be used.
 
-### Encoding
+#### Encoding
 Because the cursor should be opaque to the client and may contain internal details, it should be Base64 encoded.
 If the cursor contains data that you do not want to expose, the cursor may be encrypted and then Base64 encoded.
 
-### 2.1 Response format
+#### Response format
 
 The response **MUST** contain the following fields:
 
@@ -83,7 +85,7 @@ The response **MUST** contain the following fields:
 | `hasMore`    | boolean | Are there more items, or did the last request return all remaining items?  **MUST** be named `hasMore` |
 
 
-## 3. Choosing a Strategy
+### Choosing a Strategy
 
 Use the comparison table below to select the pagination strategy that best fits your use case.
 
@@ -95,13 +97,17 @@ Use the comparison table below to select the pagination strategy that best fits 
 | **Performance on large data sets** | ⚠️ `OFFSET` queries degrade as page number grows, because the database must scan and discard all rows before the offset | ✅ Constant-time lookups               |
 | **Sharded / NoSQL databases**    | ⚠️ Difficult to implement efficiently                                                                                   | ✅ Well suited — relies on key ordering rather than global offset |
 
-### Recommendations
+As a rule of thumb, cursor pagination **SHOULD** be used unless the number of items is small, inserts and deletes are infrequent, and jumping to specific pages must be supported.
 
-- **Use Offset** when the dataset is smaller and inserts and deletes are infrequent, or when jumping to specific pages need to be supported (like when the UI displays a traditional page-number navigation).
-- **Use Cursor** when the dataset is larger, inserts and deletes are more frequent, or when jumping to specific pages is not needed.
+## Sorting
+Sorting may of course be implemented without pagingation, but when using pagination you must also use sorting.
 
-As a rule of thumb, prefer cursor based pagination unless jumping to a specific page must be supported.
+:eyes: If you implement sorting, you **MUST** use query parameter "sort".
+You **MAY** also allow sorting on multiple levels, and allow specifying sort order (desc / asc).
+In your service, always use a secondary sorting on a unique id, so that two entries with the same primary sorting
+(e.g. created date) are always sorted in the same order.
 
-## 4. Sorting
-When using pagination the underlying data must be sorted. See [Sorting](guidelines.md#62-sorting).
-
+Example: 
+```http
+GET /api/v1/bus-stops?city=Oslo&sort=name,asc&sort=something,desc
+```

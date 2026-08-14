@@ -173,7 +173,7 @@ owner     |`string`|**REQUIRED**. The Entur team responsible for this specificat
 parentId  |`string`|Id of the parent specification, used when merging. [Read more](#243-merging-specifications).
 
 Example:
-```
+```json
 {
   "info": {
     "x-entur-metadata": {
@@ -390,7 +390,7 @@ Example:
 - :eyes: Response: Always serialized with the standard number of decimals. For NOK, this means 2, since øre is the smallest unit.
 
 Example:
-```
+```json
 {
     "amount": "99.00"
     "currency": "NOK"
@@ -426,38 +426,32 @@ A "de-facto" standard for correlating a request throughout a microservice archit
 <!-- More complex design patterns -->
 
 
-### 6.1 Pagination
-:eyes: You **MUST** use one of these approaches: 
-- Query parameters "page" (zero based page to get) and "size" (number of items per page).  
-  Example:
-  > GET /api/v1/bus-stops?city=Oslo&page=0&size=20
+### 6.1 Pagination and Sorting
 
-- Keyset pagination
-  This approach, aka Cursor pagination  
-  Example:
-  > GET /api/v1/bus-stops?city=Oslo&
+:eyes: If you implement pagination, you **MUST** use one of these approaches: 
+- Offset pagination with query parameters `page` and `size`:
+  ```http
+  GET /api/v1/bus-stops?city=Oslo&page=1&size=20
+  ```
 
-See [pagination](pagination.md) for more details on each approach and when to use which.     
+- Cursor / Keyset Pagination with query parameters `cursor` and `size`:
+  ```http
+  GET /api/v1/bus-stops?city=Oslo&cursor=eyJpZCI6MTAwfQ&size=20
+  ```
 
-
-### 6.2 Sorting
-- :eyes: If you implement sorting, you **SHOULD** use query parameter "sort".
-You **MAY** also allow sorting on multiple levels, and allow specifying sort order (desc / asc).
-In your service, always use a secondary sorting on a unique id, so that two entries with the same primary sorting 
-(e.g. created date) are always sorted in the same order.
-
-Example:
+:eyes: If you implement sorting, you **MUST** use query parameter "sort":
 > GET /api/v1/bus-stops?city=Oslo&sort=name,asc&sort=something,desc
 
+See [pagination and sorting](pagination-and-sorting.md) for more details.     
 
-### 6.3 Partial Responses
+### 6.2 Partial Responses
 - :eyes: You **MAY** let clients choose which fields to include to reduce data transfer
 
 
 Example:
 > GET /api/v1/bus-stops?fields=id,name,location
 
-### 6.4 Batch Operations
+### 6.3 Batch Operations
 - :eyes: When multiple operations need to be handled in a single call, the API **SHOULD** support batch operations
 
 Example:
@@ -472,7 +466,7 @@ POST /api/v1/batch
 ```
 
 
-### 6.5 Caching & Resource Expiration
+### 6.4 Caching & Resource Expiration
 - :eyes: You **MAY** use HTTP headers such as Cache-Control, ETag, and Last-Modified
 
 Example:
@@ -501,7 +495,7 @@ HTTP/1.1 304 Not Modified
 ```
 
 
-### 6.6 Import & Export Formats
+### 6.5 Import & Export Formats
 - :eyes: You **SHOULD** support JSON, unless you have a good reason not to.
 - :white_check_mark: Use the HTTP Accept header to specify desired response format
 
@@ -513,7 +507,7 @@ Accept: application/json
 ```
 
 
-### 6.7 Validation
+### 6.6 Validation
 - :eyes: You **SHOULD** validate all incoming data and return detailed error messages with appropriate HTTP status codes
 - :eyes: Error messages **SHOULD** be specific enough to guide the client toward fixing the issue
 - :eyes: Validation errors **SHOULD** return 400 Bad Request status code
@@ -539,7 +533,7 @@ Example:
 }
 ```
 
-### 6.8 HATEOAS
+### 6.7 HATEOAS
 - :eyes: You **MAY** include links to related resources in responses to enable easy API navigation
 
 Example:
