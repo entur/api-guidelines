@@ -220,6 +220,7 @@
         "tags": [
           "Items"
         ],
+        "deprecated": true,
         "summary": "Get an item",
         "description": "Get an item with given id.",
         "operationId": "getItem",

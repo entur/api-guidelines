@@ -262,6 +262,69 @@ Here, only 1 specification will be shown on the Developer Portal, which is a com
 </details>
 
 
+### 2.5 Lifecycle
+All APIs, and endpoints within an API, follow a lifecycle with different stages that have different properties. The following sections describe a standardized way to declare an API's lifecycle status in its specification. Following this standard has several benefits:
+- It is easier for consumers to understand what they can expect from an API in terms of stability.
+- It is easier to enforce Enturs common policy on backwards compatibility and deprecation.
+
+Lifecycle status may be declared both for the entire API specification, or for individual operations (endpoints). At the API level, use the following extension fields in the `info` block:
+
+Field name        |Type     |Description
+------------------|---------|-----------
+x-stability-level |`string` | The current lifecycle status of the API. Must be one of: `draft`, `beta`, `stable`. Default value is `stable`. 
+x-deprecated      |`boolean`| `true` if the API is deprecated. Default value is `false`.
+x-sunset          |`string` | The date at which the API will be discontinued, in the format `YYYY-MM-DD`.
+
+For individual operations, use the following extension fields in an [Operation object](https://spec.openapis.org/oas/v3.1.2.html#operation-object). All of the fields inherit default values from the API level.
+
+Field name        |Type     |Description
+------------------|---------|-----------
+deprecated        |`boolean`| Already exists in the OAS. `true` if the endpoint is deprecated. Default value is `info.x-deprecated`.
+x-stability-level |`string` | The current lifecycle status of the endpoint. Must be one of: `draft`, `beta`, `stable`. Default value is `info.x-stability-level`. 
+x-sunset          |`string` | The date at which the endpoint will be removed, in the format `YYYY-MM-DD`. Default value is `info.x-sunset`.
+
+Below is a description of what values these fields should have during an API's or endpoint's lifecycle.
+
+#### 2.5.1 Design and development
+The shape of the API is being figured out. Changes happen often. The API may not even be implemented yet.
+- :ballot_box_with_check: The field `x-stability-level` **MUST** have the value `draft`
+- :ballot_box_with_check: The field `deprecated`/`x-deprecated` **MUST** have the value `false` (or be empty)
+- :ballot_box_with_check: The field `x-sunset` **MUST** be empty
+- :ballot_box_with_check: You **MAY** make [breaking changes](#I-breaking-changes)
+
+#### 2.5.2 Testing and feedback
+Changes happen, and more design and development may be necessary.
+- :ballot_box_with_check: The field `x-stability-level` **MUST** have the value `beta`
+- :ballot_box_with_check: The field `deprecated`/`x-deprecated` **MUST** have the value `false` (or be empty)
+- :ballot_box_with_check: The field `x-sunset` **MUST** be empty
+- :ballot_box_with_check: You **MAY** make [breaking changes](#I-breaking-changes)
+
+#### 2.5.3 Production use
+The API is relied upon by consumers. Changes may happen, as long as they are not breaking.
+- :ballot_box_with_check: The field `x-stability-level` **MUST** have the value `stable` (or be empty)
+- :ballot_box_with_check: The field `deprecated`/`x-deprecated` **MUST** have the value `false` (or be empty)
+- :ballot_box_with_check: The field `x-sunset` **MUST** be empty
+- :ballot_box_with_check: You **MUST NOT** make [breaking changes](#I-breaking-changes)
+
+#### 2.5.4 Deprecation
+The API is marked as deprecated and consumers are encouraged to move to a new version. Only critical changes will happen.
+- :ballot_box_with_check: The field `x-stability-level` **MUST** have the value `stable` (or be empty)
+- :ballot_box_with_check: The field `deprecated`/`x-deprecated` **MUST** have the value `true`
+- :ballot_box_with_check: The field `x-sunset` **MUST** be filled with a date that follows Enturs [rules for deprecation](#II-deprecation-rules)
+- :ballot_box_with_check: You **MUST NOT** make [breaking changes](#I-breaking-changes)
+
+#### 2.5.5 Sunsetting
+The API is removed.
+- :ballot_box_with_check: When the date in `x-sunset` has passed, the endpoint or API **SHOULD** be removed. If the API is not ready to be removed yet, the value should be updated.
+
+#### 2.5.6 Notes
+- :ballot_box_with_check: Individual endpoints **MAY** override `x-stability-level` to an earlier stage in the lifecycle than the API, but **NOT** later.
+  - For example, if `stable` is declared at the API level, endpoints may be `draft`, `beta` or `stable`, but if `beta` is declared at the API level, endpoints may only be `draft` or `beta`.
+- :ballot_box_with_check: Individual endpoints **MUST NOT** set `deprecated` to `false`, if the API has set `x-deprecated` to `true`.
+- :ballot_box_with_check: Individual endpoints **MAY** override `x-sunset` to an earlier date than the API, but **NOT** later.
+- :ballot_box_with_check: You **MAY** use the property `deprecated` on other components in the specification, such as on parameters, headers, schemas or schema properties. However, this should only be used to indicate that the component will be removed in the next version of the API. Removal of a deprecated component is still considered to be a [breaking change](#i-breaking-changes).
+
+
 ## 3. Naming & Structure Conventions
 <!-- How to organize and label resources -->
 
@@ -292,12 +355,7 @@ published, the current year and month is used, and MICRO is set to "00". If a ve
 If the published spec is equal to the current spec, no new version is created. Because versioning is done automatically, the value in `info.version` is ignored, 
 but must be set in order for linting to pass, therefore a placeholder value like `1.0.0` may be used.
 
-### 3.3 Backward Compatibility
-- :eyes: You **MUST** not remove or modify existing fields or endpoints
-- :eyes: You **MUST** introduce new versions for changes that break previous contracts
-- :eyes: You **MUST** clearly document which features are deprecated and provide guidance for migration
-
-### 3.4 Tags Naming
+### 3.3 Tags Naming
 :eyes: Tags should be used as a logical grouping that reflects functional domains, use cases or data types, not internal architecture.
 - Bad example: `internal`, `partner`, `production`, `route-service-v2`, `misc`, `other`
 - Good example, when using tags for functional domains: `Journey Planning`, `Realtime Departures`
@@ -556,10 +614,31 @@ There may be situations where a pure REST architecture is not the best solution.
 - **WebSocket**: For real-time bidirectional communication
 - **gRPC**: For high-performance, strongly-typed services
 
-
 ## FAQ
 
 *Must existing APIs conform the guidelines?*
 - Non-breaking changes (like adding example values) **SHOULD** be updated to be compliant with the guidelines.
 - Breaking changes **MAY** be added in a new version of the API.
 - New APIs **MUST** follow the guidelines.
+
+## Appendix
+
+## I. Breaking changes
+A breaking change in an API is a change that  "breaks" a clients integration with the API, without the client having made any changes on their end. The nature of breaking changes vary depending on the type of integration. For REST APIs, it is the OpenAPI specification that specifies the contract with the client. In practice, this means that if a client fetches the OpenAPI specification for a service and integrates with it, changes to the service that invalidates that specification, is considered breaking. In other words, changes should be _backwards compatible_ with regards to the specification.
+
+Examples of breaking changes:
+
+- Removal of a non-nullable field in a response (or making it nullable)
+- Adding a new required field in a request (or making a nullable field required)
+- Changing the physical datatype of a field, for example for string to number
+- Removal of an endpoint without following the [deprecation rules](#ii-deprecation-rules)
+- Adding new values to an `enum` property in a response. An `enum` is a contract specifying that a field will only have one of the following values. If the API starts to return new values, then the old specification is no longer valid, breaking backwards compatibility. In many cases, we want to be able to add new values later, indicating to the client that the field might have one of these known values, but that they should also be ready to handle unknown values. This can be expressed in OpenAPI by using a normal string, with example values.
+
+However, an OpenAPI specification will never be a complete description of the behavior of an API. Some behavior will only be apparent when observing the output of the API, and clients _will_ make assumptions based on the observed behavior. Examples:
+- The order of items in an array. A client may observe that elements in an array are sorted alphabetically and, even though this is not specified, assume that it will continue to be. Changing the sort order may then break a clients integration, even though the contract is not technically broken.
+- When exceptions are thrown. A client may observe that a given scenario returns an HTTP exception code, and assume that it will continue to do so, even though this is not explicitly documented in the specification.
+
+These types of changes are harder to detect. They _should_ be avoided, but sometimes clients may make unreasonable assumptions that can't be taken into consideration. In the end, it is up to the API producer to judge whether a change should be considered breaking or not, and how to communicate the change to consumers. However, the amount of such breakages can be minimized through well-thought out and predictable API design that follows common guidelines.
+
+## II. Deprecation rules
+At Entur, we should generally avoid making breaking changes. Instead, we should provide a deprecation period in which consumers of an API are given time to migrate to a new [version](#321-api-versioning). This period should be at least 12 months. The API producer is responsible for ensuring that their consumers are aware of the deprecation, but they can make this easier by following the [guidelines for marking deprecation](#254-deprecation).
