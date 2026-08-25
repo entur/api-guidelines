@@ -46,14 +46,13 @@ The response **MAY** contain the following fields:
 
 This strategy is based on these query parameters:
 
-| Parameter | Type    | Description                                                                       |
-|-----------|---------|-----------------------------------------------------------------------------------|
-| `cursor`  | string  | An opaque string pointing to the **next** item to get. **MUST** be named `cursor` |
-| `pageSize`    | integer | Number of items per page. **MUST** be named `pageSize`                                |
+| Parameter | Type    | Description                                                                            |
+|-----------|---------|----------------------------------------------------------------------------------------|
+| `cursor`  | string  | An opaque string identifying the next page of items to get. **MUST** be named `cursor` |
+| `pageSize`    | integer | Number of items per page. **MUST** be named `pageSize`                                 |
 
 Cursor-based pagination is based on a `cursor` that is created when handling requests from the client, and it is returned to the client (in the response body).
-The cursor points to the next item coming after the items that you are returning. 
-Sorting parameters, number of items (`pageSize`) to get and filters are also embedded in the returned cursor. 
+The cursor points to the next page of items. Sorting parameters, number of items (`pageSize`) to get and filters are also embedded in the returned cursor. 
 
 On the next request from the client, the cursor is sent back to the service (along with any other parameters). 
 The service returns the requested items and calculates a new cursor pointing to the next item. In this way, the client can paginate through items.
