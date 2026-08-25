@@ -2,7 +2,7 @@
 
 ## Pagination
 
-When implementing pagination, you **MUST** use either Offset Pagination or Cursor Pagination, on the formats detailed below.  
+When implementing pagination, you **MUST** use either Cursor Pagination (preferred) or Offset Pagination, on the formats detailed below.  
 
 ### Offset Pagination
 
