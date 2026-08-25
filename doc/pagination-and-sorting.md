@@ -31,7 +31,7 @@ The response **MUST** contain the following fields:
 | Parameter | Type    | Description                                                                      |
 |-----------|---------|----------------------------------------------------------------------------------|
 | `items`  | array   | **MUST** be named `items`. |
-| `totalCount`    | integer | The total number of items across all pages. **MUST** be named `totalCount`       |
+| `totalItems`    | integer | The total number of items across all pages. **MUST** be named `totalItems`       |
 
 ### Cursor / Keyset Pagination
 
