@@ -8,19 +8,19 @@ When implementing pagination, you **MUST** use either Cursor Pagination (preferr
 
 This strategy is based on these query parameters:
 
-| Parameter | Type    | Description                                                        |
-|-----------|---------|--------------------------------------------------------------------|
-| `page`    | integer | Zero-based index of the page to retrieve. **MUST** be named `page` |
-| `size`    | integer | Number of items per page. **MUST** be named `size`                 |
+| Parameter  | Type    | Description                                                        |
+|------------|---------|--------------------------------------------------------------------|
+| `page`     | integer | Zero-based index of the page to retrieve. **MUST** be named `page` |
+| `pageSize` | integer | Number of items per page. **MUST** be named `pageSize`                 |
 
 **Example request:**
 
 ```http
-GET /api/v1/bus-stops?city=Oslo&page=1&size=20
+GET /api/v1/bus-stops?city=Oslo&page=1&pageSize=20
 ```
 
-When handling the request, the service skips `page * size` items and returns the next `size` items.
-In the example above, items 21–40 are returned (page index `1` × size `20` = skip the first 20 items).
+When handling the request, the service skips `page * pageSize` items and returns the next `pageSize` items.
+In the example above, items 21–40 are returned (page `1` * pageSize `20` = skip the first 20 items).
 
 #### Response format
 
@@ -40,11 +40,11 @@ This strategy is based on these query parameters:
 | Parameter | Type    | Description                                                                       |
 |-----------|---------|-----------------------------------------------------------------------------------|
 | `cursor`  | string  | An opaque string pointing to the **next** item to get. **MUST** be named `cursor` |
-| `size`    | integer | Number of items per page. **MUST** be named `size`                                |
+| `pageSize`    | integer | Number of items per page. **MUST** be named `pageSize`                                |
 
 Cursor-based pagination is based on a `cursor` that is created when handling requests from the client, and it is returned to the client (in the response body).
 The cursor points to the next item coming after the items that you are returning. 
-Sorting parameters, number of items (`size`) to get and filters are also embedded in the returned cursor. 
+Sorting parameters, number of items (`pageSize`) to get and filters are also embedded in the returned cursor. 
 
 On the next request from the client, the cursor is sent back to the service (along with any other parameters). 
 The service returns the requested items and calculates a new cursor pointing to the next item. In this way, the client can paginate through items.
@@ -55,11 +55,11 @@ Clients should not inspect, parse, or construct cursors themselves — a cursor 
 
 First request (no cursor available to client yet):
 ```http
-GET /api/v1/bus-stops?city=Oslo&size=20
+GET /api/v1/bus-stops?city=Oslo&pageSize=20
 ```
 The response includes a cursor for the next page. To fetch the next page:
 ```http
-GET /api/v1/bus-stops?city=Oslo&size=20&cursor=eyJpZCI6MTAwfQ
+GET /api/v1/bus-stops?city=Oslo&pageSize=20&cursor=eyJpZCI6MTAwfQ
 ```
 
 #### Cursor key selection
