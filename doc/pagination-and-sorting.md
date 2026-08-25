@@ -28,10 +28,10 @@ The response format will vary between APIs, but a typical response at least incl
 
 The response **MUST** contain the following fields:
 
-| Parameter | Type    | Description                                                                        |
-|-----------|---------|------------------------------------------------------------------------------------|
-| `items`  | array   | **SHOULD** be named `items` unless there is a specific reason to use another name. |
-| `totalCount`    | integer | The total number of items across all pages. **MUST** be named `totalCount`         |
+| Parameter | Type    | Description                                                                      |
+|-----------|---------|----------------------------------------------------------------------------------|
+| `items`  | array   | **MUST** be named `items`. |
+| `totalCount`    | integer | The total number of items across all pages. **MUST** be named `totalCount`       |
 
 ### Cursor / Keyset Pagination
 
@@ -76,10 +76,10 @@ If the cursor contains data that you do not want to expose, the cursor may be en
 
 The response **MUST** contain the following fields:
 
-| Parameter | Type    | Description                                                                                          |
-|-----------|---------|------------------------------------------------------------------------------------------------------|
-| `items`  | array   | **SHOULD** be named `items` unless there is a specific reason to use another name.                   |
-| `cursor`  | string  | An opaque string pointing to next item to get. **MUST** be named `cursor`                            |
+| Parameter | Type    | Description                                                                                            |
+|-----------|---------|--------------------------------------------------------------------------------------------------------|
+| `items`  | array   | **MUST** be named `items`.                       |
+| `cursor`  | string  | An opaque string pointing to next item to get. **MUST** be named `cursor`                              |
 | `hasMore`    | boolean | Are there more items, or did the last request return all remaining items?  **MUST** be named `hasMore` |
 
 
