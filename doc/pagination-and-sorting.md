@@ -43,10 +43,8 @@ This strategy is based on these query parameters:
 | `size`    | integer | Number of items per page. **MUST** be named `size`                                |
 
 Cursor-based pagination is based on a `cursor` that is created when handling requests from the client, and it is returned to the client (in the response body).
-The cursor points to the next item coming after the items that you are returning.
-
-Sorting parameters, number of items (`size`) to get and filters are **not** embedded in the cursor — they are sent separately by the client. 
-This allows the client to change direction or filters independently without obtaining a new cursor.
+The cursor points to the next item coming after the items that you are returning. 
+Sorting parameters, number of items (`size`) to get and filters are also embedded in the returned cursor. 
 
 On the next request from the client, the cursor is sent back to the service (along with any other parameters). 
 The service returns the requested items and calculates a new cursor pointing to the next item. In this way, the client can paginate through items.
