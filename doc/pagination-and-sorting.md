@@ -32,6 +32,15 @@ The response **MUST** contain the following fields:
 |-----------|---------|----------------------------------------------------------------------------------|
 | `items`  | array   | **MUST** be named `items`. |
 | `totalItems`    | integer | The total number of items across all pages. **MUST** be named `totalItems`       |
+| `pageSize`    | integer | The requested `pageSize`, or max page size if given `pageSize` was over max. |
+
+The response **MAY** contain the following fields:
+
+| Parameter | Type    | Description                                                                                                              |
+|-----------|---------|--------------------------------------------------------------------------------------------------------------------------|
+| `totalPages`    | integer | The total number of pages, which means this value, rounded up: `totalItems` / `pageSize`. **MUST** be named `totalPages` |
+
+
 
 ### Cursor / Keyset Pagination
 
