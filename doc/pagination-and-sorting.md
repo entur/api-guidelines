@@ -98,11 +98,10 @@ If the cursor contains data that you do not want to expose, the cursor may be en
 
 The response **MUST** contain the following fields:
 
-| Parameter | Type    | Description                                                                                            |
-|-----------|---------|--------------------------------------------------------------------------------------------------------|
-| `items`  | array   | **MUST** be named `items`.                       |
-| `cursor`  | string  | An opaque string pointing to next item to get. **MUST** be named `cursor`                              |
-| `hasMore`    | boolean | Are there more items, or did the last request return all remaining items?  **MUST** be named `hasMore` |
+| Parameter | Type    | Description                                                                                                                         |
+|-----------|---------|-------------------------------------------------------------------------------------------------------------------------------------|
+| `items`  | array   | **MUST** be named `items`.                                                                                                          |
+| `cursor`  | string  | An opaque string pointing to next item to get. If no more items, cursor value is not returned to client. **MUST** be named `cursor` |
 
 
 ### Choosing a Strategy
