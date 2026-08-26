@@ -73,11 +73,25 @@ GET /api/v1/bus-stops?city=Oslo&pageSize=20&cursor=eyJpZCI6MTAwfQ
 #### Cursor key selection
 
 The cursor must encode a value (or set of values) that uniquely and stably identifies a position in the sorted result set. 
-The cursor should a unique id for the next item, which can be used as a starting point for the service when getting items. The id is typically an id for a row in a database table.
-The cursor may also contain a timestamp for the row, which is useful if the row could be deleted, so that the id can not be used.
+
+Example cursor with multiple values:
+
+```json
+{
+  "id": "fa760939-dacc-4653-be5b-bfe6e87d9fcf",
+  "sort": "name"
+}
+```
+
+Example cursor key for encoding a single value (e.g. database id):
+```
+100
+```
+
 
 #### Encoding
 Because the cursor should be opaque to the client and may contain internal details, it should be Base64 encoded.
+In the case where the cursor is JSON encoded, the serialized JSON string is Base64 encoded.
 If the cursor contains data that you do not want to expose, the cursor may be encrypted and then Base64 encoded.
 
 #### Response format
