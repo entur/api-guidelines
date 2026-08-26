@@ -115,7 +115,7 @@ Use the comparison table below to select the pagination strategy that best fits 
 | **Consistency under data changes** | ⚠️ Inserts/deletes between requests may cause duplicates or missing items                                               | ✅ Stable — cursor anchors position in the data set               |
 | **Performance on large data sets** | ⚠️ `OFFSET` queries degrade as page number grows, because the database must scan and discard all rows before the offset | ✅ Constant-time lookups               |
 
-As a rule of thumb, cursor pagination **SHOULD** be used unless the number of items is small, inserts and deletes are infrequent, and jumping to specific pages must be supported.
+As a rule of thumb, cursor pagination **SHOULD** be used unless: offset pagination DB queries are not too heavy and inserts and deletes are infrequent OR jumping to specific pages must be supported.
 
 ## Sorting
 Sorting may of course be implemented without pagingation, but when using pagination you must also use sorting.
