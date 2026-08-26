@@ -90,8 +90,8 @@ Example cursor key for encoding a single value (e.g. database id):
 
 
 #### Encoding
-Because the cursor should be opaque to the client and may contain internal details, it should be Base64 encoded.
-In the case where the cursor is JSON encoded, the serialized JSON string is Base64 encoded.
+The cursor **MUST** be URL-safe (no URL-encoding required). Because the cursor should be opaque to the client and may contain internal details, 
+it may be Base64 encoded. For cursors with multiple values, a common solution is to have JSON in string value and then Base64-encode the string.
 If the cursor contains data that you do not want to expose, the cursor may be encrypted and then Base64 encoded.
 
 #### Response format
