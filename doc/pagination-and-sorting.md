@@ -114,7 +114,6 @@ Use the comparison table below to select the pagination strategy that best fits 
 | **Jump to arbitrary page**       | ✅ Supported                                                                                                            | ❌ Not supported — only sequential traversal                      |
 | **Consistency under data changes** | ⚠️ Inserts/deletes between requests may cause duplicates or missing items                                               | ✅ Stable — cursor anchors position in the data set               |
 | **Performance on large data sets** | ⚠️ `OFFSET` queries degrade as page number grows, because the database must scan and discard all rows before the offset | ✅ Constant-time lookups               |
-| **Sharded / NoSQL databases**    | ⚠️ Difficult to implement efficiently                                                                                   | ✅ Well suited — relies on key ordering rather than global offset |
 
 As a rule of thumb, cursor pagination **SHOULD** be used unless the number of items is small, inserts and deletes are infrequent, and jumping to specific pages must be supported.
 
