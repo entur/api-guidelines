@@ -8,39 +8,26 @@ When implementing pagination, you **MUST** use either Cursor Pagination (preferr
 
 This strategy is based on these query parameters:
 
-| Parameter  | Type    | Description                                                        |
-|------------|---------|--------------------------------------------------------------------|
-| `page`     | integer | Zero-based index of the page to retrieve. **MUST** be named `page` |
-| `pageSize` | integer | Number of items per page. **MUST** be named `pageSize`                 |
+| Parameter | Type    | Description                                                                |
+|-----------|---------|----------------------------------------------------------------------------|
+| `offset`  | integer | Zero-based index of the first item to retrieve. **MUST** be named `offset` |
+| `limit`       | integer | Number of items to get. **MUST** be named `limit`                              |
 
 **Example request:**
 
 ```http
-GET /api/v1/bus-stops?city=Oslo&page=1&pageSize=20
+GET /api/v1/bus-stops?city=Oslo&offset=10&limit=20
 ```
-
-When handling the request, the service skips `page * pageSize` items and returns the next `pageSize` items.
-In the example above, items 21–40 are returned (page `1` * pageSize `20` = skip the first 20 items).
 
 #### Response format
 
-The response format will vary between APIs, but a typical response at least include the items along with the total number of items that can be paginated:
-
 The response **MUST** contain the following fields:
 
-| Parameter | Type    | Description                                                                      |
-|-----------|---------|----------------------------------------------------------------------------------|
-| `items`  | array   | **MUST** be named `items`. |
-| `totalItems`    | integer | The total number of items across all pages. **MUST** be named `totalItems`       |
-| `pageSize`    | integer | The requested `pageSize`, or max page size if given `pageSize` was over max. |
-
-The response **MAY** contain the following fields:
-
-| Parameter | Type    | Description                                                                                                              |
-|-----------|---------|--------------------------------------------------------------------------------------------------------------------------|
-| `totalPages`    | integer | The total number of pages, which means this value, rounded up: `totalItems` / `pageSize`. **MUST** be named `totalPages` |
-
-
+| Parameter    | Type    | Description                                                                |
+|--------------|---------|----------------------------------------------------------------------------|
+| `items`      | array   | **MUST** be named `items`.                                                 |
+| `totalItems` | integer | The total number of items across all pages. **MUST** be named `totalItems` |
+| `limit`      | integer | The requested `limit`, or max limit if given `limit` was over max.         |
 
 ### Cursor / Keyset Pagination
 
@@ -108,14 +95,14 @@ The response **MUST** contain the following fields:
 
 Use the comparison table below to select the pagination strategy that best fits your use case.
 
-| Criterion                        | Page + Size (Offset)                                                                                                    | Cursor                                                            |
-|----------------------------------|-------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
-| **Ease of use**                  | Widely understood; broad framework support                                                                              | Less familiar to most clients; a bit more work on the server side |
-| **Jump to arbitrary page**       | ✅ Supported                                                                                                            | ❌ Not supported — only sequential traversal                      |
-| **Consistency under data changes** | ⚠️ Inserts/deletes between requests may cause duplicates or missing items                                               | ✅ Stable — cursor anchors position in the data set               |
-| **Performance on large data sets** | ⚠️ `OFFSET` queries degrade as page number grows, because the database must scan and discard all rows before the offset | ✅ Constant-time lookups               |
+| Criterion                          | Offset Pagination                                                                                                        | Cursor Pagination                                                 |
+|------------------------------------|--------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
+| **Ease of use**                    | Widely understood; broad framework support                                                                               | Less familiar to most clients; a bit more work on the server side |
+| **Jump to arbitrary position**     | ✅ Supported                                                                                                             | ❌ Not supported — only sequential traversal                      |
+| **Consistency under data changes** | ⚠️ Inserts/deletes between requests may cause duplicates or missing items                                                | ✅ Stable — cursor anchors position in the data set               |
+| **Performance on large data sets** | ⚠️ `OFFSET` queries degrade as offset gets bigger, because the database must scan and discard all rows before the offset | ✅ Constant-time lookups                                          |
 
-As a rule of thumb, cursor pagination **SHOULD** be used unless: offset pagination DB queries are not too heavy and inserts and deletes are infrequent OR jumping to specific pages must be supported.
+As a rule of thumb, cursor pagination **SHOULD** be used unless: offset pagination DB queries are not too heavy and inserts and deletes are infrequent OR jumping to a specific position must be supported.
 
 ## Sorting
 Sorting may of course be implemented without pagingation, but when using pagination you must also use sorting.
