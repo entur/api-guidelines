@@ -160,7 +160,8 @@
           }
         },
         "x-entur-permissions": {
-          "value": "items:les"
+          "description": 10,
+          "value": {"and": ["items:les"]}
         }
       },
       "post": {
@@ -195,14 +196,15 @@
           }
         },
         "x-entur-permissions": {
+          "bar": "something",
           "description": "You need access to read organisations, and create items.",
           "value": {
             "all": [
-              "organisations:les",
+              "organisations:le",
               {
                 "any": [
-                  "items:opprett",
-                  "items-global:opprett"
+                  "items:oppret",
+                  "items-global:oprett"
                 ]
               }
             ]

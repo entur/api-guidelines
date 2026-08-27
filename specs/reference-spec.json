@@ -161,7 +161,7 @@
           }
         },
         "x-entur-permissions": {
-          "value": "items:les"
+          "value": "items:LES"
         }
       },
       "post": {

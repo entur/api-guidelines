@@ -10,6 +10,7 @@ functions:
   - conditionallyDefined
   - requireExampleOrRef
   - requireRequestBodyDescription
+  - xEnturPermissions
 
 rules:
   # =============================================================================
@@ -164,53 +165,11 @@ rules:
   # -------------------------------------------------------------------------
 
   entur-permissions:
-    message: "x-entur-permissions must match the schema"
     documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#233-documenting-permissions-for-partner-endpoints"
     severity: error
     given: $.paths.*[get,post,put,patch,delete,options,head,trace].x-entur-permissions
     then:
-      function: schema
-      functionOptions:
-        schema:
-          type: object
-          required:
-            - value
-          properties:
-            description:
-              type: string
-            value:
-              $ref: "#/$defs/permission-node"
-          $defs:
-            permission-node:
-              oneOf:
-                - $ref: "#/$defs/permission-leaf"
-                - $ref: "#/$defs/permission-all"
-                - $ref: "#/$defs/permission-any"
-
-            permission-leaf:
-              type: string
-              pattern: "^[0-9a-zA-ZæøåØÆÅ][0-9a-zA-ZæøåØÆÅ.\\-]{0,99}:(les|opprett|endre|slett)$"
-
-            permission-all:
-              type: object
-              required:
-                - all
-              properties:
-                all:
-                  type: array
-                  items:
-                    - $ref: "#/$defs/permission-node"
-
-            permission-any:
-              type: object
-              required:
-                - any
-              properties:
-                any:
-                  type: array
-                  items:
-                    - $ref: "#/$defs/permission-node"
-
+      function: xEnturPermissions
 
   # -------------------------------------------------------------------------
   # 2.4 Entur Metadata
