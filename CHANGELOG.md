@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.1.0](https://github.com/entur/api-guidelines/compare/v3.0.3...v3.1.0) (2026-08-27)
+
+
+### Features
+
+* **ETU-75494:** Add guidelines for describing the lifecycle of an endpoint or an API ([3ea0639](https://github.com/entur/api-guidelines/commit/3ea06395638a2e1eb018017429f3831f6b34cca5))
+
+
+### Bug Fixes
+
+* **ETU-76205:** Better error messages for lint issues in x-entur-permissions ([#120](https://github.com/entur/api-guidelines/issues/120)) ([9c91944](https://github.com/entur/api-guidelines/commit/9c91944ec86ee6924d0b65d3e99c5f5a18f00d56))
+
 ## [3.0.3](https://github.com/entur/api-guidelines/compare/v3.0.2...v3.0.3) (2026-05-29)
 
 
