@@ -362,6 +362,21 @@ but must be set in order for linting to pass, therefore a placeholder value like
 - Good example, when using tags for use-cases : `Search`, `Booking`
 - Good example, when using tags for data types : `Routes`, `Departures`
 
+### 3.4 Enumerations
+:eyes: Prefer using open-ended values with `examples`, instead of `enum`
+
+The `enum` (https://json-schema.org/understanding-json-schema/reference/enum) keyword in JSON schema (and therefore inherited to OpenAPI), indicates that a schema property will only have a defined, limited set of values. This is problematic for evolving a schema over time. Adding a new allowed value is considered a [breaking change](#i-breaking-changes), as the previous contract is no longer valid. Because of this, you **SHOULD NOT** use the `enum` keyword, unless you are sure that there will never be a need for new values. Instead, declare your enumeration with an open-ended type, such as `string`, and use `examples` to indicate currently known values. For example:
+
+```
+transportMode:
+  type: string
+  examples:
+    - TRAIN
+    - BUS
+```
+
+This means that the consumer knows that the field `transportMode` can have either of those values, but that it may also return other values, so they are encouraged to implement a fallback. On the other side, the producer may add new entries to `examples` and start to return those values, without it being a breaking change.
+
 ## 4. Communication Standards
 <!-- HTTP standards and protocols -->
 
@@ -637,7 +652,7 @@ Examples of breaking changes:
 - Adding a new required field in a request (or making a nullable field required)
 - Changing the physical datatype of a field, for example for string to number
 - Removal of an endpoint without following the [deprecation rules](#ii-deprecation-rules)
-- Adding new values to an `enum` property in a response. An `enum` is a contract specifying that a field will only have one of the following values. If the API starts to return new values, then the old specification is no longer valid, breaking backwards compatibility. In many cases, we want to be able to add new values later, indicating to the client that the field might have one of these known values, but that they should also be ready to handle unknown values. This can be expressed in OpenAPI by using a normal string, with example values.
+- Adding new values to an `enum` property in a response. An `enum` is a contract specifying that a field will only have one of the following values. If the API starts to return new values, then the old specification is no longer valid, breaking backwards compatibility. See: [3.4 Enumerations](#34-enumerations).
 
 However, an OpenAPI specification will never be a complete description of the behavior of an API. Some behavior will only be apparent when observing the output of the API, and clients _will_ make assumptions based on the observed behavior. Examples:
 - The order of items in an array. A client may observe that elements in an array are sorted alphabetically and, even though this is not specified, assume that it will continue to be. Changing the sort order may then break a clients integration, even though the contract is not technically broken.
