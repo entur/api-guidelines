@@ -173,7 +173,7 @@ owner     |`string`|**REQUIRED**. The Entur team responsible for this specificat
 parentId  |`string`|Id of the parent specification, used when merging. [Read more](#243-merging-specifications).
 
 Example:
-```
+```json
 {
   "info": {
     "x-entur-metadata": {
@@ -448,7 +448,7 @@ Example:
 - :eyes: Response: Always serialized with the standard number of decimals. For NOK, this means 2, since øre is the smallest unit.
 
 Example:
-```
+```json
 {
     "amount": "99.00"
     "currency": "NOK"
@@ -484,18 +484,23 @@ A "de-facto" standard for correlating a request throughout a microservice archit
 <!-- More complex design patterns -->
 
 
-### 6.1 Filtering, Sorting & Pagination
-- :eyes: You **MAY** allow filtering, sorting, and pagination to retrieve specific data
-- :eyes: If you implement pagination, you **MUST** use either query parameters "page" (zero based page to get) and "size" (number of items per page), 
-  **OR** query parameters offset (zero based) and limit (number of items)  
-- :eyes: If you implement sorting, you **SHOULD** use query parameter "sort". Sorting can be done on multiple levels, and sort order (desc / asc) is also specified, like so: `sort=<field1>,<asc|desc>&sort=<field2>,<asc|desc>`
-- **TODO**: Requirements for response format for pagination and sorting
+### 6.1 Pagination and Sorting
 
-The requirements above are based on the Spring way of doing things: https://docs.spring.io/spring-data/rest/reference/paging-and-sorting.html
+:eyes: If you implement pagination, you **MUST** use one of these approaches: 
+- Offset pagination with query parameters `offset` and `limit`:
+  ```http
+  GET /api/v1/bus-stops?city=Oslo&offset=10&limit=20
+  ```
 
-Example:
-> GET /api/v1/bus-stops?city=Oslo&sort=name,asc&sort=something,desc&page=0&size=20
+- Cursor / Keyset Pagination with query parameters `cursor` and `pageSize`:
+  ```http
+  GET /api/v1/bus-stops?city=Oslo&cursor=eyJpZCI6MTAwfQ&pageSize=20
+  ```
 
+:eyes: If you implement sorting, you **MUST** use query parameter `sort`:
+> GET /api/v1/bus-stops?city=Oslo&sort=name,asc&sort=something,desc
+
+See [pagination and sorting](doc/pagination-and-sorting.md) for more details.     
 
 ### 6.2 Partial Responses
 - :eyes: You **MAY** let clients choose which fields to include to reduce data transfer
