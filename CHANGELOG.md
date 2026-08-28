@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.1](https://github.com/entur/api-guidelines/compare/v3.1.0...v3.1.1) (2026-08-28)
+
+
+### Bug Fixes
+
+* Add missing lifecycle and x-entur-permission rules to spectral-required ([#121](https://github.com/entur/api-guidelines/issues/121)) ([8f3ff00](https://github.com/entur/api-guidelines/commit/8f3ff0019688bc02fa4af5187af6dad462547a87))
+
 ## [3.1.0](https://github.com/entur/api-guidelines/compare/v3.0.3...v3.1.0) (2026-08-27)
 
 
