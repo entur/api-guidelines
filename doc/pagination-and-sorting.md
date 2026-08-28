@@ -13,6 +13,8 @@ This strategy is based on these query parameters:
 | `offset`  | integer | Zero-based index of the first item to retrieve. **MUST** be named `offset` |
 | `limit`       | integer | Number of items to get. **MUST** be named `limit`                              |
 
+Implementations **SHOULD** implement and document default and max values for `limit`.
+
 **Example request:**
 
 ```http
