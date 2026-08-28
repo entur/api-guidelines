@@ -56,11 +56,19 @@ Throughout this document, rules are marked with the following indicators:
   - The specification is the primary reference for both development and documentation
   - Update the specification throughout development to reflect changes
 - :eyes: [Lint your API spec](README.md#linting-your-api)
-- :eyes: Separate API specifications per target audience/visibility (public, partner, internal). An API spec **SHOULD** only contain endpoints for one target audience.
-This audience is used in the Developer Portal to organize APIs.
-- :eyes: Differentiate APIs based on the target audience:
-  - Internal APIs - May have extended functionality and less stringent requirements, but **MUST** still be documented and tested
-  - External APIs - **MUST** be carefully documented with a focus on stability, security, and consistency
+- :eyes: Differentiate API specifications based on the target audience. The target audience of an API specification is declared in `info.x-entur-metadata.audience`. For details, see: [2.4 Entur Metadata](#24-entur-metadata). There are different requirements based on the audience of your API.
+  - `open`: Available to anyone, without a formal relationship with Entur
+    - :eyes: **MUST** follow these guidelines
+    - :eyes: **MUST** be published to the developer portal
+  - `partner`: Available to partners of Entur
+    - :eyes: **MUST** follow these guidelines
+    - :eyes: **MUST** be published to the developer portal
+  - `internal`: Available to other teams within Entur
+    - :eyes: **SHOULD** follow these guidelines
+    - :eyes: **MUST** be published to the developer portal
+  - `private`: Only available from within the same component/application. Examples: A backend API made specifically for a frontend developed by the same team, or administration and management endpoints used for housekeeping within the team.
+    - :eyes: **MAY** follow these guidelines
+    - :eyes: **MAY** be published to the developer portal
 
 
 ### 2.3 Authentication and Authorization
@@ -168,7 +176,7 @@ All OpenAPI specifications published to Enturs developer portal must declare a b
 Field name|Type    |Description
 ----------|--------|-----------
 id        |`string`|**REQUIRED**. Unique id for this specification. [Read more](#241-identifying-a-specification).
-audience  |`string`|**REQUIRED**. Who this specification is targeted to. Must be one of `"open"`, `"partner"`, `"internal"`
+audience  |`string`|**REQUIRED**. Who this specification is targeted to. Must be one of `"open"`, `"partner"`, `"internal"`, `"private"`
 owner     |`string`|**REQUIRED**. The Entur team responsible for this specification. [Read more](#242-specification-owner).
 parentId  |`string`|Id of the parent specification, used when merging. [Read more](#243-merging-specifications).
 
