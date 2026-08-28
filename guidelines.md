@@ -429,17 +429,17 @@ A "de-facto" standard for correlating a request throughout a microservice archit
 ### 6.1 Pagination and Sorting
 
 :eyes: If you implement pagination, you **MUST** use one of these approaches: 
-- Offset pagination with query parameters `page` and `size`:
+- Offset pagination with query parameters `offset` and `limit`:
   ```http
-  GET /api/v1/bus-stops?city=Oslo&page=1&size=20
+  GET /api/v1/bus-stops?city=Oslo&offset=10&limit=20
   ```
 
-- Cursor / Keyset Pagination with query parameters `cursor` and `size`:
+- Cursor / Keyset Pagination with query parameters `cursor` and `pageSize`:
   ```http
-  GET /api/v1/bus-stops?city=Oslo&cursor=eyJpZCI6MTAwfQ&size=20
+  GET /api/v1/bus-stops?city=Oslo&cursor=eyJpZCI6MTAwfQ&pageSize=20
   ```
 
-:eyes: If you implement sorting, you **MUST** use query parameter "sort":
+:eyes: If you implement sorting, you **MUST** use query parameter `sort`:
 > GET /api/v1/bus-stops?city=Oslo&sort=name,asc&sort=something,desc
 
 See [pagination and sorting](doc/pagination-and-sorting.md) for more details.     
