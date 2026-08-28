@@ -38,8 +38,8 @@ This strategy is based on these query parameters:
 | `cursor`  | string  | An opaque string identifying the next page of items to get. **MUST** be named `cursor` |
 | `pageSize`    | integer | Number of items per page. **MUST** be named `pageSize`                                 |
 
-Cursor-based pagination is based on a `cursor` that is created when handling requests from the client, and it is returned to the client (in the response body).
-The cursor points to the next page of items. Sorting parameters, `pageSize` and filters may also be embedded in the cursor. 
+Cursor-based pagination is based on a `cursor` that is created when handling requests from the client. The cursor is returned to the client in the response body.
+The cursor points to the next page of items. Sorting parameters, `pageSize` and filters **MAY** also be embedded in the cursor. 
 
 On the next request from the client, the cursor is sent back to the service. 
 The service returns the requested items and calculates a new cursor. In this way, the client can paginate through items.
@@ -59,7 +59,7 @@ GET /api/v1/bus-stops?city=Oslo&pageSize=20&cursor=eyJpZCI6MTAwfQ
 
 #### Cursor key selection
 
-The cursor must encode a value (or set of values) that uniquely and stably identifies a position in the sorted result set. 
+The cursor **MUST** encode a value (or set of values) that uniquely and stably identifies a position in the sorted result set. 
 
 Example cursor with multiple values:
 
@@ -78,8 +78,8 @@ Example cursor key for encoding a single value (e.g. database id):
 
 #### Encoding
 The cursor **MUST** be URL-safe (no URL-encoding required). Because the cursor should be opaque to the client and may contain internal details, 
-it may be Base64 encoded. For cursors with multiple values, a common solution is to have JSON in string value and then Base64-encode the string.
-If the cursor contains data that you do not want to expose, the cursor may be encrypted and then Base64 encoded.
+it **MAY** be Base64 encoded. For cursors with multiple values, a common solution is to have JSON in string value and then Base64-encode the string.
+If the cursor contains data that you do not want to expose, the cursor **MAY** be encrypted and then Base64 encoded.
 
 #### Response format
 
@@ -105,9 +105,9 @@ Use the comparison table below to select the pagination strategy that best fits 
 As a rule of thumb, cursor pagination **SHOULD** be used unless: offset pagination DB queries are not too heavy and inserts and deletes are infrequent OR jumping to a specific position must be supported.
 
 ## Sorting
-Sorting may of course be implemented without pagingation, but when using pagination you must also use sorting.
+Sorting **MAY** be implemented without pagination, but when using pagination you **MUST** also use sorting.
 
-:eyes: If you implement sorting, you **MUST** use query parameter "sort".
+:eyes: If you implement sorting, you **MUST** use query parameter `sort`.
 You **MAY** also allow sorting on multiple levels, and allow specifying sort order (desc / asc).
 In your service, always use a secondary sorting on a unique id, so that two entries with the same primary sorting
 (e.g. created date) are always sorted in the same order.
