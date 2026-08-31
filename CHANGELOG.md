@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.0](https://github.com/entur/api-guidelines/compare/v3.1.1...v3.2.0) (2026-08-31)
+
+
+### Features
+
+* Pagination guidelines ([d2bc0f7](https://github.com/entur/api-guidelines/commit/d2bc0f7d1f221a9a82356ace0273bada2eecc775))
+
 ## [3.1.1](https://github.com/entur/api-guidelines/compare/v3.1.0...v3.1.1) (2026-08-28)
 
 
