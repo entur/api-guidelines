@@ -68,6 +68,7 @@ rules:
           - open
           - partner
           - internal
+          - private
 
   entur-info-metadata-owner:
     message: "The OpenAPI info section MUST include \"x-entur-metadata.owner\"."
