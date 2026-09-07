@@ -57,7 +57,7 @@ Throughout this document, rules are marked with the following indicators:
   - Update the specification throughout development to reflect changes
 - :eyes: [Lint your API spec](README.md#linting-your-api)
 - :eyes: Differentiate API specifications based on the target audience. The target audience of an API specification is declared in `info.x-entur-metadata.audience`. For details, see: [2.4 Entur Metadata](#24-entur-metadata). There are different requirements based on the audience of your API.
-  - `open`: Available to anyone, without a formal relationship with Entur
+  - `open`: Available to anyone, without requiring a contractual relationship with Entur
     - :eyes: **MUST** follow these guidelines
     - :eyes: **MUST** be published to the developer portal
   - `partner`: Available to partners of Entur
