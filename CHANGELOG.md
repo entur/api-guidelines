@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.0](https://github.com/entur/api-guidelines/compare/v3.3.0...v3.4.0) (2026-09-07)
+
+
+### Features
+
+* **ETU-66177:** Add private audience to guidelines ([#127](https://github.com/entur/api-guidelines/issues/127)) ([2e47880](https://github.com/entur/api-guidelines/commit/2e478806445d92a797a68a20c342a4aeacf1acbb))
+
 ## [3.3.0](https://github.com/entur/api-guidelines/compare/v3.2.0...v3.3.0) (2026-09-04)
 
 
