@@ -1,10 +1,8 @@
-# Pagination and Sorting
-
-## Pagination
+# Pagination
 
 When implementing pagination, you **MUST** use either Cursor Pagination (preferred) or Offset Pagination, on the formats detailed below.  
 
-### Offset Pagination
+## Offset Pagination
 
 This strategy is based on these query parameters:
 
@@ -21,7 +19,7 @@ Implementations **SHOULD** implement and document default and max values for `li
 GET /api/v1/bus-stops?city=Oslo&offset=10&limit=20
 ```
 
-#### Response format
+### Response format
 
 The response **MUST** contain the following fields:
 
@@ -31,7 +29,26 @@ The response **MUST** contain the following fields:
 | `totalItems` | integer | The total number of items across all pages. **MUST** be named `totalItems` |
 | `limit`      | integer | The requested `limit`, or max limit if given `limit` was over max.         |
 
-### Cursor / Keyset Pagination
+**Example**
+
+```json
+{
+  "items": [
+    {
+      "id": "100",
+      "name": "Item 100"
+    },
+    {
+      "id": "101",
+      "name": "Item 101"
+    }
+  ],
+  "totalItems": 2,
+  "limit": 100
+}
+```
+
+## Cursor / Keyset Pagination
 
 This strategy is based on these query parameters:
 
@@ -59,7 +76,7 @@ The response includes a cursor for the next page. To fetch the next page:
 GET /api/v1/bus-stops?city=Oslo&pageSize=20&cursor=eyJpZCI6MTAwfQ
 ```
 
-#### Cursor key selection
+### Cursor key selection
 
 The cursor **MUST** encode a value (or set of values) that uniquely and stably identifies a position in the sorted result set. 
 
@@ -78,12 +95,12 @@ Example cursor key for encoding a single value (e.g. database id):
 ```
 
 
-#### Encoding
+### Encoding
 The cursor **MUST** be URL-safe (no URL-encoding required). Because the cursor should be opaque to the client and may contain internal details, 
 it **MAY** be Base64 encoded. For cursors with multiple values, a common solution is to have JSON in string value and then Base64-encode the string.
 If the cursor contains data that you do not want to expose, the cursor **MAY** be encrypted and then Base64 encoded.
 
-#### Response format
+### Response format
 
 The response **MUST** contain the following fields:
 
@@ -93,7 +110,25 @@ The response **MUST** contain the following fields:
 | `cursor`  | string  | An opaque string pointing to next item to get. If no more items, cursor value is not returned to client. **MUST** be named `cursor` |
 
 
-### Choosing a Strategy
+**Example**
+
+```json
+{
+  "items": [
+    {
+      "id": "100",
+      "name": "Item 100"
+    },
+    {
+      "id": "101",
+      "name": "Item 101"
+    }
+  ],
+  "cursor": "eyJpZCI6MTAwfQ"
+}
+```
+
+## Choosing a Strategy
 
 Use the comparison table below to select the pagination strategy that best fits your use case.
 
@@ -107,14 +142,4 @@ Use the comparison table below to select the pagination strategy that best fits 
 As a rule of thumb, cursor pagination **SHOULD** be used unless: offset pagination DB queries are not too heavy and inserts and deletes are infrequent OR jumping to a specific position must be supported.
 
 ## Sorting
-Sorting **MAY** be implemented without pagination, but when using pagination you **MUST** also use sorting.
-
-:eyes: If you implement sorting, you **MUST** use query parameter `sort`.
-You **MAY** also allow sorting on multiple levels, and allow specifying sort order (desc / asc).
-In your service, always use a secondary sorting on a unique id, so that two entries with the same primary sorting
-(e.g. created date) are always sorted in the same order.
-
-Example: 
-```http
-GET /api/v1/bus-stops?city=Oslo&sort=name,asc&sort=something,desc
-```
+When using pagination you **MUST** also use [sorting](sorting.md).
