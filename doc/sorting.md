@@ -55,15 +55,6 @@ You **SHOULD** define and document a default sort order that is applied when
 the client does not provide a `sort` parameter. The default order **MUST** be
 deterministic and stable across identical requests.
 
-## Deterministic and stable ordering
-
-The result order **MUST** be deterministic: if the same request is made again
-(with unchanged data), the items **MUST** be returned in the same order.
-
-To achieve this, the backend **MUST** apply a final tiebreaker on a unique,
-stable field (typically `id`) whenever the requested sort fields do not by
-themselves guarantee a total ordering.
-
 ## Case sensitivity, collation and null ordering
 
 - For string fields, the API **SHOULD** document whether sorting is
@@ -73,7 +64,14 @@ themselves guarantee a total ordering.
 - The API **SHOULD** document where `null` or missing values are placed
   (sorted first or last).
 
-## Response format
+## Deterministic and stable ordering
+
+The result order **MUST** be deterministic: if the same request is made again
+(with unchanged data), the items **MUST** be returned in the same order.
+
+To achieve this, the backend **MUST** apply a final tiebreaker on a unique,
+stable field (typically `id`) whenever the requested sort fields do not by
+themselves guarantee a total ordering.
 
 **Example**
 
