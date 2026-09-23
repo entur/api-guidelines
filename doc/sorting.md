@@ -23,9 +23,6 @@ GET /api/v1/bus-stops?sort=name,asc
 - If the direction is omitted, the direction **MUST** default to `asc`.
 - The direction tokens `asc` and `desc` **MUST** be treated as
   case-insensitive.
-- The comma separates a **field from its direction**. A single `sort` value
-  **MUST NOT** contain more than one field (i.e. `sort=name,created` is
-  invalid). To sort on multiple fields, see below.
 
 ## Sorting on multiple fields
 
