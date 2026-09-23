@@ -8,7 +8,7 @@ If you implement sorting, you **MUST** use the query parameter `sort`.
 
 Example:
 ```http
-GET /api/v1/bus-stops?city=Oslo&sort=name
+GET /api/v1/bus-stops?sort=name
 ```
 
 ## Sort field and direction
@@ -17,7 +17,7 @@ A `sort` value is a field name, optionally followed by a comma (`,`) and a
 sort direction — either `asc` (ascending) or `desc` (descending):
 
 ```http
-GET /api/v1/bus-stops?city=Oslo&sort=name,asc
+GET /api/v1/bus-stops?sort=name,asc
 ```
 
 - If the direction is omitted, the direction **MUST** default to `asc`.
@@ -32,13 +32,13 @@ GET /api/v1/bus-stops?city=Oslo&sort=name,asc
 You **MAY** allow sorting on multiple fields by repeating the `sort` parameter:
 
 ```http
-GET /api/v1/bus-stops?city=Oslo&sort=name&sort=created
+GET /api/v1/bus-stops?sort=name&sort=created
 ```
 
 Each field **MAY** have its own direction:
 
 ```http
-GET /api/v1/bus-stops?city=Oslo&sort=name,asc&sort=created,desc
+GET /api/v1/bus-stops?sort=name,asc&sort=created,desc
 ```
 
 When multiple `sort` parameters are given, the **order of the parameters
