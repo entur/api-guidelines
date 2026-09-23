@@ -14,7 +14,7 @@ GET /api/v1/bus-stops?sort=name
 ## Sort field and direction
 
 A `sort` value is a field name, optionally followed by a comma (`,`) and a
-sort direction — either `asc` (ascending) or `desc` (descending):
+sort direction, either `asc` (ascending) or `desc` (descending):
 
 ```http
 GET /api/v1/bus-stops?sort=name,asc
