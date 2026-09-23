@@ -142,4 +142,7 @@ Use the comparison table below to select the pagination strategy that best fits 
 As a rule of thumb, cursor pagination **SHOULD** be used unless: offset pagination DB queries are not too heavy and inserts and deletes are infrequent OR jumping to a specific position must be supported.
 
 ## Sorting
-When using pagination you **MUST** also use [sorting](sorting.md).
+
+When using pagination you **MUST** return elements in a stable order, meaning the same request always results in a response where the items are in the same order.
+Without a stable order, the boundary between pages is undefined: the same item may appear on multiple pages or be skipped entirely as the client paginates, and cursors can no longer reliably point to "the next item".
+See [sorting](sorting.md) for more details. Note, however, that pagination does not require you to let clients control sort order, only that the order is stable for a given request.
