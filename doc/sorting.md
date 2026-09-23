@@ -38,10 +38,6 @@ Each field **MAY** have its own direction:
 GET /api/v1/bus-stops?sort=name,asc&sort=created,desc
 ```
 
-When multiple `sort` parameters are given, the **order of the parameters
-defines the sort precedence**. The first `sort` is the primary sort key, the
-second is the secondary key (used to break ties in the first), and so on.
-
 ## Allowed sort fields
 
 You **MUST** document which fields are sortable.
