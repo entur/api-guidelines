@@ -521,10 +521,12 @@ A "de-facto" standard for correlating a request throughout a microservice archit
   GET /api/v1/bus-stops?city=Oslo&cursor=eyJpZCI6MTAwfQ&pageSize=20
   ```
 
+See [pagination](doc/pagination.md) for more details.
+
 :eyes: If you implement sorting, you **MUST** use query parameter `sort`:
 > GET /api/v1/bus-stops?city=Oslo&sort=name,asc&sort=something,desc
+See [sorting](doc/sorting.md) for more details.
 
-See [pagination and sorting](doc/pagination-and-sorting.md) for more details.     
 
 ### 6.2 Partial Responses
 - :eyes: You **MAY** let clients choose which fields to include to reduce data transfer
