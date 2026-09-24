@@ -143,6 +143,6 @@ As a rule of thumb, cursor pagination **SHOULD** be used unless: offset paginati
 
 ## Sorting
 
-When using pagination you **MUST** return elements in a stable order, meaning the same request always results in a response where the items are in the same order.
-Without a stable order, the boundary between pages is undefined: the same item may appear on multiple pages or be skipped entirely as the client paginates, and cursors can no longer reliably point to "the next item".
-See [sorting](sorting.md) for more details. Note, however, that pagination does not require you to let clients control sort order, only that the order is stable for a given request.
+When using pagination you **MUST** return elements in a deterministic order. Without a stable order, the boundary between pages is undefined: the same 
+item may appear on multiple pages or be skipped entirely as the client paginates, and cursors can no longer reliably point to "the next item".
+See [sorting](sorting.md) for more details. 
