@@ -2,8 +2,6 @@
 
 When an API response is sorted, it means that the order is deterministic: the same
 request **MUST** return items in the same order.
-Note that a sorted response does not require that the client can control the sorting; the endpoint
-may return items in a predetermined order.
 
 ## Client-controlled sorting
 
@@ -60,9 +58,10 @@ You **MUST** document which fields are sortable.
 
 
 ### Tiebreaking
-To achieve a deterministic order, the sorting implementation **MUST** include sorting on a unique,
-stable field (typically `id`). This means for example that if client requests sorting on `name`, and
-`name` is not unique across all items, a secondary sort must also be applied on a unique field.
+To achieve a deterministic order, the sorting implementation **MUST** append a unique
+field with a stable value (typically `id`) as a final tiebreaker. For example, if a
+client requests sorting on `name` and `name` is not unique across all items, a secondary
+sort **MUST** also be applied on a unique field.
 
 **Example**
 
@@ -95,7 +94,64 @@ always returned in the same order (`100` before `101`). The item with `id` 99
 is still returned last, because the primary sort is on `name` and "Item B"
 sorts after "Item A".
 
-## Default sort order
-You **SHOULD** define and document a default sort order that is applied when
-the client does not provide a `sort` parameter.
-If the default order is **not** deterministic, that **MUST** also be documented.
+### Documenting in OpenAPI
+
+The documentation requirements above (allowed sort fields, default order, case
+sensitivity, collation and null ordering) **MUST** be expressed on the `sort`
+query parameter in your OpenAPI specification.
+
+**Example**
+```json
+{
+  "parameters": [
+    {
+      "name": "sort",
+      "in": "query",
+      "description": "Field(s) to sort on. Repeat the parameter to sort on multiple fields. Each value is a field name optionally followed by a direction: `<field>,<asc|desc>`.\n\n**Sortable fields:** `name`, `created`.\n\n**Collation:** String fields are sorted case-insensitively using Norwegian collation.\n\n**Null ordering:** Items with a `null` or missing value for the sort field are placed last, regardless of sort direction.",
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^(name|created)(,(asc|desc))?$"
+        },
+        "default": ["name,asc"],
+        "example": ["name,asc", "created,desc"]
+      }
+    }
+  ]
+}
+```
+
+## Sorting not controlled by client
+A sorted response does not require that the client can control the sorting; the endpoint
+may return items in a predetermined order. When the order is fixed, you
+**MUST** document it on the response field for the collection:
+
+**Example**
+```json
+{
+  "items": {
+    "type": "array",
+    "description": "Sorted by `name` ascending, with `id` as a tiebreaker. This ordering is fixed and cannot be changed by the client.",
+    "items": {
+      "$ref": "#/components/schemas/Item"
+    }
+  }
+}
+```
+
+## Non-sorted responses
+If a returned collection is not sorted, that **MUST** also be documented:
+
+**Example**
+```json
+{
+  "items": {
+    "type": "array",
+    "description": "The order is undefined and **MUST NOT** be relied upon; it may change between requests.",
+    "items": {
+      "$ref": "#/components/schemas/Item"
+    }
+  }
+}
+```
