@@ -48,6 +48,7 @@ Throughout this document, rules are marked with the following indicators:
 - :white_check_mark: Encryption: All communication **MUST** be over HTTPS
 - :white_check_mark: You **SHOULD** not use localhost (or 127.0.0.1) host names in `info.servers`.
 - :white_check_mark: `info.title` **MUST** be non-empty and **MUST** not contain the word 'api'. 
+- :eyes: Don't use `info.title` to declare your APIs lifecycle status (draft, beta, deprecated). [Instead follow the lifecycle guidelines](#25-lifecycle).
 
 
 ### 2.2 Development Approach
