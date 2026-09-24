@@ -8,8 +8,8 @@ This strategy is based on these query parameters:
 
 | Parameter | Type    | Description                                                                |
 |-----------|---------|----------------------------------------------------------------------------|
-| `offset`  | integer | Zero-based index of the first item to retrieve. **MUST** be named `offset` |
-| `limit`       | integer | Number of items to get. **MUST** be named `limit`                              |
+| `offset`  | integer | Zero-based index of the first item to retrieve.  |
+| `limit`       | integer | Number of items to get.                               |
 
 Implementations **SHOULD** implement and document default and max values for `limit`.
 
@@ -25,8 +25,8 @@ The response **MUST** contain the following fields:
 
 | Parameter    | Type    | Description                                                                |
 |--------------|---------|----------------------------------------------------------------------------|
-| `items`      | array   | **MUST** be named `items`.                                                 |
-| `totalItems` | integer | The total number of items across all pages. **MUST** be named `totalItems` |
+| `items`      | array   | Returned items.                                                            |
+| `totalItems` | integer | The total number of items across all pages.  |
 | `limit`      | integer | The requested `limit`, or max limit if given `limit` was over max.         |
 
 **Example**
@@ -54,8 +54,8 @@ This strategy is based on these query parameters:
 
 | Parameter | Type    | Description                                                                            |
 |-----------|---------|----------------------------------------------------------------------------------------|
-| `cursor`  | string  | An opaque string identifying the next page of items to get. **MUST** be named `cursor` |
-| `pageSize`    | integer | Number of items per page. **MUST** be named `pageSize`                                 |
+| `cursor`  | string  | An opaque string identifying the next page of items to get.  |
+| `pageSize`    | integer | Number of items per page.                                  |
 
 Cursor-based pagination is based on a `cursor` that is created when handling requests from the client. The cursor is returned to the client in the response body.
 The cursor points to the next page of items. Sorting parameters, `pageSize` and filters **MAY** also be embedded in the cursor. 
@@ -106,8 +106,8 @@ The response **MUST** contain the following fields:
 
 | Parameter | Type    | Description                                                                                                                         |
 |-----------|---------|-------------------------------------------------------------------------------------------------------------------------------------|
-| `items`  | array   | **MUST** be named `items`.                                                                                                          |
-| `cursor`  | string  | An opaque string pointing to next item to get. If no more items, cursor value is not returned to client. **MUST** be named `cursor` |
+| `items`  | array   | Returned items.                                                                                                                     |
+| `cursor`  | string  | An opaque string pointing to next item to get. If no more items, cursor value is not returned to client.  |
 
 
 **Example**

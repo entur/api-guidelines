@@ -4,7 +4,7 @@ If you implement sorting, you **MUST** use the query parameter `sort`.
 
 | Parameter | Type   | Description                                         |
 |-----------|--------|-----------------------------------------------------|
-| `sort`    | string | The field(s) to sort on. **MUST** be named `sort`.  |
+| `sort`    | string | The field(s) to sort on.  |
 
 Example:
 ```http
