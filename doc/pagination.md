@@ -143,6 +143,5 @@ As a rule of thumb, cursor pagination **SHOULD** be used unless: offset paginati
 
 ## Sorting
 
-When using pagination you **MUST** return elements in a deterministic order. Without a stable order, the boundary between pages is undefined: the same 
-item may appear on multiple pages or be skipped entirely as the client paginates, and cursors can no longer reliably point to "the next item".
-See [sorting](sorting.md) for more details. 
+When using pagination you **MUST** return elements in a deterministic order. Without one, the boundary between pages is undefined: the same item may appear on multiple pages or be skipped entirely as the client paginates, and cursors can no longer reliably point to the next page.
+See [sorting](sorting.md) for more details.
