@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.1](https://github.com/entur/api-guidelines/compare/v3.4.0...v3.4.1) (2026-09-25)
+
+
+### Bug Fixes
+
+* Add guideline about lifecycle in API title ([#130](https://github.com/entur/api-guidelines/issues/130)) ([c06e56a](https://github.com/entur/api-guidelines/commit/c06e56a61fbba356013dc5f9f756e8a857417b86))
+
 ## [3.4.0](https://github.com/entur/api-guidelines/compare/v3.3.0...v3.4.0) (2026-09-07)
 
 
