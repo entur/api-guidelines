@@ -123,8 +123,7 @@ query parameter in your OpenAPI specification.
 ```
 
 ## Sorting not controlled by client
-When returning a collection, there is no requirement that the client can control the sorting. However, the endpoint
-**MUST** return items in a predetermined order and you **MUST** document the order on the response field for the collection:
+When returning a collection, there is no requirement that the client can control the sorting. When sorting is not controlled by the client, you **MUST** however document the order on the response field for the collection:
 
 **Example**
 ```json
