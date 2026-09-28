@@ -131,7 +131,7 @@ When returning a collection, there is no requirement that the client can control
 {
   "items": {
     "type": "array",
-    "description": "Sorted by `name` ascending, with `id` as a tiebreaker. This ordering is fixed and cannot be changed by the client.",
+    "description": "Sorted by `name` ascending, with `id` as a tiebreaker.",
     "items": {
       "$ref": "#/components/schemas/Item"
     }
