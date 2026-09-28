@@ -522,8 +522,13 @@ A "de-facto" standard for correlating a request throughout a microservice archit
 
 See [pagination](doc/pagination.md) for more details.
 
-:eyes: If you implement sorting, you **MUST** use query parameter `sort`:
+All returned collections **MUST** be sorted, which it means that the order is deterministic: the same
+request **MUST** return items in the same order.
+
+:eyes: If you implement client-controlled sorting, you **MUST** use query parameter `sort`:
 > GET /api/v1/bus-stops?city=Oslo&sort=name,asc&sort=something,desc
+
+
 See [sorting](doc/sorting.md) for more details.
 
 
