@@ -1,6 +1,6 @@
 # Sorting
 
-When an API response is sorted, it means that the order is deterministic: the same
+All returned collections **MUST** be sorted, which it means that the order is deterministic: the same
 request **MUST** return items in the same order.
 
 ## Client-controlled sorting
@@ -123,9 +123,8 @@ query parameter in your OpenAPI specification.
 ```
 
 ## Sorting not controlled by client
-A sorted response does not require that the client can control the sorting; the endpoint
-may return items in a predetermined order. When the order is fixed, you
-**MUST** document it on the response field for the collection:
+When returning a collection, there is no requirement that the client can control the sorting. However, the endpoint
+**MUST** return items in a predetermined order and you **MUST** document the order on the response field for the collection:
 
 **Example**
 ```json
@@ -133,22 +132,6 @@ may return items in a predetermined order. When the order is fixed, you
   "items": {
     "type": "array",
     "description": "Sorted by `name` ascending, with `id` as a tiebreaker. This ordering is fixed and cannot be changed by the client.",
-    "items": {
-      "$ref": "#/components/schemas/Item"
-    }
-  }
-}
-```
-
-## Non-sorted responses
-If a returned collection is not sorted, that **MUST** also be documented:
-
-**Example**
-```json
-{
-  "items": {
-    "type": "array",
-    "description": "The order is undefined and **MUST NOT** be relied upon; it may change between requests.",
     "items": {
       "$ref": "#/components/schemas/Item"
     }
