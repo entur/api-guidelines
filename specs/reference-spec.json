@@ -13,7 +13,8 @@
     "x-entur-metadata": {
       "id": "items",
       "owner": "team-api",
-      "audience": "partner"
+      "audience": "partner",
+      "devExtensions": ["x-kotlin-implements"]
     }
   },
 

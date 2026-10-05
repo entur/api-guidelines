@@ -12,7 +12,8 @@
     },
     "x-entur-metadata": {
       "owner": "team-Api",
-      "audience": "public"
+      "audience": "public",
+      "devExtensions": ["kotlin-implements"]
     }
   },
 
