@@ -174,12 +174,13 @@ If you need to explain the required permissions in more detail, you can declare 
 ### 2.4 Entur Metadata
 All OpenAPI specifications published to Enturs developer portal must declare a block `x-entur-metadata` in the `info` section of the specification.
 
-Field name|Type    |Description
-----------|--------|-----------
-id        |`string`|**REQUIRED**. Unique id for this specification. [Read more](#241-identifying-a-specification).
-audience  |`string`|**REQUIRED**. Who this specification is targeted to. Must be one of `"open"`, `"partner"`, `"internal"`, `"private"`
-owner     |`string`|**REQUIRED**. The Entur team responsible for this specification. [Read more](#242-specification-owner).
-parentId  |`string`|Id of the parent specification, used when merging. [Read more](#243-merging-specifications).
+Field name    |Type      |Description
+--------------|----------|-----------
+id            |`string`  |**REQUIRED**. Unique id for this specification. [Read more](#241-identifying-a-specification).
+audience      |`string`  |**REQUIRED**. Who this specification is targeted to. Must be one of `"open"`, `"partner"`, `"internal"`, `"private"`
+owner         |`string`  |**REQUIRED**. The Entur team responsible for this specification. [Read more](#242-specification-owner).
+parentId      |`string`  |Id of the parent specification, used when merging. [Read more](#243-merging-specifications).
+devExtensions |[`string`]|OpenAPI extensions in the specification that are used for development, but that should not be visible to consumers of the API.
 
 Example:
 ```json
@@ -229,6 +230,7 @@ There are some limitations when merging specifications:
 
 <details>
 <summary>Example</summary>
+
 For example, say you have three microservices, `alpha`, `beta` and `gamma`:
 
 Microservice `alpha` publishes the specification:
@@ -268,6 +270,35 @@ Microservice `gamma` publishes the specification:
 ```
 
 Here, only 1 specification will be shown on the Developer Portal, which is a combination of `alpha`, `beta` and `gamma`. Since `alpha` is the parent specification, the combined specification will use `alpha` as the base, so fields like `info.title` will be picked from there.
+</details>
+
+#### 2.4.4 Development-only OpenAPI extensions
+Sometimes there may be a need for adding OpenAPI extensions to a specification that are only meant for the development process, for example for generating server interfaces with [OpenAPIGenerator](https://openapi-generator.tech/docs/generators/kotlin-spring#supported-vendor-extensions). These extensions are only relevant for the team creating the API, not for consumers. To hide extensions like these from the OpenAPI specification that is served from the Developer Portal, use the field `x-entur-metadata.devExtensions`.
+
+<details>
+<summary>Example</summary>
+
+The extension `x-kotlin-implements` will be stripped before the specification is published to the Developer Portal.
+
+```json
+{
+  "info": {
+    "x-entur-metadata": {
+      ...,
+      "devExtensions": ["x-kotlin-implements"]
+    }
+  },
+  "components": {
+    "schemas": {
+      "Item": {
+        "type": "object",
+        "x-kotlin-implements": ["com.example.Item"],
+        ...
+      }
+    }
+  }
+}
+```
 </details>
 
 

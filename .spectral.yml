@@ -244,6 +244,19 @@ rules:
       functionOptions:
         match: ^[a-z0-9]+(-[a-z0-9]+)*$
 
+  entur-info-metadata-devExtensions:
+    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#244-development-only-openapi-extensions"
+    severity: error
+    given: $.info.x-entur-metadata.devExtensions
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          items:
+            type: string
+            pattern: ^x-.*$
+
   # -------------------------------------------------------------------------
   # 2.5 Lifecycle
   # -------------------------------------------------------------------------
