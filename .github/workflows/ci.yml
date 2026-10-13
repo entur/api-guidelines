@@ -8,7 +8,28 @@ on:
 jobs:
   validate-pr:
     uses: entur/gha-meta/.github/workflows/verify-pr.yml@v1
-  
+
+  test-rules:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: ./tests
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: tests/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Type check
+        run: npm run typecheck
+      - name: Run Spectral rule tests
+        run: npm test
+
   lint-reference-spec:
     runs-on: ubuntu-latest
     permissions:
