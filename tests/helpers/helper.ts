@@ -1,17 +1,9 @@
 import * as fs from "node:fs";
-import * as path from "node:path";
-import {
-  Spectral,
-  Document,
-  type Ruleset,
-  type ISpectralDiagnostic,
-} from "@stoplight/spectral-core";
-import { Json as JsonParser } from "@stoplight/spectral-parsers";
-import { bundleAndLoadRuleset } from "@stoplight/spectral-ruleset-bundler/with-loader";
-import { commonjs } from "@stoplight/spectral-ruleset-bundler/plugins/commonjs";
-import { fetch } from "@stoplight/spectral-runtime";
-
-const DEFAULT_RULESET = path.resolve(__dirname, "..", "..", ".spectral.yml");
+import {Document, type ISpectralDiagnostic, type Ruleset, Spectral,} from "@stoplight/spectral-core";
+import {Json as JsonParser} from "@stoplight/spectral-parsers";
+import {bundleAndLoadRuleset} from "@stoplight/spectral-ruleset-bundler/with-loader";
+import {commonjs} from "@stoplight/spectral-ruleset-bundler/plugins/commonjs";
+import {fetch} from "@stoplight/spectral-runtime";
 
 // Cache the bundled rulesets so the bundling only runs once per ruleset during a test run.
 const rulesetCache = new Map<string, Promise<Ruleset>>();
@@ -47,12 +39,12 @@ export type Scenario = ReadonlyArray<
  *
  * @param ruleName The rule id under test (e.g. "entur-info-title").
  * @param tests    The scenarios to run.
- * @param ruleset  Absolute path to the ruleset file. Defaults to `../../.spectral.yml`.
+ * @param ruleset  Absolute path to the ruleset file.
  */
 export default function testRule(
   ruleName: string,
   tests: Scenario,
-  ruleset = DEFAULT_RULESET
+  ruleset: string
 ): void {
   describe(ruleName, () => {
     for (const testCase of tests) {
@@ -77,3 +69,27 @@ export default function testRule(
   });
 }
 
+/**
+ * Lint a whole spec file on disk against a ruleset and return every diagnostic.
+ *
+ * Intended for integration tests over the reference specs, where we care about
+ * the full set of findings rather than a single rule.
+ *
+ * @param specPath    Absolute path to the OpenAPI document to lint.
+ * @param rulesetFile Absolute path to the ruleset file.
+ */
+export async function lintFile(
+  specPath: string,
+  rulesetFile: string
+): Promise<ISpectralDiagnostic[]> {
+  const spectral = new Spectral();
+  spectral.setRuleset(await loadRuleset(rulesetFile));
+
+  const document = new Document(
+    fs.readFileSync(specPath, "utf8"),
+    JsonParser,
+    specPath
+  );
+
+  return spectral.run(document);
+}

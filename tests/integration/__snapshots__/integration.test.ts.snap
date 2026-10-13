@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`reference-spec-with-errors.json produces the expected error codes against .spectral.yml 1`] = `
+[
+  "entur-get-responses-validation",
+  "entur-info-metadata-audience-valid",
+  "entur-info-metadata-devExtensions",
+  "entur-info-metadata-id",
+  "entur-info-metadata-owner-valid",
+  "entur-permissions",
+  "entur-permissions",
+  "entur-permissions",
+  "entur-permissions",
+  "entur-permissions",
+  "entur-permissions",
+  "oas3-valid-schema-example",
+  "oas3-valid-schema-example",
+]
+`;

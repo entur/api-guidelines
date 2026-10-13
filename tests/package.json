@@ -4,9 +4,7 @@
   "private": true,
   "description": "Jest unit tests for the Entur API guidelines Spectral rulesets",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "typecheck": "tsc --noEmit"
+    "test": "jest"
   },
   "devDependencies": {
     "@stoplight/spectral-core": "1.24.0",

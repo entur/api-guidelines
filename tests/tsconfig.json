@@ -14,6 +14,6 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true
   },
-  "include": ["helpers/**/*.ts", "rules/**/*.ts"]
+  "include": ["helpers/**/*.ts", "unit/**/*.ts", "integration/**/*.ts"]
 }
 
