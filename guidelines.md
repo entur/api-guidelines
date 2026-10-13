@@ -439,6 +439,7 @@ This means that the consumer knows that the field `transportMode` can have eithe
 | 404  | Not Found             |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 | 409  | Conflict              |                  |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 | 410  | Gone                  |:white_check_mark:|                  |:white_check_mark:|:white_check_mark:|:white_check_mark:|
+| 412  | Precondition Failed   |                  |                  |:white_check_mark:|:white_check_mark:|:white_check_mark:|
 | 500  | Internal Server Error |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 | 503  | Service Unavailable   |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 
