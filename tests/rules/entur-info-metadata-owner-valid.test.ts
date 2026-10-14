@@ -34,7 +34,7 @@ testRule({
     paths: {},
   },
   rulesetPath: resolve("../../.spectral.yml"),
-  errors: [
+  expectedIssues: [
     {
       code: "entur-info-metadata-owner-valid",
       severity: DiagnosticSeverity.Error,

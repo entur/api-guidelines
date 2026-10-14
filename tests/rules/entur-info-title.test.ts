@@ -26,7 +26,7 @@ testRule({
     paths: {},
   },
   rulesetPath: resolve("../../.spectral.yml"),
-  errors: [
+  expectedIssues: [
     {
       code: "entur-info-title",
       severity: DiagnosticSeverity.Error,

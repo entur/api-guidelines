@@ -40,7 +40,7 @@ testRule({
     paths: {},
   },
   rulesetPath: resolve("../../.spectral.yml"),
-  errors: [
+  expectedIssues: [
     {
       code: "entur-sunset-format-api",
       message: "Must be a valid calendar date.",

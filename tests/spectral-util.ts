@@ -20,7 +20,7 @@ export type RuleTest = Readonly<{
   /** Absolute path to the ruleset file */
   rulesetPath: string;
   /** The diagnostics expected from the rule (omitted = valid). */
-  errors?: ReadonlyArray<Partial<ISpectralDiagnostic>>;
+  expectedIssues?: ReadonlyArray<Partial<ISpectralDiagnostic>>;
 }>;
 
 /**
@@ -31,7 +31,7 @@ export default function testRule({
   name,
   document,
   rulesetPath,
-  errors = [],
+  expectedIssues = [],
 }: RuleTest): void {
   it(`${rule}: ${name}`, async () => {
     const spectral = new Spectral();
@@ -44,14 +44,14 @@ export default function testRule({
     );
 
     const results = await spectral.run(doc);
-    const ruleResults = results.filter(({ code }) => code === rule);
+    const issues = results.filter(({ code }) => code === rule);
 
     // toEqual checks the result count and order against this array; wrapping
-    // each expected error in objectContaining makes the per-element check a
+    // each expected issue in objectContaining makes the per-element check a
     // subset match, so a case only asserts the fields it lists (e.g. code,
     // severity) and ignores the rest (message, path, range, ...).
-    expect(ruleResults).toEqual(
-      errors.map((error) => expect.objectContaining(error))
+    expect(issues).toEqual(
+      expectedIssues.map((issue) => expect.objectContaining(issue))
     );
   });
 }
@@ -63,8 +63,8 @@ export type SpecTest = Readonly<{
   specPath: string;
   /** Absolute path to the ruleset file */
   rulesetPath: string;
-  /** The error-severity diagnostics expected (omitted = clean). */
-  errors?: ReadonlyArray<Partial<ISpectralDiagnostic>>;
+  /** The error- and warning-severity diagnostics expected (omitted = clean). */
+  expectedIssues?: ReadonlyArray<Partial<ISpectralDiagnostic>>;
 }>;
 
 /**
@@ -74,7 +74,7 @@ export function testSpec({
   name,
   specPath,
   rulesetPath,
-  errors = [],
+  expectedIssues = [],
 }: SpecTest): void {
   it(name, async () => {
     const spectral = new Spectral();
@@ -87,12 +87,14 @@ export function testSpec({
     );
 
     const results = await spectral.run(doc);
-    const errorResults = results.filter(
-      ({ severity }) => severity === DiagnosticSeverity.Error
+    const issues = results.filter(
+      ({ severity }) =>
+        severity === DiagnosticSeverity.Error ||
+        severity === DiagnosticSeverity.Warning
     );
 
-    expect(errorResults).toEqual(
-      errors.map((error) => expect.objectContaining(error))
+    expect(issues).toEqual(
+      expectedIssues.map((issue) => expect.objectContaining(issue))
     );
   });
 }

@@ -40,7 +40,7 @@ testRule({
     },
   },
   rulesetPath: resolve("../../.spectral.yml"),
-  errors: [
+  expectedIssues: [
     {
       code: "entur-permissions",
       severity: DiagnosticSeverity.Error,

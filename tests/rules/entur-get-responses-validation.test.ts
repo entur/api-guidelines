@@ -38,7 +38,7 @@ testRule({
     },
   },
   rulesetPath: resolve("../../.spectral.yml"),
-  errors: [
+  expectedIssues: [
     {
       code: "entur-get-responses-validation",
       severity: DiagnosticSeverity.Error,
