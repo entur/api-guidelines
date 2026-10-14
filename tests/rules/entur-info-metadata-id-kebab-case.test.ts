@@ -1,19 +1,15 @@
 import * as path from "node:path";
 import { DiagnosticSeverity } from "@stoplight/types";
-import testRule from "../spectral-util";
-
-const resolve = (p: string): string => path.resolve(__dirname, p);
-const RULESETS = [
-  ["spectral", resolve("../../.spectral.yml")],
-  ["required", resolve("../../.spectral-required.yml")],
-] as const;
+import testRule, { RULESETS } from "../spectral-util";
 
 const rule = "entur-info-metadata-id-kebab-case";
 
-for (const [label, rulesetPath] of RULESETS) {
+for (const rulesetPath of Object.values(RULESETS)) {
+  const ruleset = path.basename(rulesetPath);
+
   testRule({
     rule,
-    name: `valid for a lower-kebab-case id (${label})`,
+    name: `valid for a lower-kebab-case id (${ruleset})`,
     document: {
       openapi: "3.0.3",
       info: {
@@ -28,7 +24,7 @@ for (const [label, rulesetPath] of RULESETS) {
 
   testRule({
     rule,
-    name: `flags an id that is not lower-kebab-case (${label})`,
+    name: `flags an id that is not lower-kebab-case (${ruleset})`,
     document: {
       openapi: "3.0.3",
       info: {

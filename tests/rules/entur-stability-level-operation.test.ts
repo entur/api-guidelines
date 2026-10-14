@@ -1,19 +1,15 @@
 import * as path from "node:path";
 import { DiagnosticSeverity } from "@stoplight/types";
-import testRule from "../spectral-util";
-
-const resolve = (p: string): string => path.resolve(__dirname, p);
-const RULESETS = [
-  ["spectral", resolve("../../.spectral.yml")],
-  ["required", resolve("../../.spectral-required.yml")],
-] as const;
+import testRule, { RULESETS } from "../spectral-util";
 
 const rule = "entur-stability-level-operation";
 
-for (const [label, rulesetPath] of RULESETS) {
+for (const rulesetPath of Object.values(RULESETS)) {
+  const ruleset = path.basename(rulesetPath);
+
   testRule({
     rule,
-    name: `valid for a recognised operation stability level (${label})`,
+    name: `valid for a recognised operation stability level (${ruleset})`,
     document: {
       openapi: "3.0.3",
       info: { title: "Ticketing", version: "1.0.0" },
@@ -31,7 +27,7 @@ for (const [label, rulesetPath] of RULESETS) {
 
   testRule({
     rule,
-    name: `flags an unrecognised operation stability level (${label})`,
+    name: `flags an unrecognised operation stability level (${ruleset})`,
     document: {
       openapi: "3.0.3",
       info: { title: "Ticketing", version: "1.0.0" },

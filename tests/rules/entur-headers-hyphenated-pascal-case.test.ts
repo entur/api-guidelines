@@ -1,9 +1,9 @@
 import * as path from "node:path";
 import { DiagnosticSeverity } from "@stoplight/types";
-import testRule from "../spectral-util";
+import testRule, { RULESETS } from "../spectral-util";
 
-const resolve = (p: string): string => path.resolve(__dirname, p);
-const rulesetPath = resolve("../../.spectral.yml");
+const rulesetPath = RULESETS.all;
+const ruleset = path.basename(rulesetPath);
 const rule = "entur-headers-hyphenated-pascal-case";
 
 const withHeaderName = (name: string) => ({
@@ -28,14 +28,14 @@ const withHeaderName = (name: string) => ({
 
 testRule({
   rule,
-  name: "valid for a Hyphenated-Pascal-Case header name",
+  name: `valid for a Hyphenated-Pascal-Case header name (${ruleset})`,
   document: withHeaderName("Accept-Language"),
   rulesetPath,
 });
 
 testRule({
   rule,
-  name: "flags a header name that is not Hyphenated-Pascal-Case",
+  name: `flags a header name that is not Hyphenated-Pascal-Case (${ruleset})`,
   document: withHeaderName("accept-language"),
   rulesetPath,
   expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],

@@ -1,14 +1,14 @@
 import * as path from "node:path";
 import { DiagnosticSeverity } from "@stoplight/types";
-import testRule from "../spectral-util";
+import testRule, { RULESETS } from "../spectral-util";
 
-const resolve = (p: string): string => path.resolve(__dirname, p);
-const rulesetPath = resolve("../../.spectral.yml");
+const rulesetPath = RULESETS.all;
+const ruleset = path.basename(rulesetPath);
 const rule = "entur-operation-summary";
 
 testRule({
   rule,
-  name: "valid when an operation has a summary",
+  name: `valid when an operation has a summary (${ruleset})`,
   document: {
     openapi: "3.0.3",
     info: { title: "Ticketing", version: "1.0.0" },
@@ -26,7 +26,7 @@ testRule({
 
 testRule({
   rule,
-  name: "warns when an operation has no summary",
+  name: `warns when an operation has no summary (${ruleset})`,
   document: {
     openapi: "3.0.3",
     info: { title: "Ticketing", version: "1.0.0" },

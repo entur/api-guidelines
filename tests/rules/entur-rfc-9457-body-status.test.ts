@@ -1,9 +1,9 @@
 import * as path from "node:path";
 import { DiagnosticSeverity } from "@stoplight/types";
-import testRule from "../spectral-util";
+import testRule, { RULESETS } from "../spectral-util";
 
-const resolve = (p: string): string => path.resolve(__dirname, p);
-const rulesetPath = resolve("../../.spectral.yml");
+const rulesetPath = RULESETS.all;
+const ruleset = path.basename(rulesetPath);
 const rule = "entur-rfc-9457-body-status";
 
 const problemSchema = (properties: Record<string, unknown>) => ({
@@ -29,7 +29,7 @@ const problemSchema = (properties: Record<string, unknown>) => ({
 
 testRule({
   rule,
-  name: "valid when the error schema defines 'status'",
+  name: `valid when the error schema defines 'status' (${ruleset})`,
   document: problemSchema({
     title: { type: "string" },
     status: { type: "integer" },
@@ -39,7 +39,7 @@ testRule({
 
 testRule({
   rule,
-  name: "flags an error schema missing 'status'",
+  name: `flags an error schema missing 'status' (${ruleset})`,
   document: problemSchema({ title: { type: "string" } }),
   rulesetPath,
   expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],

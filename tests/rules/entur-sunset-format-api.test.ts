@@ -1,14 +1,6 @@
 import * as path from "node:path";
 import { DiagnosticSeverity } from "@stoplight/types";
-import testRule from "../spectral-util";
-
-/** Resolve a path relative to this test file. */
-const resolve = (relativePath: string): string =>
-  path.resolve(__dirname, relativePath);
-const RULESETS = [
-  ["spectral", resolve("../../.spectral.yml")],
-  ["required", resolve("../../.spectral-required.yml")],
-] as const;
+import testRule, { RULESETS } from "../spectral-util";
 
 const rule = "entur-sunset-format-api";
 
@@ -16,10 +8,12 @@ const rule = "entur-sunset-format-api";
  * This rule uses the custom `date` function (functions/date.js), so it also
  * verifies that custom Spectral functions are bundled and loaded correctly.
  */
-for (const [label, rulesetPath] of RULESETS) {
+for (const rulesetPath of Object.values(RULESETS)) {
+  const ruleset = path.basename(rulesetPath);
+
   testRule({
     rule,
-    name: `accepts a valid calendar date for info.x-sunset (${label})`,
+    name: `accepts a valid calendar date for info.x-sunset (${ruleset})`,
     document: {
       openapi: "3.0.3",
       info: {
@@ -35,7 +29,7 @@ for (const [label, rulesetPath] of RULESETS) {
 
   testRule({
     rule,
-    name: `rejects an invalid date for info.x-sunset (${label})`,
+    name: `rejects an invalid date for info.x-sunset (${ruleset})`,
     document: {
       openapi: "3.0.3",
       info: {

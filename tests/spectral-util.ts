@@ -1,10 +1,17 @@
 import * as fs from "node:fs";
+import * as path from "node:path";
 import {Document, type ISpectralDiagnostic, Spectral,} from "@stoplight/spectral-core";
 import { DiagnosticSeverity } from "@stoplight/types";
 import {Json as JsonParser} from "@stoplight/spectral-parsers";
 import {bundleAndLoadRuleset} from "@stoplight/spectral-ruleset-bundler/with-loader";
 import {commonjs} from "@stoplight/spectral-ruleset-bundler/plugins/commonjs";
 import {fetch} from "@stoplight/spectral-runtime";
+
+/** The repo rulesets, keyed by label, resolved to absolute paths. */
+export const RULESETS = {
+  all: path.resolve(__dirname, "..", ".spectral.yml"),
+  required: path.resolve(__dirname, "..", ".spectral-required.yml"),
+} as const;
 
 export type RuleTest = Readonly<{
   /** The rule id under test (e.g. "entur-info-title") */

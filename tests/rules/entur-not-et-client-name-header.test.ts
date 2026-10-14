@@ -1,14 +1,14 @@
 import * as path from "node:path";
 import { DiagnosticSeverity } from "@stoplight/types";
-import testRule from "../spectral-util";
+import testRule, { RULESETS } from "../spectral-util";
 
-const resolve = (p: string): string => path.resolve(__dirname, p);
-const rulesetPath = resolve("../../.spectral.yml");
+const rulesetPath = RULESETS.all;
+const ruleset = path.basename(rulesetPath);
 const rule = "entur-not-et-client-name-header";
 
 testRule({
   rule,
-  name: "valid when no ET-Client-Name header is declared",
+  name: `valid when no ET-Client-Name header is declared (${ruleset})`,
   document: {
     openapi: "3.0.3",
     info: { title: "Ticketing", version: "1.0.0" },
@@ -19,7 +19,7 @@ testRule({
 
 testRule({
   rule,
-  name: "warns when an ET-Client-Name header is declared",
+  name: `warns when an ET-Client-Name header is declared (${ruleset})`,
   document: {
     openapi: "3.0.3",
     info: { title: "Ticketing", version: "1.0.0" },

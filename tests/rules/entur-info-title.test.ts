@@ -1,31 +1,30 @@
 import * as path from "node:path";
 import { DiagnosticSeverity } from "@stoplight/types";
-import testRule from "../spectral-util";
+import testRule, { RULESETS } from "../spectral-util";
 
-/** Resolve a path relative to this test file. */
-const resolve = (relativePath: string): string =>
-  path.resolve(__dirname, relativePath);
+const rulesetPath = RULESETS.all;
+const ruleset = path.basename(rulesetPath);
 
 testRule({
   rule: "entur-info-title",
-  name: "valid when the info section has a non-empty title",
+  name: `valid when the info section has a non-empty title (${ruleset})`,
   document: {
     openapi: "3.0.3",
     info: { title: "Ticketing", version: "1.0.0" },
     paths: {},
   },
-  rulesetPath: resolve("../../.spectral.yml"),
+  rulesetPath,
 });
 
 testRule({
   rule: "entur-info-title",
-  name: "flags a missing info title",
+  name: `flags a missing info title (${ruleset})`,
   document: {
     openapi: "3.0.3",
     info: { version: "1.0.0" },
     paths: {},
   },
-  rulesetPath: resolve("../../.spectral.yml"),
+  rulesetPath,
   expectedIssues: [
     {
       code: "entur-info-title",

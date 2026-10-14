@@ -1,9 +1,9 @@
 import * as path from "node:path";
 import { DiagnosticSeverity } from "@stoplight/types";
-import testRule from "../spectral-util";
+import testRule, { RULESETS } from "../spectral-util";
 
-const resolve = (p: string): string => path.resolve(__dirname, p);
-const rulesetPath = resolve("../../.spectral.yml");
+const rulesetPath = RULESETS.all;
+const ruleset = path.basename(rulesetPath);
 const rule = "entur-language-headers";
 
 const withAcceptLanguageExample = (example: string) => ({
@@ -29,14 +29,14 @@ const withAcceptLanguageExample = (example: string) => ({
 
 testRule({
   rule,
-  name: "valid for a BCP 47 language that is not a macrolanguage",
+  name: `valid for a BCP 47 language that is not a macrolanguage (${ruleset})`,
   document: withAcceptLanguageExample("nb"),
   rulesetPath,
 });
 
 testRule({
   rule,
-  name: "flags a macrolanguage code",
+  name: `flags a macrolanguage code (${ruleset})`,
   document: withAcceptLanguageExample("no"),
   rulesetPath,
   expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],

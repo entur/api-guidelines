@@ -1,21 +1,15 @@
 import * as path from "node:path";
 import { DiagnosticSeverity } from "@stoplight/types";
-import testRule from "../spectral-util";
-
-/** Resolve a path relative to this test file. */
-const resolve = (relativePath: string): string =>
-  path.resolve(__dirname, relativePath);
-const RULESETS = [
-  ["spectral", resolve("../../.spectral.yml")],
-  ["required", resolve("../../.spectral-required.yml")],
-] as const;
+import testRule, { RULESETS } from "../spectral-util";
 
 const rule = "entur-info-metadata-audience-valid";
 
-for (const [label, rulesetPath] of RULESETS) {
+for (const rulesetPath of Object.values(RULESETS)) {
+  const ruleset = path.basename(rulesetPath);
+
   testRule({
     rule,
-    name: `valid for a recognised audience value (${label})`,
+    name: `valid for a recognised audience value (${ruleset})`,
     document: {
       openapi: "3.0.3",
       info: {
@@ -30,7 +24,7 @@ for (const [label, rulesetPath] of RULESETS) {
 
   testRule({
     rule,
-    name: `flags an unrecognised audience value (${label})`,
+    name: `flags an unrecognised audience value (${ruleset})`,
     document: {
       openapi: "3.0.3",
       info: {
