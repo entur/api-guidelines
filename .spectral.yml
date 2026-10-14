@@ -460,7 +460,7 @@ rules:
       field: "@key"
       function: enumeration
       functionOptions:
-        values: ["200", "201", "204", "400", "401", "403", "404", "409", "410", "500", "503", "default"]
+        values: ["200", "201", "204", "400", "401", "403", "404", "409", "410", "412", "500", "503", "default"]
 
   entur-patch-responses-validation:
     documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#41-http-status-codes"
@@ -470,7 +470,7 @@ rules:
       field: "@key"
       function: enumeration
       functionOptions:
-        values: ["200", "204", "400", "401", "403", "404", "409", "410", "500", "503", "default"]
+        values: ["200", "204", "400", "401", "403", "404", "409", "410", "412", "500", "503", "default"]
 
   entur-delete-responses-validation:
     documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#41-http-status-codes"
@@ -480,7 +480,7 @@ rules:
       field: "@key"
       function: enumeration
       functionOptions:
-        values: ["200", "204", "400", "401", "403", "404", "409", "410", "500", "503", "default"]
+        values: ["200", "204", "400", "401", "403", "404", "409", "410", "412", "500", "503", "default"]
 
 
   # -------------------------------------------------------------------------
