@@ -18,7 +18,7 @@ testRule({
     },
     paths: {},
   },
-  ruleset: resolve("../../.spectral.yml"),
+  rulesetPath: resolve("../../.spectral.yml"),
 });
 
 testRule({
@@ -33,7 +33,7 @@ testRule({
     },
     paths: {},
   },
-  ruleset: resolve("../../.spectral.yml"),
+  rulesetPath: resolve("../../.spectral.yml"),
   errors: [
     {
       code: "entur-info-metadata-devExtensions",

@@ -21,7 +21,7 @@ testRule({
       },
     },
   },
-  ruleset: resolve("../../.spectral.yml"),
+  rulesetPath: resolve("../../.spectral.yml"),
 });
 
 testRule({
@@ -39,7 +39,7 @@ testRule({
       },
     },
   },
-  ruleset: resolve("../../.spectral.yml"),
+  rulesetPath: resolve("../../.spectral.yml"),
   errors: [
     {
       code: "entur-permissions",

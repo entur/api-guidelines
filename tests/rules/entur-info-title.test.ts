@@ -14,7 +14,7 @@ testRule({
     info: { title: "Ticketing", version: "1.0.0" },
     paths: {},
   },
-  ruleset: resolve("../../.spectral.yml"),
+  rulesetPath: resolve("../../.spectral.yml"),
 });
 
 testRule({
@@ -25,7 +25,7 @@ testRule({
     info: { version: "1.0.0" },
     paths: {},
   },
-  ruleset: resolve("../../.spectral.yml"),
+  rulesetPath: resolve("../../.spectral.yml"),
   errors: [
     {
       code: "entur-info-title",

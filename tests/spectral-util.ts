@@ -18,7 +18,7 @@ export type RuleTest = Readonly<{
   /** The OpenAPI document (as a plain object) to lint */
   document: Record<string, unknown>;
   /** Absolute path to the ruleset file */
-  ruleset: string;
+  rulesetPath: string;
   /** The diagnostics expected from the rule (omitted = valid). */
   errors?: ReadonlyArray<Partial<ISpectralDiagnostic>>;
 }>;
@@ -30,12 +30,12 @@ export default function testRule({
   rule,
   name,
   document,
-  ruleset,
+  rulesetPath,
   errors = [],
 }: RuleTest): void {
   it(`${rule}: ${name}`, async () => {
     const spectral = new Spectral();
-    spectral.setRuleset(await loadRuleset(ruleset));
+    spectral.setRuleset(await loadRuleset(rulesetPath));
 
     const doc = new Document(
       JSON.stringify(document),
