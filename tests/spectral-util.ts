@@ -1,14 +1,10 @@
 import * as fs from "node:fs";
-import {Document, type ISpectralDiagnostic, type Ruleset, Spectral,} from "@stoplight/spectral-core";
+import {Document, type ISpectralDiagnostic, Spectral,} from "@stoplight/spectral-core";
 import { DiagnosticSeverity } from "@stoplight/types";
 import {Json as JsonParser} from "@stoplight/spectral-parsers";
 import {bundleAndLoadRuleset} from "@stoplight/spectral-ruleset-bundler/with-loader";
 import {commonjs} from "@stoplight/spectral-ruleset-bundler/plugins/commonjs";
 import {fetch} from "@stoplight/spectral-runtime";
-
-function loadRuleset(rulesetFile: string): Promise<Ruleset> {
-  return bundleAndLoadRuleset(rulesetFile, { fs, fetch }, [commonjs()]);
-}
 
 export type RuleTest = Readonly<{
   /** The rule id under test (e.g. "entur-info-title") */
@@ -34,17 +30,15 @@ export default function testRule({
   expectedIssues = [],
 }: RuleTest): void {
   it(`${rule}: ${name}`, async () => {
-    const spectral = new Spectral();
-    spectral.setRuleset(await loadRuleset(rulesetPath));
-
     const doc = new Document(
       JSON.stringify(document),
       JsonParser,
       "document.json"
     );
 
-    const issues = await spectral.run(doc);
-    const ruleIssues = issues.filter(({ code }) => code === rule);
+    const spectral = await setupSpectral(rulesetPath);
+    const results = await spectral.run(doc);
+    const ruleIssues = results.filter(({ code }) => code === rule);
 
     // toEqual checks the result count and order against this array; wrapping
     // each expected issue in objectContaining makes the per-element check a
@@ -77,17 +71,15 @@ export function testSpec({
   expectedIssues = [],
 }: SpecTest): void {
   it(name, async () => {
-    const spectral = new Spectral();
-    spectral.setRuleset(await loadRuleset(rulesetPath));
-
     const doc = new Document(
       fs.readFileSync(specPath, "utf8"),
       JsonParser,
       specPath
     );
 
-    const issues = await spectral.run(doc);
-    const warningsAndErrors = issues.filter(
+    const spectral = await setupSpectral(rulesetPath);
+    const results = await spectral.run(doc);
+    const warningsAndErrors = results.filter(
       ({ severity }) =>
         severity === DiagnosticSeverity.Error ||
         severity === DiagnosticSeverity.Warning
@@ -97,4 +89,13 @@ export function testSpec({
       expectedIssues.map((issue) => expect.objectContaining(issue))
     );
   });
+}
+
+/** Create a Spectral instance with the given ruleset loaded. */
+async function setupSpectral(rulesetPath: string): Promise<Spectral> {
+  const spectral = new Spectral();
+  spectral.setRuleset(
+      await bundleAndLoadRuleset(rulesetPath, { fs, fetch }, [commonjs()])
+  );
+  return spectral;
 }
