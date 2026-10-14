@@ -5,19 +5,8 @@ import {bundleAndLoadRuleset} from "@stoplight/spectral-ruleset-bundler/with-loa
 import {commonjs} from "@stoplight/spectral-ruleset-bundler/plugins/commonjs";
 import {fetch} from "@stoplight/spectral-runtime";
 
-// Cache the bundled rulesets so the bundling only runs once per ruleset during a test run.
-const rulesetCache = new Map<string, Promise<Ruleset>>();
-
 function loadRuleset(rulesetFile: string): Promise<Ruleset> {
-  let cached = rulesetCache.get(rulesetFile);
-  if (!cached) {
-    // The repo's custom functions are a mix of CommonJS (`module.exports`) and
-    // ESM. The `commonjs` plugin lets the bundler handle both, matching how the
-    // Spectral CLI loads them.
-    cached = bundleAndLoadRuleset(rulesetFile, { fs, fetch }, [commonjs()]);
-    rulesetCache.set(rulesetFile, cached);
-  }
-  return cached;
+  return bundleAndLoadRuleset(rulesetFile, { fs, fetch }, [commonjs()]);
 }
 
 export type RuleTest = Readonly<{
