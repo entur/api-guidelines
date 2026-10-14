@@ -9,19 +9,17 @@ function loadRuleset(rulesetFile: string): Promise<Ruleset> {
   return bundleAndLoadRuleset(rulesetFile, { fs, fetch }, [commonjs()]);
 }
 
-export type RuleError = Partial<ISpectralDiagnostic>;
-
 export type RuleTest = Readonly<{
-  /** The rule id under test (e.g. "entur-info-title"). */
+  /** The rule id under test (e.g. "entur-info-title") */
   rule: string;
-  /** Human-readable description of the scenario. */
+  /** Human-readable description of what is tested */
   name: string;
-  /** The OpenAPI document (as a plain object) to lint. */
+  /** The OpenAPI document (as a plain object) to lint */
   document: Record<string, unknown>;
-  /** Absolute path to the ruleset file. */
+  /** Absolute path to the ruleset file */
   ruleset: string;
   /** The diagnostics expected from the rule (omitted = valid). */
-  errors?: ReadonlyArray<RuleError>;
+  errors?: ReadonlyArray<Partial<ISpectralDiagnostic>>;
 }>;
 
 /**
