@@ -15,20 +15,20 @@ const errorCodes = (
     .map((result) => String(result.code))
     .sort();
 
-describe("reference-spec.json", () => {
+describe("valid.json", () => {
   it("lints clean against .spectral.yml", async () => {
     const results = await lintFile(
-      resolve("specs/reference-spec.json"),
+      resolve("specs/valid.json"),
       resolve("../../.spectral.yml")
     );
     expect(errorCodes(results)).toEqual([]);
   });
 });
 
-describe("reference-spec-with-errors.json", () => {
+describe("errors.json", () => {
   it("produces the expected error codes against .spectral.yml", async () => {
     const results = await lintFile(
-      resolve("specs/reference-spec-with-errors.json"),
+      resolve("specs/errors.json"),
       resolve("../../.spectral.yml")
     );
     expect(errorCodes(results)).toEqual([
@@ -49,10 +49,10 @@ describe("reference-spec-with-errors.json", () => {
   });
 });
 
-describe("valid-reference-spec-with-errors.json", () => {
+describe("required-valid.json", () => {
   it("has no .spectral-required.yml errors", async () => {
     const results = await lintFile(
-      resolve("specs/valid-reference-spec-with-errors.json"),
+      resolve("specs/required-valid.json"),
       resolve("../../.spectral-required.yml")
     );
     expect(errorCodes(results)).toEqual([]);
