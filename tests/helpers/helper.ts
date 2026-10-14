@@ -20,52 +20,46 @@ function loadRuleset(rulesetFile: string): Promise<Ruleset> {
   return cached;
 }
 
-export type Scenario = ReadonlyArray<
-  Readonly<{
-    /** Human-readable description of the scenario. */
-    name: string;
-    /** The OpenAPI document (as a plain object) to lint. */
-    document: Record<string, unknown>;
-    /** The diagnostics expected from the rule under test (empty = valid). */
-    errors: ReadonlyArray<Partial<ISpectralDiagnostic>>;
-  }>
->;
+export type RuleTest = Readonly<{
+  /** Human-readable description of the scenario. */
+  name: string;
+  /** The OpenAPI document (as a plain object) to lint. */
+  document: Record<string, unknown>;
+  /** The diagnostics expected from the rule under test (empty = valid). */
+  errors: ReadonlyArray<Partial<ISpectralDiagnostic>>;
+}>;
 
 /**
- * Run a set of scenarios against a single rule of one of the repo rulesets.
+ * Run a single scenario against one rule of a repo ruleset. Call once per case.
  *
  * Only diagnostics produced by `ruleName` are considered, so each `document`
  * only needs to contain enough to exercise that rule.
  *
  * @param ruleName The rule id under test (e.g. "entur-info-title").
- * @param tests    The scenarios to run.
+ * @param test     The scenario to run.
  * @param ruleset  Absolute path to the ruleset file.
  */
 export default function testRule(
   ruleName: string,
-  tests: Scenario,
+  test: RuleTest,
   ruleset: string
 ): void {
-  describe(ruleName, () => {
-    for (const testCase of tests) {
-      it(testCase.name, async () => {
-        const spectral = new Spectral();
-        spectral.setRuleset(await loadRuleset(ruleset));
+  it(`${ruleName}: ${test.name}`, async () => {
+    const spectral = new Spectral();
+    spectral.setRuleset(await loadRuleset(ruleset));
 
-        const document = new Document(
-          JSON.stringify(testCase.document),
-          JsonParser,
-          "document.json"
-        );
+    const document = new Document(
+      JSON.stringify(test.document),
+      JsonParser,
+      "document.json"
+    );
 
-        const results = await spectral.run(document);
-        const ruleResults = results.filter(({ code }) => code === ruleName);
+    const results = await spectral.run(document);
+    const ruleResults = results.filter(({ code }) => code === ruleName);
 
-        expect(ruleResults).toEqual(
-          testCase.errors.map((error) => expect.objectContaining(error))
-        );
-      });
-    }
+    expect(ruleResults).toEqual(
+      test.errors.map((error) => expect.objectContaining(error))
+    );
   });
 }
 
