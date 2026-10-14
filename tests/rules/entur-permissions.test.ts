@@ -1,6 +1,6 @@
 import * as path from "node:path";
 import { DiagnosticSeverity } from "@stoplight/types";
-import testRule from "../helpers/helper";
+import testRule from "../helper";
 
 /** Resolve a path relative to this test file. */
 const resolve = (relativePath: string): string =>
