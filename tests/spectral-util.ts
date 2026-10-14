@@ -43,14 +43,14 @@ export default function testRule({
       "document.json"
     );
 
-    const results = await spectral.run(doc);
-    const issues = results.filter(({ code }) => code === rule);
+    const issues = await spectral.run(doc);
+    const ruleIssues = issues.filter(({ code }) => code === rule);
 
     // toEqual checks the result count and order against this array; wrapping
     // each expected issue in objectContaining makes the per-element check a
     // subset match, so a case only asserts the fields it lists (e.g. code,
     // severity) and ignores the rest (message, path, range, ...).
-    expect(issues).toEqual(
+    expect(ruleIssues).toEqual(
       expectedIssues.map((issue) => expect.objectContaining(issue))
     );
   });
@@ -86,14 +86,14 @@ export function testSpec({
       specPath
     );
 
-    const results = await spectral.run(doc);
-    const issues = results.filter(
+    const issues = await spectral.run(doc);
+    const warningsAndErrors = issues.filter(
       ({ severity }) =>
         severity === DiagnosticSeverity.Error ||
         severity === DiagnosticSeverity.Warning
     );
 
-    expect(issues).toEqual(
+    expect(warningsAndErrors).toEqual(
       expectedIssues.map((issue) => expect.objectContaining(issue))
     );
   });
