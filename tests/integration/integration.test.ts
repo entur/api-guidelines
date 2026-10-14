@@ -31,8 +31,21 @@ describe("reference-spec-with-errors.json", () => {
       resolve("specs/reference-spec-with-errors.json"),
       resolve("../../.spectral.yml")
     );
-    // Snapshot the exact set of rules that fire so any drift is reviewed.
-    expect(errorCodes(results)).toMatchSnapshot();
+    expect(errorCodes(results)).toEqual([
+      "entur-get-responses-validation",
+      "entur-info-metadata-audience-valid",
+      "entur-info-metadata-devExtensions",
+      "entur-info-metadata-id",
+      "entur-info-metadata-owner-valid",
+      "entur-permissions",
+      "entur-permissions",
+      "entur-permissions",
+      "entur-permissions",
+      "entur-permissions",
+      "entur-permissions",
+      "oas3-valid-schema-example",
+      "oas3-valid-schema-example",
+    ]);
   });
 });
 
