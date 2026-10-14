@@ -1,5 +1,6 @@
 import * as fs from "node:fs";
 import {Document, type ISpectralDiagnostic, type Ruleset, Spectral,} from "@stoplight/spectral-core";
+import { DiagnosticSeverity } from "@stoplight/types";
 import {Json as JsonParser} from "@stoplight/spectral-parsers";
 import {bundleAndLoadRuleset} from "@stoplight/spectral-ruleset-bundler/with-loader";
 import {commonjs} from "@stoplight/spectral-ruleset-bundler/plugins/commonjs";
@@ -55,27 +56,43 @@ export default function testRule({
   });
 }
 
+export type SpecTest = Readonly<{
+  /** Human-readable description of what is tested */
+  name: string;
+  /** Absolute path to the OpenAPI document to lint */
+  specPath: string;
+  /** Absolute path to the ruleset file */
+  rulesetPath: string;
+  /** The error-severity diagnostics expected (omitted = clean). */
+  errors?: ReadonlyArray<Partial<ISpectralDiagnostic>>;
+}>;
+
 /**
- * Lint a whole spec file on disk against a ruleset and return every diagnostic.
- *
- * Intended for integration tests over the reference specs, where we care about
- * the full set of findings rather than a single rule.
- *
- * @param specPath    Absolute path to the OpenAPI document to lint.
- * @param rulesetFile Absolute path to the ruleset file.
+ * Lint a whole spec file on disk against a ruleset.
  */
-export async function lintFile(
-  specPath: string,
-  rulesetFile: string
-): Promise<ISpectralDiagnostic[]> {
-  const spectral = new Spectral();
-  spectral.setRuleset(await loadRuleset(rulesetFile));
+export function testSpec({
+  name,
+  specPath,
+  rulesetPath,
+  errors = [],
+}: SpecTest): void {
+  it(name, async () => {
+    const spectral = new Spectral();
+    spectral.setRuleset(await loadRuleset(rulesetPath));
 
-  const document = new Document(
-    fs.readFileSync(specPath, "utf8"),
-    JsonParser,
-    specPath
-  );
+    const doc = new Document(
+      fs.readFileSync(specPath, "utf8"),
+      JsonParser,
+      specPath
+    );
 
-  return spectral.run(document);
+    const results = await spectral.run(doc);
+    const errorResults = results.filter(
+      ({ severity }) => severity === DiagnosticSeverity.Error
+    );
+
+    expect(errorResults).toEqual(
+      errors.map((error) => expect.objectContaining(error))
+    );
+  });
 }
