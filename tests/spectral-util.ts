@@ -23,10 +23,7 @@ export type RuleTest = Readonly<{
 }>;
 
 /**
- * Run a single scenario against one rule of a repo ruleset. Call once per case.
- *
- * Only diagnostics produced by `rule` are considered, so each `document` only
- * needs to contain enough to exercise that rule.
+ * Test a single spectral rule
  */
 export default function testRule({
   rule,
@@ -48,6 +45,10 @@ export default function testRule({
     const results = await spectral.run(doc);
     const ruleResults = results.filter(({ code }) => code === rule);
 
+    // toEqual checks the result count and order against this array; wrapping
+    // each expected error in objectContaining makes the per-element check a
+    // subset match, so a case only asserts the fields it lists (e.g. code,
+    // severity) and ignores the rest (message, path, range, ...).
     expect(ruleResults).toEqual(
       errors.map((error) => expect.objectContaining(error))
     );
