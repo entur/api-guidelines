@@ -6,48 +6,43 @@ import testRule from "../spectral-util";
 const resolve = (relativePath: string): string =>
   path.resolve(__dirname, relativePath);
 
-testRule(
-  "entur-get-responses-validation",
-  {
-    name: "valid when a GET uses an allowed response code",
-    document: {
-      openapi: "3.0.3",
-      info: { title: "Ticketing", version: "1.0.0" },
-      paths: {
-        "/items": {
-          get: {
-            responses: { "200": { description: "OK" } },
-          },
+testRule({
+  rule: "entur-get-responses-validation",
+  name: "valid when a GET uses an allowed response code",
+  document: {
+    openapi: "3.0.3",
+    info: { title: "Ticketing", version: "1.0.0" },
+    paths: {
+      "/items": {
+        get: {
+          responses: { "200": { description: "OK" } },
         },
       },
     },
-    errors: [],
   },
-  resolve("../../.spectral.yml")
-);
+  ruleset: resolve("../../.spectral.yml"),
+});
 
-testRule(
-  "entur-get-responses-validation",
-  {
-    name: "flags a GET using a disallowed response code",
-    document: {
-      openapi: "3.0.3",
-      info: { title: "Ticketing", version: "1.0.0" },
-      paths: {
-        "/items": {
-          get: {
-            responses: { "201": { description: "Created" } },
-          },
+testRule({
+  rule: "entur-get-responses-validation",
+  name: "flags a GET using a disallowed response code",
+  document: {
+    openapi: "3.0.3",
+    info: { title: "Ticketing", version: "1.0.0" },
+    paths: {
+      "/items": {
+        get: {
+          responses: { "201": { description: "Created" } },
         },
       },
     },
-    errors: [
-      {
-        code: "entur-get-responses-validation",
-        severity: DiagnosticSeverity.Error,
-      },
-    ],
   },
-  resolve("../../.spectral.yml")
-);
+  ruleset: resolve("../../.spectral.yml"),
+  errors: [
+    {
+      code: "entur-get-responses-validation",
+      severity: DiagnosticSeverity.Error,
+    },
+  ],
+});
 

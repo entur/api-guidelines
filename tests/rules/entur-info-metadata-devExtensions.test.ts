@@ -6,44 +6,39 @@ import testRule from "../spectral-util";
 const resolve = (relativePath: string): string =>
   path.resolve(__dirname, relativePath);
 
-testRule(
-  "entur-info-metadata-devExtensions",
-  {
-    name: "valid when every devExtension is 'x-' prefixed",
-    document: {
-      openapi: "3.0.3",
-      info: {
-        title: "Ticketing",
-        version: "1.0.0",
-        "x-entur-metadata": { devExtensions: ["x-kotlin-implements"] },
-      },
-      paths: {},
+testRule({
+  rule: "entur-info-metadata-devExtensions",
+  name: "valid when every devExtension is 'x-' prefixed",
+  document: {
+    openapi: "3.0.3",
+    info: {
+      title: "Ticketing",
+      version: "1.0.0",
+      "x-entur-metadata": { devExtensions: ["x-kotlin-implements"] },
     },
-    errors: [],
+    paths: {},
   },
-  resolve("../../.spectral.yml")
-);
+  ruleset: resolve("../../.spectral.yml"),
+});
 
-testRule(
-  "entur-info-metadata-devExtensions",
-  {
-    name: "flags a devExtension without the 'x-' prefix",
-    document: {
-      openapi: "3.0.3",
-      info: {
-        title: "Ticketing",
-        version: "1.0.0",
-        "x-entur-metadata": { devExtensions: ["kotlin-implements"] },
-      },
-      paths: {},
+testRule({
+  rule: "entur-info-metadata-devExtensions",
+  name: "flags a devExtension without the 'x-' prefix",
+  document: {
+    openapi: "3.0.3",
+    info: {
+      title: "Ticketing",
+      version: "1.0.0",
+      "x-entur-metadata": { devExtensions: ["kotlin-implements"] },
     },
-    errors: [
-      {
-        code: "entur-info-metadata-devExtensions",
-        severity: DiagnosticSeverity.Error,
-      },
-    ],
+    paths: {},
   },
-  resolve("../../.spectral.yml")
-);
+  ruleset: resolve("../../.spectral.yml"),
+  errors: [
+    {
+      code: "entur-info-metadata-devExtensions",
+      severity: DiagnosticSeverity.Error,
+    },
+  ],
+});
 

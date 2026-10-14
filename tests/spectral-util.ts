@@ -9,45 +9,49 @@ function loadRuleset(rulesetFile: string): Promise<Ruleset> {
   return bundleAndLoadRuleset(rulesetFile, { fs, fetch }, [commonjs()]);
 }
 
+export type RuleError = Partial<ISpectralDiagnostic>;
+
 export type RuleTest = Readonly<{
+  /** The rule id under test (e.g. "entur-info-title"). */
+  rule: string;
   /** Human-readable description of the scenario. */
   name: string;
   /** The OpenAPI document (as a plain object) to lint. */
   document: Record<string, unknown>;
-  /** The diagnostics expected from the rule under test (empty = valid). */
-  errors: ReadonlyArray<Partial<ISpectralDiagnostic>>;
+  /** Absolute path to the ruleset file. */
+  ruleset: string;
+  /** The diagnostics expected from the rule (omitted = valid). */
+  errors?: ReadonlyArray<RuleError>;
 }>;
 
 /**
  * Run a single scenario against one rule of a repo ruleset. Call once per case.
  *
- * Only diagnostics produced by `ruleName` are considered, so each `document`
- * only needs to contain enough to exercise that rule.
- *
- * @param ruleName The rule id under test (e.g. "entur-info-title").
- * @param test     The scenario to run.
- * @param ruleset  Absolute path to the ruleset file.
+ * Only diagnostics produced by `rule` are considered, so each `document` only
+ * needs to contain enough to exercise that rule.
  */
-export default function testRule(
-  ruleName: string,
-  test: RuleTest,
-  ruleset: string
-): void {
-  it(`${ruleName}: ${test.name}`, async () => {
+export default function testRule({
+  rule,
+  name,
+  document,
+  ruleset,
+  errors = [],
+}: RuleTest): void {
+  it(`${rule}: ${name}`, async () => {
     const spectral = new Spectral();
     spectral.setRuleset(await loadRuleset(ruleset));
 
-    const document = new Document(
-      JSON.stringify(test.document),
+    const doc = new Document(
+      JSON.stringify(document),
       JsonParser,
       "document.json"
     );
 
-    const results = await spectral.run(document);
-    const ruleResults = results.filter(({ code }) => code === ruleName);
+    const results = await spectral.run(doc);
+    const ruleResults = results.filter(({ code }) => code === rule);
 
     expect(ruleResults).toEqual(
-      test.errors.map((error) => expect.objectContaining(error))
+      errors.map((error) => expect.objectContaining(error))
     );
   });
 }
