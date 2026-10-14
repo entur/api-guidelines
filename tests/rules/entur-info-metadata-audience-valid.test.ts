@@ -5,40 +5,43 @@ import testRule from "../spectral-util";
 /** Resolve a path relative to this test file. */
 const resolve = (relativePath: string): string =>
   path.resolve(__dirname, relativePath);
+const RULESETS = [
+  ["spectral", resolve("../../.spectral.yml")],
+  ["required", resolve("../../.spectral-required.yml")],
+] as const;
 
-testRule({
-  rule: "entur-info-metadata-audience-valid",
-  name: "valid for a recognised audience value",
-  document: {
-    openapi: "3.0.3",
-    info: {
-      title: "Ticketing",
-      version: "1.0.0",
-      "x-entur-metadata": { audience: "partner" },
-    },
-    paths: {},
-  },
-  rulesetPath: resolve("../../.spectral.yml"),
-});
+const rule = "entur-info-metadata-audience-valid";
 
-testRule({
-  rule: "entur-info-metadata-audience-valid",
-  name: "flags an unrecognised audience value",
-  document: {
-    openapi: "3.0.3",
-    info: {
-      title: "Ticketing",
-      version: "1.0.0",
-      "x-entur-metadata": { audience: "public" },
+for (const [label, rulesetPath] of RULESETS) {
+  testRule({
+    rule,
+    name: `valid for a recognised audience value (${label})`,
+    document: {
+      openapi: "3.0.3",
+      info: {
+        title: "Ticketing",
+        version: "1.0.0",
+        "x-entur-metadata": { audience: "partner" },
+      },
+      paths: {},
     },
-    paths: {},
-  },
-  rulesetPath: resolve("../../.spectral.yml"),
-  expectedIssues: [
-    {
-      code: "entur-info-metadata-audience-valid",
-      severity: DiagnosticSeverity.Error,
+    rulesetPath,
+  });
+
+  testRule({
+    rule,
+    name: `flags an unrecognised audience value (${label})`,
+    document: {
+      openapi: "3.0.3",
+      info: {
+        title: "Ticketing",
+        version: "1.0.0",
+        "x-entur-metadata": { audience: "public" },
+      },
+      paths: {},
     },
-  ],
-});
+    rulesetPath,
+    expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
+  });
+}
 

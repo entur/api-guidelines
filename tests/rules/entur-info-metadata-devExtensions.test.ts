@@ -5,40 +5,43 @@ import testRule from "../spectral-util";
 /** Resolve a path relative to this test file. */
 const resolve = (relativePath: string): string =>
   path.resolve(__dirname, relativePath);
+const RULESETS = [
+  ["spectral", resolve("../../.spectral.yml")],
+  ["required", resolve("../../.spectral-required.yml")],
+] as const;
 
-testRule({
-  rule: "entur-info-metadata-devExtensions",
-  name: "valid when every devExtension is 'x-' prefixed",
-  document: {
-    openapi: "3.0.3",
-    info: {
-      title: "Ticketing",
-      version: "1.0.0",
-      "x-entur-metadata": { devExtensions: ["x-kotlin-implements"] },
-    },
-    paths: {},
-  },
-  rulesetPath: resolve("../../.spectral.yml"),
-});
+const rule = "entur-info-metadata-devExtensions";
 
-testRule({
-  rule: "entur-info-metadata-devExtensions",
-  name: "flags a devExtension without the 'x-' prefix",
-  document: {
-    openapi: "3.0.3",
-    info: {
-      title: "Ticketing",
-      version: "1.0.0",
-      "x-entur-metadata": { devExtensions: ["kotlin-implements"] },
+for (const [label, rulesetPath] of RULESETS) {
+  testRule({
+    rule,
+    name: `valid when every devExtension is 'x-' prefixed (${label})`,
+    document: {
+      openapi: "3.0.3",
+      info: {
+        title: "Ticketing",
+        version: "1.0.0",
+        "x-entur-metadata": { devExtensions: ["x-kotlin-implements"] },
+      },
+      paths: {},
     },
-    paths: {},
-  },
-  rulesetPath: resolve("../../.spectral.yml"),
-  expectedIssues: [
-    {
-      code: "entur-info-metadata-devExtensions",
-      severity: DiagnosticSeverity.Error,
+    rulesetPath,
+  });
+
+  testRule({
+    rule,
+    name: `flags a devExtension without the 'x-' prefix (${label})`,
+    document: {
+      openapi: "3.0.3",
+      info: {
+        title: "Ticketing",
+        version: "1.0.0",
+        "x-entur-metadata": { devExtensions: ["kotlin-implements"] },
+      },
+      paths: {},
     },
-  ],
-});
+    rulesetPath,
+    expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
+  });
+}
 
