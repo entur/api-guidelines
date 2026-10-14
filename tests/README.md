@@ -2,5 +2,6 @@
 
 ## Running the tests
 ```bash
-npm test
+yarn install   # first time / when deps change
+yarn test
 ```

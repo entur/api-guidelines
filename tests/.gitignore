@@ -1,3 +1,7 @@
 node_modules/
-coverage/
+
+# Yarn (node-modules linker) — keep lockfile + config, ignore caches/state
+.yarn/*
+!.yarn/patches
+.pnp.*
 
