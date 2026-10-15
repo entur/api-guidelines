@@ -30,7 +30,7 @@ for (const rulesetPath of Object.values(RULESETS)) {
       info: {
         title: "Ticketing",
         version: "1.0.0",
-        "x-entur-metadata": { owner: "team-api" },
+        "x-entur-metadata": { },
       },
       paths: {},
     },
