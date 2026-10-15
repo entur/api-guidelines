@@ -13,6 +13,6 @@ testSpec({
 
 testSpec({
   name: "required-valid.json has no .spectral-required.yml errors",
-  specPath: resolve("required-valid.json"),
+  specPath: resolve("../../specs/required-valid.json"),
   rulesetPath: resolve("../../.spectral-required.yml"),
 });
