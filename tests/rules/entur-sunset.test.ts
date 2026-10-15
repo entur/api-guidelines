@@ -1,0 +1,186 @@
+import * as path from "node:path";
+import { DiagnosticSeverity } from "@stoplight/types";
+import testRule, { RULESETS } from "../spectral-util";
+
+// Rules that only run against the full ruleset (RULESETS.all).
+{
+  const rulesetPath = RULESETS.all;
+  const ruleset = path.basename(rulesetPath);
+
+  // entur-sunset-api
+  {
+    const rule = "entur-sunset-api";
+
+    testRule({
+      rule,
+      name: `valid when a deprecated API also declares x-sunset (${ruleset})`,
+      document: {
+        openapi: "3.0.3",
+        info: {
+          title: "Ticketing",
+          version: "1.0.0",
+          "x-deprecated": true,
+          "x-sunset": "2030-01-01",
+        },
+        paths: {},
+      },
+      rulesetPath,
+    });
+
+    testRule({
+      rule,
+      name: `flags a deprecated API with no x-sunset (${ruleset})`,
+      document: {
+        openapi: "3.0.3",
+        info: { title: "Ticketing", version: "1.0.0", "x-deprecated": true },
+        paths: {},
+      },
+      rulesetPath,
+      expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
+    });
+  }
+
+  // entur-sunset-operation
+  {
+    const rule = "entur-sunset-operation";
+
+    testRule({
+      rule,
+      name: `valid when a deprecated operation also declares x-sunset (${ruleset})`,
+      document: {
+        openapi: "3.0.3",
+        info: { title: "Ticketing", version: "1.0.0" },
+        paths: {
+          "/items": {
+            get: {
+              deprecated: true,
+              "x-sunset": "2030-01-01",
+              responses: { "200": { description: "OK" } },
+            },
+          },
+        },
+      },
+      rulesetPath,
+    });
+
+    testRule({
+      rule,
+      name: `flags a deprecated operation with no x-sunset (${ruleset})`,
+      document: {
+        openapi: "3.0.3",
+        info: { title: "Ticketing", version: "1.0.0" },
+        paths: {
+          "/items": {
+            get: { deprecated: true, responses: { "200": { description: "OK" } } },
+          },
+        },
+      },
+      rulesetPath,
+      expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Information }],
+    });
+  }
+}
+
+/**
+ * The sunset format rules use the custom `date` function (functions/date.js), so
+ * they also verify that custom Spectral functions are bundled and loaded
+ * correctly. They run against every ruleset.
+ */
+for (const rulesetPath of Object.values(RULESETS)) {
+  const ruleset = path.basename(rulesetPath);
+
+  // entur-sunset-format-api
+  {
+    const rule = "entur-sunset-format-api";
+
+    testRule({
+      rule,
+      name: `accepts a valid calendar date for info.x-sunset (${ruleset})`,
+      document: {
+        openapi: "3.0.3",
+        info: {
+          title: "Ticketing",
+          version: "1.0.0",
+          "x-deprecated": true,
+          "x-sunset": "2030-01-01",
+        },
+        paths: {},
+      },
+      rulesetPath,
+    });
+
+    testRule({
+      rule,
+      name: `rejects an invalid date for info.x-sunset (${ruleset})`,
+      document: {
+        openapi: "3.0.3",
+        info: {
+          title: "Ticketing",
+          version: "1.0.0",
+          "x-deprecated": true,
+          "x-sunset": "not-a-date",
+        },
+        paths: {},
+      },
+      rulesetPath,
+      expectedIssues: [
+        {
+          code: rule,
+          message: "Must be a valid calendar date.",
+          severity: DiagnosticSeverity.Error,
+        },
+      ],
+    });
+  }
+
+  // entur-sunset-format-operation
+  {
+    const rule = "entur-sunset-format-operation";
+
+    testRule({
+      rule,
+      name: `accepts a valid calendar date for an operation x-sunset (${ruleset})`,
+      document: {
+        openapi: "3.0.3",
+        info: { title: "Ticketing", version: "1.0.0" },
+        paths: {
+          "/items": {
+            get: {
+              deprecated: true,
+              responses: { "200": { description: "OK" } },
+              "x-sunset": "2030-01-01",
+            },
+          },
+        },
+      },
+      rulesetPath,
+    });
+
+    testRule({
+      rule,
+      name: `rejects an invalid date for an operation x-sunset (${ruleset})`,
+      document: {
+        openapi: "3.0.3",
+        info: { title: "Ticketing", version: "1.0.0" },
+        paths: {
+          "/items": {
+            get: {
+              deprecated: true,
+              responses: { "200": { description: "OK" } },
+              "x-sunset": "not-a-date",
+            },
+          },
+        },
+      },
+      rulesetPath,
+      expectedIssues: [
+        {
+          code: rule,
+          message: "Must be a valid calendar date.",
+          severity: DiagnosticSeverity.Error,
+        },
+      ],
+    });
+  }
+}
+
