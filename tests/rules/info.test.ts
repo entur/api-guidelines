@@ -6,7 +6,7 @@ const rulesetPath = RULESETS.all;
 const ruleset = path.basename(rulesetPath);
 
 // entur-info-title
-{
+describe("rule entur-info-title", () => {
   const rule = "entur-info-title";
 
   testRule({
@@ -31,10 +31,10 @@ const ruleset = path.basename(rulesetPath);
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
   });
-}
+});
 
 // entur-info-title-no-api
-{
+describe("rule entur-info-title-no-api", () => {
   const rule = "entur-info-title-no-api";
 
   testRule({
@@ -59,10 +59,10 @@ const ruleset = path.basename(rulesetPath);
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Warning }],
   });
-}
+});
 
 // info-description
-{
+describe("rule info-description", () => {
   const rule = "info-description";
 
   testRule({
@@ -87,10 +87,10 @@ const ruleset = path.basename(rulesetPath);
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
   });
-}
+});
 
 // info-contact
-{
+describe("rule info-contact", () => {
   const rule = "info-contact";
 
   // This built-in spectral:oas rule is turned off in .spectral.yml. A document
@@ -106,4 +106,4 @@ const ruleset = path.basename(rulesetPath);
     },
     rulesetPath,
   });
-}
+});

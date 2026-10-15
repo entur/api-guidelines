@@ -6,7 +6,7 @@ const rulesetPath = RULESETS.all;
 const ruleset = path.basename(rulesetPath);
 
 // entur-server-urls-lowercase
-{
+describe("rule entur-server-urls-lowercase", () => {
   const rule = "entur-server-urls-lowercase";
 
   testRule({
@@ -33,10 +33,10 @@ const ruleset = path.basename(rulesetPath);
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
   });
-}
+});
 
 // entur-hosts-https-only
-{
+describe("rule entur-hosts-https-only", () => {
   const rule = "entur-hosts-https-only";
 
   testRule({
@@ -63,10 +63,10 @@ const ruleset = path.basename(rulesetPath);
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
   });
-}
+});
 
 // entur-hosts-not-localhost
-{
+describe("rule entur-hosts-not-localhost", () => {
   const rule = "entur-hosts-not-localhost";
 
   testRule({
@@ -93,5 +93,5 @@ const ruleset = path.basename(rulesetPath);
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Warning }],
   });
-}
+});
 

@@ -6,7 +6,7 @@ const rulesetPath = RULESETS.all;
 const ruleset = path.basename(rulesetPath);
 
 // entur-example-parameter
-{
+describe("rule entur-example-parameter", () => {
   const rule = "entur-example-parameter";
 
   // This rule is `recommended: false`, so it is disabled under the default
@@ -36,10 +36,10 @@ const ruleset = path.basename(rulesetPath);
     },
     rulesetPath,
   });
-}
+});
 
 // entur-example-schema-property
-{
+describe("rule entur-example-schema-property", () => {
   const rule = "entur-example-schema-property";
 
   // This rule is `recommended: false`, so it is disabled under the default
@@ -60,10 +60,10 @@ const ruleset = path.basename(rulesetPath);
     },
     rulesetPath,
   });
-}
+});
 
 // entur-request-body-examples
-{
+describe("rule entur-request-body-examples", () => {
   const rule = "entur-request-body-examples";
 
   testRule({
@@ -113,10 +113,10 @@ const ruleset = path.basename(rulesetPath);
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Warning }],
   });
-}
+});
 
 // entur-response-body-examples
-{
+describe("rule entur-response-body-examples", () => {
   const rule = "entur-response-body-examples";
 
   testRule({
@@ -168,5 +168,5 @@ const ruleset = path.basename(rulesetPath);
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Warning }],
   });
-}
+});
 

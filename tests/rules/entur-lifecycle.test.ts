@@ -7,7 +7,7 @@ for (const rulesetPath of Object.values(RULESETS)) {
   const ruleset = path.basename(rulesetPath);
 
   // entur-stability-level-api
-  {
+  describe("rule entur-stability-level-api", () => {
     const rule = "entur-stability-level-api";
 
     testRule({
@@ -36,10 +36,10 @@ for (const rulesetPath of Object.values(RULESETS)) {
       rulesetPath,
       expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
     });
-  }
+  });
 
   // entur-stability-level-operation
-  {
+  describe("rule entur-stability-level-operation", () => {
     const rule = "entur-stability-level-operation";
 
     testRule({
@@ -78,14 +78,14 @@ for (const rulesetPath of Object.values(RULESETS)) {
       rulesetPath,
       expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
     });
-  }
+  });
 
   // entur-sunset-format-api
   //
   // The sunset format rules use the custom `date` function (functions/date.js),
   // so they also verify that custom Spectral functions are bundled and loaded
   // correctly.
-  {
+  describe("rule entur-sunset-format-api", () => {
     const rule = "entur-sunset-format-api";
 
     testRule({
@@ -126,10 +126,10 @@ for (const rulesetPath of Object.values(RULESETS)) {
         },
       ],
     });
-  }
+  });
 
   // entur-sunset-format-operation
-  {
+  describe("rule entur-sunset-format-operation", () => {
     const rule = "entur-sunset-format-operation";
 
     testRule({
@@ -176,7 +176,7 @@ for (const rulesetPath of Object.values(RULESETS)) {
         },
       ],
     });
-  }
+  });
 }
 
 // Rules that only run against the full ruleset (RULESETS.all).
@@ -185,7 +185,7 @@ for (const rulesetPath of Object.values(RULESETS)) {
   const ruleset = path.basename(rulesetPath);
 
   // entur-sunset-api
-  {
+  describe("rule entur-sunset-api", () => {
     const rule = "entur-sunset-api";
 
     testRule({
@@ -215,10 +215,10 @@ for (const rulesetPath of Object.values(RULESETS)) {
       rulesetPath,
       expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
     });
-  }
+  });
 
   // entur-sunset-operation
-  {
+  describe("rule entur-sunset-operation", () => {
     const rule = "entur-sunset-operation";
 
     testRule({
@@ -255,6 +255,6 @@ for (const rulesetPath of Object.values(RULESETS)) {
       rulesetPath,
       expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Information }],
     });
-  }
+  });
 }
 

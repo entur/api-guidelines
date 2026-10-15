@@ -6,7 +6,7 @@ const rulesetPath = RULESETS.all;
 const ruleset = path.basename(rulesetPath);
 
 // entur-paths-format
-{
+describe("rule entur-paths-format", () => {
   const rule = "entur-paths-format";
 
   testRule({
@@ -31,10 +31,10 @@ const ruleset = path.basename(rulesetPath);
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
   });
-}
+});
 
 // entur-paths-with-api
-{
+describe("rule entur-paths-with-api", () => {
   const rule = "entur-paths-with-api";
 
   testRule({
@@ -59,5 +59,5 @@ const ruleset = path.basename(rulesetPath);
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Warning }],
   });
-}
+});
 

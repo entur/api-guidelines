@@ -4,32 +4,35 @@ import testRule, { RULESETS } from "../spectral-util";
 
 const rulesetPath = RULESETS.all;
 const ruleset = path.basename(rulesetPath);
-const rule = "entur-operation-standard-methods";
 
-testRule({
-  rule,
-  name: `valid when operations use standard HTTP methods (${ruleset})`,
-  document: {
-    openapi: "3.0.3",
-    info: { title: "Ticketing", version: "1.0.0" },
-    paths: {
-      "/items": { get: { responses: { "200": { description: "OK" } } } },
-    },
-  },
-  rulesetPath,
-});
+describe("rule entur-operation-standard-methods", () => {
+  const rule = "entur-operation-standard-methods";
 
-testRule({
-  rule,
-  name: `warns on a non-standard HTTP method (${ruleset})`,
-  document: {
-    openapi: "3.0.3",
-    info: { title: "Ticketing", version: "1.0.0" },
-    paths: {
-      "/items": { trace: { responses: { "200": { description: "OK" } } } },
+  testRule({
+    rule,
+    name: `valid when operations use standard HTTP methods (${ruleset})`,
+    document: {
+      openapi: "3.0.3",
+      info: { title: "Ticketing", version: "1.0.0" },
+      paths: {
+        "/items": { get: { responses: { "200": { description: "OK" } } } },
+      },
     },
-  },
-  rulesetPath,
-  expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Warning }],
+    rulesetPath,
+  });
+
+  testRule({
+    rule,
+    name: `warns on a non-standard HTTP method (${ruleset})`,
+    document: {
+      openapi: "3.0.3",
+      info: { title: "Ticketing", version: "1.0.0" },
+      paths: {
+        "/items": { trace: { responses: { "200": { description: "OK" } } } },
+      },
+    },
+    rulesetPath,
+    expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Warning }],
+  });
 });
 

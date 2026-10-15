@@ -6,7 +6,7 @@ for (const rulesetPath of Object.values(RULESETS)) {
   const ruleset = path.basename(rulesetPath);
 
   // entur-info-metadata-id
-  {
+  describe("rule entur-info-metadata-id", () => {
     const rule = "entur-info-metadata-id";
 
     testRule({
@@ -39,10 +39,10 @@ for (const rulesetPath of Object.values(RULESETS)) {
       rulesetPath,
       expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
     });
-  }
+  });
 
   // entur-info-metadata-id-kebab-case
-  {
+  describe("rule entur-info-metadata-id-kebab-case", () => {
     const rule = "entur-info-metadata-id-kebab-case";
 
     testRule({
@@ -75,10 +75,10 @@ for (const rulesetPath of Object.values(RULESETS)) {
       rulesetPath,
       expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
     });
-  }
+  });
 
   // entur-info-metadata-parent-id-kebab-case
-  {
+  describe("rule entur-info-metadata-parent-id-kebab-case", () => {
     const rule = "entur-info-metadata-parent-id-kebab-case";
 
     testRule({
@@ -111,10 +111,10 @@ for (const rulesetPath of Object.values(RULESETS)) {
       rulesetPath,
       expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
     });
-  }
+  });
 
   // entur-info-metadata-owner
-  {
+  describe("rule entur-info-metadata-owner", () => {
     const rule = "entur-info-metadata-owner";
 
     testRule({
@@ -147,10 +147,10 @@ for (const rulesetPath of Object.values(RULESETS)) {
       rulesetPath,
       expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
     });
-  }
+  });
 
   // entur-info-metadata-owner-valid
-  {
+  describe("rule entur-info-metadata-owner-valid", () => {
     const rule = "entur-info-metadata-owner-valid";
 
     testRule({
@@ -183,10 +183,10 @@ for (const rulesetPath of Object.values(RULESETS)) {
       rulesetPath,
       expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
     });
-  }
+  });
 
   // entur-info-metadata-audience
-  {
+  describe("rule entur-info-metadata-audience", () => {
     const rule = "entur-info-metadata-audience";
 
     testRule({
@@ -219,10 +219,10 @@ for (const rulesetPath of Object.values(RULESETS)) {
       rulesetPath,
       expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
     });
-  }
+  });
 
   // entur-info-metadata-audience-valid
-  {
+  describe("rule entur-info-metadata-audience-valid", () => {
     const rule = "entur-info-metadata-audience-valid";
 
     testRule({
@@ -255,10 +255,10 @@ for (const rulesetPath of Object.values(RULESETS)) {
       rulesetPath,
       expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
     });
-  }
+  });
 
   // entur-info-metadata-devExtensions
-  {
+  describe("rule entur-info-metadata-devExtensions", () => {
     const rule = "entur-info-metadata-devExtensions";
 
     testRule({
@@ -291,6 +291,6 @@ for (const rulesetPath of Object.values(RULESETS)) {
       rulesetPath,
       expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
     });
-  }
+  });
 }
 

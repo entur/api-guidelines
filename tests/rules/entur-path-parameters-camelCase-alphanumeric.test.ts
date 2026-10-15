@@ -4,58 +4,61 @@ import testRule, { RULESETS } from "../spectral-util";
 
 const rulesetPath = RULESETS.all;
 const ruleset = path.basename(rulesetPath);
-const rule = "entur-path-parameters-camelCase-alphanumeric";
 
-testRule({
-  rule,
-  name: `valid for a lowerCamelCase path parameter name (${ruleset})`,
-  document: {
-    openapi: "3.0.3",
-    info: { title: "Ticketing", version: "1.0.0" },
-    paths: {
-      "/items/{itemId}": {
-        get: {
-          parameters: [
-            {
-              name: "itemId",
-              in: "path",
-              required: true,
-              description: "Item id",
-              schema: { type: "string" },
-            },
-          ],
-          responses: { "200": { description: "OK" } },
+describe("rule entur-path-parameters-camelCase-alphanumeric", () => {
+  const rule = "entur-path-parameters-camelCase-alphanumeric";
+
+  testRule({
+    rule,
+    name: `valid for a lowerCamelCase path parameter name (${ruleset})`,
+    document: {
+      openapi: "3.0.3",
+      info: { title: "Ticketing", version: "1.0.0" },
+      paths: {
+        "/items/{itemId}": {
+          get: {
+            parameters: [
+              {
+                name: "itemId",
+                in: "path",
+                required: true,
+                description: "Item id",
+                schema: { type: "string" },
+              },
+            ],
+            responses: { "200": { description: "OK" } },
+          },
         },
       },
     },
-  },
-  rulesetPath,
-});
+    rulesetPath,
+  });
 
-testRule({
-  rule,
-  name: `flags a path parameter name that is not lowerCamelCase (${ruleset})`,
-  document: {
-    openapi: "3.0.3",
-    info: { title: "Ticketing", version: "1.0.0" },
-    paths: {
-      "/items/{item_id}": {
-        get: {
-          parameters: [
-            {
-              name: "item_id",
-              in: "path",
-              required: true,
-              description: "Item id",
-              schema: { type: "string" },
-            },
-          ],
-          responses: { "200": { description: "OK" } },
+  testRule({
+    rule,
+    name: `flags a path parameter name that is not lowerCamelCase (${ruleset})`,
+    document: {
+      openapi: "3.0.3",
+      info: { title: "Ticketing", version: "1.0.0" },
+      paths: {
+        "/items/{item_id}": {
+          get: {
+            parameters: [
+              {
+                name: "item_id",
+                in: "path",
+                required: true,
+                description: "Item id",
+                schema: { type: "string" },
+              },
+            ],
+            responses: { "200": { description: "OK" } },
+          },
         },
       },
     },
-  },
-  rulesetPath,
-  expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
+    rulesetPath,
+    expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
+  });
 });
 

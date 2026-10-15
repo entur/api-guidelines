@@ -6,7 +6,7 @@ const rulesetPath = RULESETS.all;
 const ruleset = path.basename(rulesetPath);
 
 // entur-get-responses-validation
-{
+describe("rule entur-get-responses-validation", () => {
   const rule = "entur-get-responses-validation";
 
   testRule({
@@ -39,10 +39,10 @@ const ruleset = path.basename(rulesetPath);
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
   });
-}
+});
 
 // entur-post-responses-validation
-{
+describe("rule entur-post-responses-validation", () => {
   const rule = "entur-post-responses-validation";
 
   testRule({
@@ -71,10 +71,10 @@ const ruleset = path.basename(rulesetPath);
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
   });
-}
+});
 
 // entur-put-responses-validation
-{
+describe("rule entur-put-responses-validation", () => {
   const rule = "entur-put-responses-validation";
 
   testRule({
@@ -107,10 +107,10 @@ const ruleset = path.basename(rulesetPath);
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
   });
-}
+});
 
 // entur-patch-responses-validation
-{
+describe("rule entur-patch-responses-validation", () => {
   const rule = "entur-patch-responses-validation";
 
   testRule({
@@ -143,10 +143,10 @@ const ruleset = path.basename(rulesetPath);
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
   });
-}
+});
 
 // entur-delete-responses-validation
-{
+describe("rule entur-delete-responses-validation", () => {
   const rule = "entur-delete-responses-validation";
 
   testRule({
@@ -179,5 +179,5 @@ const ruleset = path.basename(rulesetPath);
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
   });
-}
+});
 

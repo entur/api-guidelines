@@ -27,7 +27,7 @@ const problemSchema = (properties: Record<string, unknown>) => ({
 });
 
 // entur-rfc-9457-body-title
-{
+describe("rule entur-rfc-9457-body-title", () => {
   const rule = "entur-rfc-9457-body-title";
 
   testRule({
@@ -47,10 +47,10 @@ const problemSchema = (properties: Record<string, unknown>) => ({
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
   });
-}
+});
 
 // entur-rfc-9457-body-status
-{
+describe("rule entur-rfc-9457-body-status", () => {
   const rule = "entur-rfc-9457-body-status";
 
   testRule({
@@ -70,10 +70,10 @@ const problemSchema = (properties: Record<string, unknown>) => ({
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
   });
-}
+});
 
 // entur-rfc-9457-body-detail
-{
+describe("rule entur-rfc-9457-body-detail", () => {
   const rule = "entur-rfc-9457-body-detail";
 
   testRule({
@@ -93,10 +93,10 @@ const problemSchema = (properties: Record<string, unknown>) => ({
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Warning }],
   });
-}
+});
 
 // entur-rfc-9457-content-type
-{
+describe("rule entur-rfc-9457-content-type", () => {
   const rule = "entur-rfc-9457-content-type";
 
   testRule({
@@ -145,5 +145,5 @@ const problemSchema = (properties: Record<string, unknown>) => ({
     rulesetPath,
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Warning }],
   });
-}
+});
 
