@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.5.1](https://github.com/entur/api-guidelines/compare/v3.5.0...v3.5.1) (2026-10-14)
+
+
+### Bug Fixes
+
+* Allow 412 Precondition Failed and 410 Gone ([3756de8](https://github.com/entur/api-guidelines/commit/3756de87195ec0247bfc6e89ad79e74c36e46681))
+
 ## [3.5.0](https://github.com/entur/api-guidelines/compare/v3.4.0...v3.5.0) (2026-10-06)
 
 
