@@ -60,3 +60,50 @@ const ruleset = path.basename(rulesetPath);
     expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Warning }],
   });
 }
+
+// info-description
+{
+  const rule = "info-description";
+
+  testRule({
+    rule,
+    name: `valid when info has a description (${ruleset})`,
+    document: {
+      openapi: "3.0.3",
+      info: { title: "Ticketing", version: "1.0.0", description: "Ticketing API" },
+      paths: {},
+    },
+    rulesetPath,
+  });
+
+  testRule({
+    rule,
+    name: `flags a missing info description (${ruleset})`,
+    document: {
+      openapi: "3.0.3",
+      info: { title: "Ticketing", version: "1.0.0" },
+      paths: {},
+    },
+    rulesetPath,
+    expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
+  });
+}
+
+// info-contact
+{
+  const rule = "info-contact";
+
+  // This built-in spectral:oas rule is turned off in .spectral.yml. A document
+  // missing info.contact would warn if the rule were enabled, so asserting no
+  // diagnostics here guards that the "off" toggle stays in place.
+  testRule({
+    rule,
+    name: `is disabled: no diagnostic even when info.contact is missing (${ruleset})`,
+    document: {
+      openapi: "3.0.3",
+      info: { title: "Ticketing", version: "1.0.0", description: "Ticketing API" },
+      paths: {},
+    },
+    rulesetPath,
+  });
+}
