@@ -2,26 +2,20 @@ import * as path from "node:path";
 import { DiagnosticSeverity } from "@stoplight/types";
 import testRule, { RULESETS } from "../spectral-util";
 
-// Rules that only run against the full ruleset (RULESETS.all).
-{
-  const rulesetPath = RULESETS.all;
+// Rules that run against every ruleset.
+for (const rulesetPath of Object.values(RULESETS)) {
   const ruleset = path.basename(rulesetPath);
 
-  // entur-sunset-api
+  // entur-stability-level-api
   {
-    const rule = "entur-sunset-api";
+    const rule = "entur-stability-level-api";
 
     testRule({
       rule,
-      name: `valid when a deprecated API also declares x-sunset (${ruleset})`,
+      name: `valid for a recognised stability level (${ruleset})`,
       document: {
         openapi: "3.0.3",
-        info: {
-          title: "Ticketing",
-          version: "1.0.0",
-          "x-deprecated": true,
-          "x-sunset": "2030-01-01",
-        },
+        info: { title: "Ticketing", version: "1.0.0", "x-stability-level": "beta" },
         paths: {},
       },
       rulesetPath,
@@ -29,10 +23,14 @@ import testRule, { RULESETS } from "../spectral-util";
 
     testRule({
       rule,
-      name: `flags a deprecated API with no x-sunset (${ruleset})`,
+      name: `flags an unrecognised stability level (${ruleset})`,
       document: {
         openapi: "3.0.3",
-        info: { title: "Ticketing", version: "1.0.0", "x-deprecated": true },
+        info: {
+          title: "Ticketing",
+          version: "1.0.0",
+          "x-stability-level": "experimental",
+        },
         paths: {},
       },
       rulesetPath,
@@ -40,22 +38,21 @@ import testRule, { RULESETS } from "../spectral-util";
     });
   }
 
-  // entur-sunset-operation
+  // entur-stability-level-operation
   {
-    const rule = "entur-sunset-operation";
+    const rule = "entur-stability-level-operation";
 
     testRule({
       rule,
-      name: `valid when a deprecated operation also declares x-sunset (${ruleset})`,
+      name: `valid for a recognised operation stability level (${ruleset})`,
       document: {
         openapi: "3.0.3",
         info: { title: "Ticketing", version: "1.0.0" },
         paths: {
           "/items": {
             get: {
-              deprecated: true,
-              "x-sunset": "2030-01-01",
               responses: { "200": { description: "OK" } },
+              "x-stability-level": "stable",
             },
           },
         },
@@ -65,31 +62,29 @@ import testRule, { RULESETS } from "../spectral-util";
 
     testRule({
       rule,
-      name: `flags a deprecated operation with no x-sunset (${ruleset})`,
+      name: `flags an unrecognised operation stability level (${ruleset})`,
       document: {
         openapi: "3.0.3",
         info: { title: "Ticketing", version: "1.0.0" },
         paths: {
           "/items": {
-            get: { deprecated: true, responses: { "200": { description: "OK" } } },
+            get: {
+              responses: { "200": { description: "OK" } },
+              "x-stability-level": "experimental",
+            },
           },
         },
       },
       rulesetPath,
-      expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Information }],
+      expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
     });
   }
-}
-
-/**
- * The sunset format rules use the custom `date` function (functions/date.js), so
- * they also verify that custom Spectral functions are bundled and loaded
- * correctly. They run against every ruleset.
- */
-for (const rulesetPath of Object.values(RULESETS)) {
-  const ruleset = path.basename(rulesetPath);
 
   // entur-sunset-format-api
+  //
+  // The sunset format rules use the custom `date` function (functions/date.js),
+  // so they also verify that custom Spectral functions are bundled and loaded
+  // correctly.
   {
     const rule = "entur-sunset-format-api";
 
@@ -180,6 +175,85 @@ for (const rulesetPath of Object.values(RULESETS)) {
           severity: DiagnosticSeverity.Error,
         },
       ],
+    });
+  }
+}
+
+// Rules that only run against the full ruleset (RULESETS.all).
+{
+  const rulesetPath = RULESETS.all;
+  const ruleset = path.basename(rulesetPath);
+
+  // entur-sunset-api
+  {
+    const rule = "entur-sunset-api";
+
+    testRule({
+      rule,
+      name: `valid when a deprecated API also declares x-sunset (${ruleset})`,
+      document: {
+        openapi: "3.0.3",
+        info: {
+          title: "Ticketing",
+          version: "1.0.0",
+          "x-deprecated": true,
+          "x-sunset": "2030-01-01",
+        },
+        paths: {},
+      },
+      rulesetPath,
+    });
+
+    testRule({
+      rule,
+      name: `flags a deprecated API with no x-sunset (${ruleset})`,
+      document: {
+        openapi: "3.0.3",
+        info: { title: "Ticketing", version: "1.0.0", "x-deprecated": true },
+        paths: {},
+      },
+      rulesetPath,
+      expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Error }],
+    });
+  }
+
+  // entur-sunset-operation
+  {
+    const rule = "entur-sunset-operation";
+
+    testRule({
+      rule,
+      name: `valid when a deprecated operation also declares x-sunset (${ruleset})`,
+      document: {
+        openapi: "3.0.3",
+        info: { title: "Ticketing", version: "1.0.0" },
+        paths: {
+          "/items": {
+            get: {
+              deprecated: true,
+              "x-sunset": "2030-01-01",
+              responses: { "200": { description: "OK" } },
+            },
+          },
+        },
+      },
+      rulesetPath,
+    });
+
+    testRule({
+      rule,
+      name: `flags a deprecated operation with no x-sunset (${ruleset})`,
+      document: {
+        openapi: "3.0.3",
+        info: { title: "Ticketing", version: "1.0.0" },
+        paths: {
+          "/items": {
+            get: { deprecated: true, responses: { "200": { description: "OK" } } },
+          },
+        },
+      },
+      rulesetPath,
+      expectedIssues: [{ code: rule, severity: DiagnosticSeverity.Information }],
     });
   }
 }
