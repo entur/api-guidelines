@@ -233,7 +233,7 @@ for (const rulesetPath of Object.values(RULESETS)) {
         info: {
           title: "Ticketing",
           version: "1.0.0",
-          "x-entur-metadata": { audience: "feil" },
+          "x-entur-metadata": { audience: "partner" },
         },
         paths: {},
       },
