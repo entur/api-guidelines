@@ -19,7 +19,7 @@ updates:
       exclude:
         - "entur/*"
   - package-ecosystem: "npm"
-    directory: "/"
+    directory: "/tests"
     registries:
       - "jfrog-artifactory"
     schedule:
@@ -31,23 +31,12 @@ updates:
       default-days: 5
       semver-major-days: 7
       exclude:
-        - "@entur/*"
         - "typescript"
 
     open-pull-requests-limit: 10
     groups:
-      Entur-Minor-Updates:
-        applies-to: version-updates
-        update-types:
-          - "minor"
-          - "patch"
-        patterns:
-          - "@entur/*"
-
       Minor-Updates:
         applies-to: version-updates
         update-types:
           - "minor"
           - "patch"
-        exclude-patterns:
-          - "@entur/*"
