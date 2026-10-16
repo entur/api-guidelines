@@ -33,7 +33,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: entur/gha-api/.github/actions/setup-spectral@v6
       - name: Lint OpenAPI
         shell: bash
@@ -65,7 +65,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: entur/gha-api/.github/actions/setup-spectral@v6
       - name: Lint OpenAPI
         shell: bash
@@ -98,7 +98,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: entur/gha-api/.github/actions/setup-spectral@v6
       - name: Lint OpenAPI
         shell: bash
