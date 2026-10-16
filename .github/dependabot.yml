@@ -1,0 +1,53 @@
+version: 2
+
+registries:
+  jfrog-artifactory:
+    type: npm-registry
+    url: "https://entur2.jfrog.io/entur2"
+    token: ${{secrets.ARTIFACTORY_AUTH_TOKEN}}
+
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      time: "09:00"
+      timezone: "Europe/Oslo"
+      day: "monday"
+    cooldown:
+      default-days: 5
+      exclude:
+        - "entur/*"
+  - package-ecosystem: "npm"
+    directory: "/"
+    registries:
+      - "jfrog-artifactory"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "05:55"
+      timezone: "Europe/Oslo"
+    cooldown:
+      default-days: 5
+      semver-major-days: 7
+      exclude:
+        - "@entur/*"
+        - "typescript"
+
+    open-pull-requests-limit: 10
+    groups:
+      Entur-Minor-Updates:
+        applies-to: version-updates
+        update-types:
+          - "minor"
+          - "patch"
+        patterns:
+          - "@entur/*"
+
+      Minor-Updates:
+        applies-to: version-updates
+        update-types:
+          - "minor"
+          - "patch"
+        exclude-patterns:
+          - "@entur/*"
