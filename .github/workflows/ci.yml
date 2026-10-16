@@ -8,7 +8,26 @@ on:
 jobs:
   validate-pr:
     uses: entur/gha-meta/.github/workflows/verify-pr.yml@v1
-  
+
+  test-rules:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: ./tests
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: "tests/package.json"
+          cache: "yarn"
+          cache-dependency-path: "tests/yarn.lock"
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Run Spectral rule tests
+        run: yarn test
+
   lint-reference-spec:
     runs-on: ubuntu-latest
     permissions:
@@ -22,7 +41,7 @@ jobs:
           set -o errexit
           set -o nounset
           set -o pipefail
-        
+          
           annotations=$(mktemp)
           markdown=$(mktemp)
           spectral lint ./specs/reference-spec.json --ruleset ".spectral.yml" --show-documentation-url -F hint -f github-actions -o.github-actions "$annotations" -f markdown -o.markdown="$markdown" && rc=$? || rc=$?
@@ -41,7 +60,7 @@ jobs:
             exit $rc
           fi
 
-  lint-reference-spec-with-errors:
+  lint-invalid:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -54,10 +73,10 @@ jobs:
           set -o errexit
           set -o nounset
           set -o pipefail
-        
+          
           annotations=$(mktemp)
           markdown=$(mktemp)
-          spectral lint ./specs/reference-spec-with-errors.json --ruleset ".spectral.yml" --show-documentation-url -F hint -f github-actions -o.github-actions "$annotations" -f markdown -o.markdown="$markdown" && rc=$? || rc=$?
+          spectral lint ./specs/invalid.json --ruleset ".spectral.yml" --show-documentation-url -F hint -f github-actions -o.github-actions "$annotations" -f markdown -o.markdown="$markdown" && rc=$? || rc=$?
 
           #Return code 2 means that spectral command failed to run (not linting errors), so fail workflow.
           if [ "$rc" -eq 2 ]; then
@@ -73,8 +92,8 @@ jobs:
             cat $markdown >> $GITHUB_STEP_SUMMARY
           fi
 
-  # This invalid spec should still pass validate, since it has no critical errors
-  validate-reference-spec-with-errors:
+  # This spec which is invalid with the full linting rules (.spectral) should still pass linting with .spectral-required
+  lint-required-valid:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -87,10 +106,10 @@ jobs:
           set -o errexit
           set -o nounset
           set -o pipefail
-        
+          
           annotations=$(mktemp)
           markdown=$(mktemp)
-          spectral lint ./specs/valid-reference-spec-with-errors.json --ruleset ".spectral-required.yml" --show-documentation-url -F hint -f github-actions -o.github-actions "$annotations" -f markdown -o.markdown="$markdown" && rc=$? || rc=$?
+          spectral lint ./specs/required-valid.json --ruleset ".spectral-required.yml" --show-documentation-url -F hint -f github-actions -o.github-actions "$annotations" -f markdown -o.markdown="$markdown" && rc=$? || rc=$?
 
           #Return code 2 means that spectral command failed to run (not linting errors), so fail workflow.
           if [ "$rc" -eq 2 ]; then
