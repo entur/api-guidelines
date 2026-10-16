@@ -23,8 +23,6 @@ jobs:
           node-version-file: "tests/package.json"
           cache: "yarn"
           cache-dependency-path: "tests/yarn.lock"
-      - name: Enable Corepack
-        run: corepack enable
       - name: Install dependencies
         run: yarn install --immutable
       - name: Run Spectral rule tests
