@@ -386,6 +386,8 @@ The API is removed.
 - :eyes: URL Based Versioning - You **MUST** include the version number in the URL
 - :eyes: Best Practices on Version Info - You **SHOULD** place the version number immediately after the domain, and before the resource path itself
   - Example: `https://api.entur.io/sales/v1/orders?distributionChannelId=1`
+- :eyes: You **SHOULD NOT** include the stability level of the api in the URL. Instead, [follow the lifecycle guidelines](#25-lifecycle)
+  - Example: :x: `https://api.entur.io/sales/v1beta/orders?distributionChannelId=1`
  
 #### 3.2.2 API Spec Versioning
 API spec versioning is done automatically when [publishing the spec](https://github.com/entur/gha-api/blob/main/README-publish.md).
