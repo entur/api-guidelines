@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.5.2](https://github.com/entur/api-guidelines/compare/v3.5.1...v3.5.2) (2026-10-21)
+
+
+### Bug Fixes
+
+* **ETU-79054:** Add guideline that lifecycle info should not be in URL ([#141](https://github.com/entur/api-guidelines/issues/141)) ([7780b71](https://github.com/entur/api-guidelines/commit/7780b71e7d52115b82e10282e337c6a50a51fb8d))
+
 ## [3.5.1](https://github.com/entur/api-guidelines/compare/v3.5.0...v3.5.1) (2026-10-14)
 
 
