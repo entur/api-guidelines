@@ -180,7 +180,7 @@ id            |`string`  |**REQUIRED**. Unique id for this specification. [Read 
 audience      |`string`  |**REQUIRED**. Who this specification is targeted to. Must be one of `"open"`, `"partner"`, `"internal"`, `"private"`
 owner         |`string`  |**REQUIRED**. The Entur team responsible for this specification. [Read more](#242-specification-owner).
 parentId      |`string`  |Id of the parent specification, used when merging. [Read more](#243-merging-specifications).
-devExtensions |[`string`]|OpenAPI extensions in the specification that are used for development, but that should not be visible to consumers of the API.
+devExtensions |[`string`]|OpenAPI extensions that are used for development, that should not be visible to consumers. [Read more](#244-development-only-openapi-extensions).
 
 Example:
 ```json
