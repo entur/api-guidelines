@@ -1,0 +1,47 @@
+// Custom overrides for the just-the-docs theme.
+// This file is imported automatically by the theme (local files take
+// precedence over the remote theme's empty custom.scss).
+
+// 1. Widen the main content column things fit horizontally. Default is 800px (~50rem).
+@media (min-width: 66.5rem) {
+  .main {
+    max-width: 64rem;
+  }
+}
+
+// 2. Keep the breadcrumb trail pinned to the top of the screen while scrolling.
+.breadcrumb-nav {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 0.75rem 0;
+  background-color: $body-background-color;
+  border-bottom: 1px solid $border-color;
+}
+
+// 3. Render the in-page table of contents as a sticky column on the left
+//    of the content, instead of a block at the top of the page.
+#markdown-toc {
+  float: left;
+  width: 16rem;
+  margin: 0 2rem 1rem 0;
+  padding: 1rem;
+  position: sticky;
+  top: 3.5rem; // sit just below the sticky breadcrumbs
+  max-height: calc(100vh - 5rem);
+  overflow-y: auto;
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  font-size: 0.75rem;
+}
+
+// On narrow screens, drop the TOC back to full width above the content.
+@media (max-width: 66.5rem) {
+  #markdown-toc {
+    float: none;
+    width: auto;
+    position: static;
+    max-height: none;
+  }
+}
+
