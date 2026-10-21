@@ -1,5 +1,11 @@
 # Sorting
 
+## Table of contents
+{: .no_toc }
+
+* TOC placeholder
+{:toc}
+
 All returned collections **MUST** be sorted, which it means that the order is deterministic: the same
 request **MUST** return items in the same order.
 

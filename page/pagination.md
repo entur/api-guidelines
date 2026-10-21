@@ -1,5 +1,11 @@
 # Pagination
 
+## Table of contents
+{: .no_toc }
+
+* TOC placeholder
+{:toc}
+
 When implementing pagination, you **MUST** use either Cursor Pagination (preferred) or Offset Pagination, on the formats detailed below.  
 
 ## Offset Pagination
