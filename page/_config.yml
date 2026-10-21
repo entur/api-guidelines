@@ -2,12 +2,20 @@
 title: Entur API Guidelines
 description: Guidelines and best practices for designing RESTful APIs at Entur.
 
-# Theme (served via GitHub Pages / jekyll-build-pages).
-# "remote_theme" lets you use any theme on GitHub without adding a Gemfile.
-# The Cayman theme is a clean, single-column docs theme.
-remote_theme: pages-themes/cayman@v0.2.0
+# Theme: just-the-docs gives a left-hand navigation sidebar, built-in search,
+# and automatic breadcrumbs. It is used as a remote theme (no Gemfile needed).
+remote_theme: just-the-docs/just-the-docs
 plugins:
   - jekyll-remote-theme
+
+# just-the-docs options
+search_enabled: true        # search box at the top of the left sidebar
+heading_anchors: true       # hover-anchors on headings
+color_scheme: light
+aux_links:
+  "GitHub":
+    - "https://github.com/entur/api-guidelines"
+aux_links_new_tab: true
 
 # Markdown / rendering configuration
 markdown: kramdown
@@ -19,9 +27,3 @@ kramdown:
   parse_block_html: true
   syntax_highlighter: rouge
   toc_levels: 2..3   # which heading levels appear in the {:toc} list
-
-# Make the three guideline pages the content of the site.
-include:
-  - index.md
-  - pagination.md
-  - sorting.md

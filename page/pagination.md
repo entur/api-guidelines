@@ -1,3 +1,10 @@
+---
+title: Pagination
+layout: default
+parent: API Guidelines
+nav_order: 2
+---
+
 # Pagination
 
 ## Table of contents
