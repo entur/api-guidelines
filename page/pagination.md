@@ -6,6 +6,7 @@ nav_order: 2
 ---
 
 # Pagination
+{: .no_toc }
 
 ## Table of contents
 {: .no_toc }

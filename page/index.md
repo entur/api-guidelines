@@ -6,6 +6,7 @@ has_children: true
 ---
 
 # API Guidelines
+{: .no_toc }
 
 > **Request for comment**
 
