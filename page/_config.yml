@@ -2,29 +2,8 @@
 title: Entur API Guidelines
 description: Guidelines and best practices for designing RESTful APIs at Entur.
 
-# Theme: just-the-docs gives a left-hand navigation sidebar, built-in search,
-# and automatic breadcrumbs. It is used as a remote theme (no Gemfile needed).
-remote_theme: just-the-docs/just-the-docs
-plugins:
-  - jekyll-remote-theme
-  - jemoji            # renders :emoji: shortcodes like :white_check_mark:
+theme: just-the-docs
 
-# just-the-docs options
-search_enabled: true        # search box at the top of the left sidebar
-heading_anchors: true       # hover-anchors on headings
-color_scheme: light
 aux_links:
   "GitHub":
     - "https://github.com/entur/api-guidelines"
-aux_links_new_tab: true
-
-# Markdown / rendering configuration
-markdown: kramdown
-kramdown:
-  # Generate id="..." anchors on every heading so the TOC and
-  # in-page links (e.g. #25-lifecycle) resolve correctly.
-  auto_ids: true
-  # Allow raw HTML blocks (e.g. the <details> sections) to pass through.
-  parse_block_html: true
-  syntax_highlighter: rouge
-  toc_levels: 2..3   # which heading levels appear in the {:toc} list
