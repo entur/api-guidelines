@@ -7,7 +7,7 @@ The guidelines are published as a Github Pages page, using the just-the-docs the
 All site sources live in the [page](page) folder.
 
 ### Building and previewing your site locally
-Assuming Jekyll and Bundler are installed on your computer:
+Assuming [Jekyll](https://jekyllrb.com/) and [Bundler](https://bundler.io/) are installed on your computer:
 
 - Change your working directory to the root directory of your site.
 - Run ```bundle install```.
