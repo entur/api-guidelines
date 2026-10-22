@@ -1,10 +1,3 @@
----
-title: API Guidelines
-layout: default
-nav_order: 1
-has_children: true
----
-
 # API Guidelines
 
 > **Request for comment**
