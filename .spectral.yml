@@ -27,7 +27,7 @@ rules:
 
   entur-info-title:
     message: "The OpenAPI info section MUST include a non-empty \"title\"."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#21-general-design-principles"
+    documentationUrl: "https://entur.github.io/api-guidelines/#21-general-design-principles"
     severity: error
     given: $
     then:
@@ -36,7 +36,7 @@ rules:
 
   entur-info-title-no-api:
     message: "API titles SHOULD NOT contain the word 'api'."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#21-general-design-principles"
+    documentationUrl: "https://entur.github.io/api-guidelines/#21-general-design-principles"
     severity: warn
     given: $.info.title
     then:
@@ -50,7 +50,7 @@ rules:
   # HTTP Methods
   entur-operation-standard-methods:
     message: "Operations SHOULD use standard HTTP methods (`get`, `post`, `put`, `patch`, `delete`). Invalid operation: {{property}}."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#21-general-design-principles"
+    documentationUrl: "https://entur.github.io/api-guidelines/#21-general-design-principles"
     given: $.paths[*]
     severity: warn
     then:
@@ -62,7 +62,7 @@ rules:
   # Documentation with examples
   entur-example-parameter:
     message: "Parameters SHOULD have example values."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#21-general-design-principles"
+    documentationUrl: "https://entur.github.io/api-guidelines/#21-general-design-principles"
     severity: warn
     recommended: false
     given: $.paths.*.*.parameters.*
@@ -72,7 +72,7 @@ rules:
 
   entur-parameter-description:
     message: "Parameters SHOULD have a description."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#21-general-design-principles"
+    documentationUrl: "https://entur.github.io/api-guidelines/#21-general-design-principles"
     severity: warn
     given: $.paths.*.*.parameters.*
     then:
@@ -81,7 +81,7 @@ rules:
 
   entur-example-schema-property:
     message: "Properties in components schema SHOULD have example values."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#21-general-design-principles"
+    documentationUrl: "https://entur.github.io/api-guidelines/#21-general-design-principles"
     severity: warn
     recommended: false
     #For schema properties where type is not array, or items is not a ref. (Array with ref to other schema does not need an example)
@@ -92,7 +92,7 @@ rules:
 
   entur-request-body-examples:
     message: "Request bodies SHOULD include at least one example."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#21-general-design-principles"
+    documentationUrl: "https://entur.github.io/api-guidelines/#21-general-design-principles"
     severity: warn
     given: $.paths.*.*.requestBody.content.*
     then:
@@ -100,7 +100,7 @@ rules:
 
   entur-request-body-description:
     message: "Request bodies SHOULD have a description, either directly or on the referenced schema."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#21-general-design-principles"
+    documentationUrl: "https://entur.github.io/api-guidelines/#21-general-design-principles"
     severity: warn
     given: $.paths.*.*.requestBody
     then:
@@ -108,7 +108,7 @@ rules:
 
   entur-response-body-examples:
     message: "Response bodies SHOULD include at least one example."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#21-general-design-principles"
+    documentationUrl: "https://entur.github.io/api-guidelines/#21-general-design-principles"
     severity: warn
     given: $.paths.*.*.responses.*.content.*
     then:
@@ -117,7 +117,7 @@ rules:
 
   entur-operation-summary:
     message: "Operations SHOULD have a non-empty summary field."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#21-general-design-principles"
+    documentationUrl: "https://entur.github.io/api-guidelines/#21-general-design-principles"
     severity: warn
     given: $.paths.*[get,post,put,patch,delete,options,head,trace]
     then:
@@ -127,7 +127,7 @@ rules:
   # openapi spec version 3
   entur-openapi-version-3:
     message: "OpenAPI specification must use version 3.x"
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#21-general-design-principles"
+    documentationUrl: "https://entur.github.io/api-guidelines/#21-general-design-principles"
     severity: error
     given: "$"
     then:
@@ -141,7 +141,7 @@ rules:
   # Security - HTTPS requirement
   entur-hosts-https-only:
     message: "Servers MUST use HTTPS. Invalid URL: {{value}}"
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#21-general-design-principles"
+    documentationUrl: "https://entur.github.io/api-guidelines/#21-general-design-principles"
     severity: error
     given: $.servers[*].url
     then:
@@ -151,7 +151,7 @@ rules:
 
   entur-hosts-not-localhost:
     message: "Server URLs SHOULD NOT use localhost or 127.0.0.1 as hostname. Invalid URL: {{value}}"
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#21-general-design-principles"
+    documentationUrl: "https://entur.github.io/api-guidelines/#21-general-design-principles"
     severity: warn
     given: $.servers[*].url
     then:
@@ -165,7 +165,7 @@ rules:
   # -------------------------------------------------------------------------
 
   entur-permissions:
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#233-documenting-permissions-for-partner-endpoints"
+    documentationUrl: "https://entur.github.io/api-guidelines/#233-documenting-permissions-for-partner-endpoints"
     severity: error
     given: $.paths.*[get,post,put,patch,delete,options,head,trace].x-entur-permissions
     then:
@@ -177,7 +177,7 @@ rules:
 
   entur-info-metadata-id:
     message: "The OpenAPI info section MUST include \"x-entur-metadata.id\"."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#241-identifying-a-specification"
+    documentationUrl: "https://entur.github.io/api-guidelines/#241-identifying-a-specification"
     severity: error
     given: $
     then:
@@ -186,7 +186,7 @@ rules:
 
   entur-info-metadata-id-kebab-case:
     message: "The \"x-entur-metadata.id\" MUST be in lower-kebab-case format. Invalid value: {{value}}"
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#241-identifying-a-specification"
+    documentationUrl: "https://entur.github.io/api-guidelines/#241-identifying-a-specification"
     severity: error
     given: $.info.x-entur-metadata.id
     then:
@@ -196,7 +196,7 @@ rules:
 
   entur-info-metadata-audience:
     message: "The OpenAPI info section MUST include \"x-entur-metadata.audience\"."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#24-entur-metadata"
+    documentationUrl: "https://entur.github.io/api-guidelines/#24-entur-metadata"
     severity: error
     given: $
     then:
@@ -204,7 +204,7 @@ rules:
       function: truthy
 
   entur-info-metadata-audience-valid:
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#24-entur-metadata"
+    documentationUrl: "https://entur.github.io/api-guidelines/#24-entur-metadata"
     severity: error
     given: $.info.x-entur-metadata.audience
     then:
@@ -218,7 +218,7 @@ rules:
 
   entur-info-metadata-owner:
     message: "The OpenAPI info section MUST include \"x-entur-metadata.owner\"."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#242-specification-owner"
+    documentationUrl: "https://entur.github.io/api-guidelines/#242-specification-owner"
     severity: error
     given: $
     then:
@@ -226,7 +226,7 @@ rules:
       function: truthy
 
   entur-info-metadata-owner-valid:
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#242-specification-owner"
+    documentationUrl: "https://entur.github.io/api-guidelines/#242-specification-owner"
     severity: error
     given: $.info.x-entur-metadata.owner
     then:
@@ -236,7 +236,7 @@ rules:
 
   entur-info-metadata-parent-id-kebab-case:
     message: "The \"x-entur-metadata.parentId\" MUST be in lower-kebab-case format. Invalid value: {{value}}"
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#243-merging-specifications"
+    documentationUrl: "https://entur.github.io/api-guidelines/#243-merging-specifications"
     severity: error
     given: $.info.x-entur-metadata.parentId
     then:
@@ -245,7 +245,7 @@ rules:
         match: ^[a-z0-9]+(-[a-z0-9]+)*$
 
   entur-info-metadata-devExtensions:
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#244-development-only-openapi-extensions"
+    documentationUrl: "https://entur.github.io/api-guidelines/#244-development-only-openapi-extensions"
     severity: error
     given: $.info.x-entur-metadata.devExtensions
     then:
@@ -263,7 +263,7 @@ rules:
 
   ## On API level
   entur-stability-level-api:
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#25-lifecycle"
+    documentationUrl: "https://entur.github.io/api-guidelines/#25-lifecycle"
     severity: error
     given: $.info.x-stability-level
     then:
@@ -272,7 +272,7 @@ rules:
         values: [draft, beta, stable]
 
   entur-deprecation-api:
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#254-deprecation"
+    documentationUrl: "https://entur.github.io/api-guidelines/#254-deprecation"
     severity: error
     given: $.info.x-deprecated
     then:
@@ -282,7 +282,7 @@ rules:
           type: boolean
 
   entur-sunset-api:
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#254-deprecation"
+    documentationUrl: "https://entur.github.io/api-guidelines/#254-deprecation"
     severity: error
     given: $.info
     then:
@@ -293,7 +293,7 @@ rules:
         havingValue: true
 
   entur-sunset-format-api:
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#254-deprecation"
+    documentationUrl: "https://entur.github.io/api-guidelines/#254-deprecation"
     severity: error
     given: $.info.x-sunset
     then:
@@ -301,7 +301,7 @@ rules:
 
   # On individual operation level
   entur-stability-level-operation:
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#25-lifecycle"
+    documentationUrl: "https://entur.github.io/api-guidelines/#25-lifecycle"
     severity: error
     given: $.paths.*[get,post,put,patch,delete,options,head,trace].x-stability-level
     then:
@@ -310,7 +310,7 @@ rules:
         values: [draft, beta, stable]
 
   entur-sunset-operation:
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#254-deprecation"
+    documentationUrl: "https://entur.github.io/api-guidelines/#254-deprecation"
     severity: info # This one should be an error, but for an introduction period, make it just info.
     given: $.paths.*[get,post,put,patch,delete,options,head,trace]
     then:
@@ -321,7 +321,7 @@ rules:
         havingValue: true
 
   entur-sunset-format-operation:
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#254-deprecation"
+    documentationUrl: "https://entur.github.io/api-guidelines/#254-deprecation"
     severity: error
     given: $.paths.*[get,post,put,patch,delete,options,head,trace].x-sunset
     then:
@@ -339,7 +339,7 @@ rules:
   # URL format requirements
   entur-paths-format:
     message: "Paths MUST be in kebab-case (lower case and separated with hyphens), with single slashes, and no trailing slash at end of path. Invalid path: {{property}}."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#31-resource-naming"
+    documentationUrl: "https://entur.github.io/api-guidelines/#31-resource-naming"
     severity: error
     given: $.paths.*~
     then:
@@ -353,7 +353,7 @@ rules:
   # Field naming conventions
   entur-query-parameters-lower-camel-case:
     message: "Query parameter names MUST be lowerCamelCase. Invalid name: {{value}}"
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#31-resource-naming"
+    documentationUrl: "https://entur.github.io/api-guidelines/#31-resource-naming"
     severity: error
     given: $.paths.*.*.parameters[?(@.in=='query')].name
     then:
@@ -363,7 +363,7 @@ rules:
 
   entur-path-parameters-camelCase-alphanumeric:
     message: "Path parameter names MUST be lowerCamelCase. Invalid name: {{value}}"
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#31-resource-naming"
+    documentationUrl: "https://entur.github.io/api-guidelines/#31-resource-naming"
     severity: error
     given: $..parameters[?(@.in == 'path')].name
     then:
@@ -373,7 +373,7 @@ rules:
 
   entur-body-fields-lower-camel-case:
     message: "Request and Response body field names MUST be lowerCamelCase."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#31-resource-naming"
+    documentationUrl: "https://entur.github.io/api-guidelines/#31-resource-naming"
     severity: error
     given: $..[?(@property === 'properties')]
     then:
@@ -385,7 +385,7 @@ rules:
 # Server URL case requirements
   entur-server-urls-lowercase:
     message: "Server URLs MUST be in lowercase. Invalid URL: {{value}}"
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#31-resource-naming"
+    documentationUrl: "https://entur.github.io/api-guidelines/#31-resource-naming"
     severity: error
     given: $.servers[*].url
     then:
@@ -396,7 +396,7 @@ rules:
   # Avoid 'api' in paths
   entur-paths-with-api:
     message: "Paths SHOULD NOT contain 'api'."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#31-resource-naming"
+    documentationUrl: "https://entur.github.io/api-guidelines/#31-resource-naming"
     severity: warn
     given: $.paths.*~
     then:
@@ -420,7 +420,7 @@ rules:
   # Request body allowed methods
   entur-request-body-allowed-methods:
     message: "Request body is allowed only for PUT, POST, and PATCH."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#41-http-status-codes"
+    documentationUrl: "https://entur.github.io/api-guidelines/#41-http-status-codes"
     severity: error
     given:
       - "$.paths[*].get.requestBody"
@@ -433,7 +433,7 @@ rules:
 
   # HTTP method responses validation
   entur-get-responses-validation:
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#41-http-status-codes"
+    documentationUrl: "https://entur.github.io/api-guidelines/#41-http-status-codes"
     severity: error
     given: $.paths.*.get.responses
     then:
@@ -443,7 +443,7 @@ rules:
         values: ["200", "302", "304", "400", "401", "403", "404", "410", "500", "503", "default"]
 
   entur-post-responses-validation:
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#41-http-status-codes"
+    documentationUrl: "https://entur.github.io/api-guidelines/#41-http-status-codes"
     severity: error
     given: $.paths.*.post.responses
     then:
@@ -453,7 +453,7 @@ rules:
         values: ["200", "201", "202", "204", "303", "400", "401", "403", "404", "409", "500", "503", "default"]
 
   entur-put-responses-validation:
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#41-http-status-codes"
+    documentationUrl: "https://entur.github.io/api-guidelines/#41-http-status-codes"
     severity: error
     given: $.paths.*.put.responses
     then:
@@ -463,7 +463,7 @@ rules:
         values: ["200", "201", "204", "400", "401", "403", "404", "409", "410", "412", "500", "503", "default"]
 
   entur-patch-responses-validation:
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#41-http-status-codes"
+    documentationUrl: "https://entur.github.io/api-guidelines/#41-http-status-codes"
     severity: error
     given: $.paths.*.patch.responses
     then:
@@ -473,7 +473,7 @@ rules:
         values: ["200", "204", "400", "401", "403", "404", "409", "410", "412", "500", "503", "default"]
 
   entur-delete-responses-validation:
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#41-http-status-codes"
+    documentationUrl: "https://entur.github.io/api-guidelines/#41-http-status-codes"
     severity: error
     given: $.paths.*.delete.responses
     then:
@@ -490,7 +490,7 @@ rules:
   # Error response format validation
   entur-rfc-9457-content-type:
     message: "Error responses MUST have content type application/problem+json or application/problem+xml"
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#42-error-handling"
+    documentationUrl: "https://entur.github.io/api-guidelines/#42-error-handling"
     severity: warn
     given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))]
     then:
@@ -508,7 +508,7 @@ rules:
 
   entur-rfc-9457-body-title:
     message: "Error responses MUST have property 'title'."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#42-error-handling"
+    documentationUrl: "https://entur.github.io/api-guidelines/#42-error-handling"
     severity: error
     given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))].content.*.schema.properties
     then:
@@ -517,7 +517,7 @@ rules:
 
   entur-rfc-9457-body-status:
     message: "Error responses MUST have property 'status'."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#42-error-handling"
+    documentationUrl: "https://entur.github.io/api-guidelines/#42-error-handling"
     severity: error
     given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))].content.*.schema.properties
     then:
@@ -526,7 +526,7 @@ rules:
 
   entur-rfc-9457-body-detail:
     message: "Error responses SHOULD have property 'detail' to provide additional context."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#42-error-handling"
+    documentationUrl: "https://entur.github.io/api-guidelines/#42-error-handling"
     severity: warn
     given: $.paths.*.*.responses[?(@property.match(/^(4|5)/))].content.*.schema.properties
     then:
@@ -545,7 +545,7 @@ rules:
 
   entur-language-headers:
     message: "Accept-Language and Content-Language should follow IETF BCP 47. And macrolanguages like 'no' should not be used - use 'nb' or 'nn'."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#51-language--spelling"
+    documentationUrl: "https://entur.github.io/api-guidelines/#51-language--spelling"
     severity: error
     given:
       - $..parameters[?(@.in=='header' && @.name=='Accept-Language')].example
@@ -581,7 +581,7 @@ rules:
   # ET-Client-Name header not necessary
   entur-not-et-client-name-header:
     message: "Declaring header \"ET-Client-Name\" is not necessary."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#55-http-headers"
+    documentationUrl: "https://entur.github.io/api-guidelines/#55-http-headers"
     severity: warn
     given: "$.paths[*]..parameters[?(@.in == 'header' && @.name == 'ET-Client-Name')].name"
     then:
@@ -590,7 +590,7 @@ rules:
   # Header naming conventions
   entur-headers-hyphenated-pascal-case:
     message: "HTTP header names MUST be in Hyphenated-Pascal-Case. Invalid name: \"{{value}}\"."
-    documentationUrl: "https://github.com/entur/api-guidelines/blob/main/guidelines.md#55-http-headers"
+    documentationUrl: "https://entur.github.io/api-guidelines/#55-http-headers"
     severity: error
     given: "$..parameters[?(@.in == 'header' && @.name != 'ET-Client-Name' && @.name != 'Entur-POS')].name"
     then:
