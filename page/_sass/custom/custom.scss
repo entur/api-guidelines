@@ -1,0 +1,43 @@
+// Project-specific style overrides for the just-the-docs theme.
+// This file is imported automatically by just-the-docs after its own styles,
+// so use concrete CSS overrides here (SCSS variables like $content-width are
+// already resolved by this point and cannot be changed retroactively).
+
+// --- Widen the main content area, keeping it centered ---------------------
+//
+// just-the-docs centers the content by balancing the left margin and the
+// sidebar width against `$content-width` (default 800px). If we only change
+// `.main`'s max-width, the extra width spills to the right and the content
+// looks off-center. So we recompute the sidebar width and `.main` margin-left
+// with the same formula the theme uses, but based on our wider target width.
+
+// Keep this in `rem` to match the theme's `$nav-width` (16.5rem) and
+// `$content-width` (50rem) — they are added together in SCSS arithmetic, so
+// mixing px with rem would be a compile error.
+$jtd-content-width: 68rem; // ~1088px (theme default is 50rem / ~800px)
+
+.main {
+  @include mq(md) {
+    max-width: $jtd-content-width;
+  }
+}
+
+.side-bar {
+  @include mq(lg) {
+    width: calc(
+      (100% - #{$nav-width + $jtd-content-width}) / 2 + #{$nav-width}
+    );
+    min-width: $nav-width;
+  }
+
+  // stylelint-disable function-name-case
+  & + .main {
+    @include mq(lg) {
+      margin-left: Max(
+        #{$nav-width},
+        calc((100% - #{$nav-width + $jtd-content-width}) / 2 + #{$nav-width})
+      );
+    }
+  }
+  // stylelint-enable function-name-case
+}
