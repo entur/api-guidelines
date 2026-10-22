@@ -13,8 +13,15 @@ has_children: true
 ## Table of contents
 {: .no_toc }
 
+<details markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
 * TOC placeholder (the list below is generated automatically)
 {:toc}
+</details>
+
 
 ## 1. Introduction
 Welcome to Enturs API guidelines, designed to ensure a consistent and robust approach to developing [RESTful](https://en.wikipedia.org/wiki/REST) APIs. REST (Representational State Transfer) is an architectural style that uses standard HTTP methods to create scalable, lightweight, and maintainable services.
