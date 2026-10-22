@@ -36,10 +36,10 @@ jobs:
         uses: actions/configure-pages@v6
 
       - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./page
-          destination: ./_site
+        working-directory: ./page
+        run: bundle exec jekyll build --destination ../_site --baseurl "${{ steps.pages.outputs.base_path }}"
+        env:
+          JEKYLL_ENV: production
       - uses: actions/upload-pages-artifact@v5
 
   deploy-page:
