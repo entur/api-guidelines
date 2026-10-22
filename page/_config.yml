@@ -7,7 +7,6 @@ description: Guidelines and best practices for designing RESTful APIs at Entur.
 remote_theme: just-the-docs/just-the-docs
 plugins:
   - jekyll-remote-theme
-  - jemoji            # renders :emoji: shortcodes like :white_check_mark:
 
 # just-the-docs options
 search_enabled: true        # search box at the top of the left sidebar
