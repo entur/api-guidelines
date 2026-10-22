@@ -1,3 +1,10 @@
+---
+title: Sorting
+layout: default
+parent: API Guidelines
+nav_order: 3
+---
+
 # Sorting
 
 ## Table of contents
