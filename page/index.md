@@ -3,6 +3,7 @@ title: API Guidelines
 layout: default
 nav_order: 1
 has_children: true
+has_toc: false
 ---
 
 # API Guidelines
@@ -13,7 +14,7 @@ has_children: true
 ## Table of contents
 {: .no_toc }
 
-<details markdown="block">
+<details open markdown="block">
   <summary>
     Table of contents
   </summary>
