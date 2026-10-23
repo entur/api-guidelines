@@ -1,6 +1,27 @@
+---
+title: API Guidelines
+layout: default
+nav_order: 1
+has_children: true
+has_toc: false
+---
+
 # API Guidelines
+{: .no_toc }
 
 > **Request for comment**
+
+## Table of contents
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+* TOC placeholder (the list below is generated automatically)
+{:toc}
+</details>
 
 
 ## 1. Introduction
@@ -18,7 +39,7 @@ This guide is for developers, architects, and technical designers who work on th
 
 
 ### 1.3 Contributing
-For details on how to contribute to these guidelines, see the [contributing guide](CONTRIBUTING.md).
+For details on how to contribute to these guidelines, see the [contributing guide](https://github.com/entur/api-guidelines/blob/main/CONTRIBUTING.md).
 
 
 ### 1.4 Requirement Levels
@@ -30,8 +51,8 @@ Throughout this document, these requirement levels are used:
 
 ### 1.5 Linter Coverage
 Throughout this document, rules are marked with the following indicators:
-- :white_check_mark: Automatically enforced by [linter](README.md#linting-your-api)
-- :ballot_box_with_check: Partially checked by [linter](README.md#linting-your-api)
+- :white_check_mark: Automatically enforced by [linter](https://github.com/entur/api-guidelines/blob/main/README.md#linting-your-api)
+- :ballot_box_with_check: Partially checked by [linter](https://github.com/entur/api-guidelines/blob/main/README.md#linting-your-api)
 - :eyes: Requires manual review
 
 
@@ -56,7 +77,7 @@ Throughout this document, rules are marked with the following indicators:
   - Create the API specification before implementing the API
   - The specification is the primary reference for both development and documentation
   - Update the specification throughout development to reflect changes
-- :eyes: [Lint your API spec](README.md#linting-your-api)
+- :eyes: [Lint your API spec](https://github.com/entur/api-guidelines/blob/main/README.md#linting-your-api)
 - :eyes: Differentiate API specifications based on the target audience. The target audience of an API specification is declared in `info.x-entur-metadata.audience`. For details, see: [2.4 Entur Metadata](#24-entur-metadata). There are different requirements based on the audience of your API.
   - `open`: Available to anyone, without requiring a contractual relationship with Entur
     - :eyes: **MUST** follow these guidelines
@@ -556,7 +577,7 @@ A "de-facto" standard for correlating a request throughout a microservice archit
   GET /api/v1/bus-stops?city=Oslo&cursor=eyJpZCI6MTAwfQ&pageSize=20
   ```
 
-See [pagination](doc/pagination.md) for more details.
+See [pagination](pagination.md) for more details.
 
 All returned collections **MUST** be sorted, which it means that the order is deterministic: the same
 request **MUST** return items in the same order.
@@ -565,7 +586,7 @@ request **MUST** return items in the same order.
 > GET /api/v1/bus-stops?city=Oslo&sort=name,asc&sort=something,desc
 
 
-See [sorting](doc/sorting.md) for more details.
+See [sorting](sorting.md) for more details.
 
 
 ### 6.2 Partial Responses

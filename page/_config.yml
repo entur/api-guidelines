@@ -1,0 +1,14 @@
+# Jekyll config
+
+title: Entur API Guidelines
+description: Guidelines and best practices for designing RESTful APIs at Entur.
+favicon_ico: "/assets/images/favicon.ico"
+
+theme: just-the-docs
+
+plugins:
+  - jemoji
+
+aux_links:
+  "GitHub":
+    - "https://github.com/entur/api-guidelines"
