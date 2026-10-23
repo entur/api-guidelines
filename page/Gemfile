@@ -2,5 +2,5 @@ source 'https://rubygems.org'
 
 gem "jekyll", "4.4.1"
 gem "just-the-docs", "0.12.0"
-gem "jemoji" # GitHub-style emoji shortcodes, e.g. :white_check_mark:
+gem "jemoji", "0.13.0" # GitHub-style emoji shortcodes, e.g. :white_check_mark:
 
