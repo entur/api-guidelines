@@ -1,9 +1,7 @@
 # Jekyll config
 
-# Site metadata
 title: Entur API Guidelines
 description: Guidelines and best practices for designing RESTful APIs at Entur.
-
 favicon_ico: "/assets/images/favicon.ico"
 
 theme: just-the-docs
