@@ -249,7 +249,7 @@ There are some limitations when merging specifications:
 - Root level `security` must be identical in all specs to be merged.
 - If there are multiple non-equal schemas with the same name, they will be namespaced with the `x-entur-metadata.id` field. So if multiple specs declare a schema `Item` that differ from each other, there will be one schema `Item_alpha` and one schema `Item_beta`.
 
-<details>
+<details markdown="block">
 <summary>Example</summary>
 
 For example, say you have three microservices, `alpha`, `beta` and `gamma`:
@@ -296,7 +296,7 @@ Here, only 1 specification will be shown on the Developer Portal, which is a com
 #### 2.4.4 Development-only OpenAPI extensions
 Sometimes there may be a need for adding OpenAPI extensions to a specification that are only meant for the development process, for example for generating server interfaces with [OpenAPIGenerator](https://openapi-generator.tech/docs/generators/kotlin-spring#supported-vendor-extensions). These extensions are only relevant for the team creating the API, not for consumers. To hide extensions like these from the OpenAPI specification that is served from the Developer Portal, use the field `x-entur-metadata.devExtensions`.
 
-<details>
+<details markdown="block">
 <summary>Example</summary>
 
 The extension `x-kotlin-implements` will be stripped before the specification is published to the Developer Portal.
