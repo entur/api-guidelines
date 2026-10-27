@@ -1,4 +1,18 @@
+---
+title: Pagination
+layout: default
+parent: API Guidelines
+nav_order: 2
+---
+
 # Pagination
+{: .no_toc }
+
+## Table of contents
+{: .no_toc }
+
+* TOC placeholder
+{:toc}
 
 When implementing pagination, you **MUST** use either Cursor Pagination (preferred) or Offset Pagination, on the formats detailed below.  
 
