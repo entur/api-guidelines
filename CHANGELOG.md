@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.5.4](https://github.com/entur/api-guidelines/compare/v3.5.3...v3.5.4) (2026-11-03)
+
+
+### Bug Fixes
+
+* Fixed documentationUrl in   .spectral-required.yml ([a9cc7e8](https://github.com/entur/api-guidelines/commit/a9cc7e88215c9d693e87adb79d779f20b1370b9b))
+
 ## [3.5.3](https://github.com/entur/api-guidelines/compare/v3.5.2...v3.5.3) (2026-11-03)
 
 
