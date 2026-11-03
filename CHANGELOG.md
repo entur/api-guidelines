@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.5.3](https://github.com/entur/api-guidelines/compare/v3.5.2...v3.5.3) (2026-11-03)
+
+
+### Bug Fixes
+
+* Created GitHub Pages page for API guidelines ([1a4ad3b](https://github.com/entur/api-guidelines/commit/1a4ad3ba2ad13731c180e332528d4787f392e8a6))
+
 ## [3.5.2](https://github.com/entur/api-guidelines/compare/v3.5.1...v3.5.2) (2026-10-21)
 
 
