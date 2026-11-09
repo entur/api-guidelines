@@ -18,9 +18,9 @@
     "@stoplight/spectral-ruleset-bundler": "1.8.0",
     "@stoplight/spectral-runtime": "1.1.6",
     "@stoplight/types": "14.1.1",
-    "@types/node": "26.6.5",
+    "@types/node": "26.6.6",
     "vite": "8.3.5",
-    "vitest": "5.0.5",
+    "vitest": "5.1.0",
     "typescript": "7.0.2"
   }
 }
