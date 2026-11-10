@@ -25,7 +25,7 @@ has_toc: false
 
 ### 1.1 Audience and scope
 
-These guidelines are for developers, product owners, AI agents and others who write or review changelogs. They apply to any kind of changelog, as long as the changelog is available to an audience other than its authors.
+These guidelines are for developers, product owners, AI agents and others who write or review changelogs. They apply to changelogs whose consumers are technical, such as developers and AI agents, as long as the changelog is available to an audience other than its authors. Release notes for non-technical consumers, such as the users of a mobile app, are not covered yet.
 
 ### 1.2 Purpose
 
@@ -46,7 +46,7 @@ For details on how to contribute to these guidelines, see the [contributing guid
 - A *release* is a set of changes that are made available to consumers together, such as a new SDK version, or API changes that are deployed or switched on with a feature flag.
 - A *hosted interface*, such as an API or a web interface, runs in the system that exposes it, so consumers get changes when they are released. An *installed interface*, such as an SDK or a library, runs in consumers' own environment, so they get changes by upgrading.
 - A *changelog* communicates how an interface changes to its consumers.
-- A changelog *entry* is the information that describes consumer-relevant changes in one or more releases.
+- A changelog *entry* is a distinct section of a changelog that describes one or more releases.
 
 ### 1.5 Requirement levels
 
@@ -58,7 +58,9 @@ The keywords **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT** and **MAY** have
 
 ## 2. General requirements
 
-A release that has consumer-relevant changes **MUST** be described in an entry. A release with no consumer-relevant changes **SHOULD NOT** be mentioned in an entry.
+For a hosted interface, a release that has consumer-relevant changes **MUST** be described in an entry, and a release with no consumer-relevant changes **SHOULD NOT** be mentioned in an entry. An entry **MAY** describe several releases.
+
+For an installed interface, each release **MUST** be described in an entry of its own. If a release has no consumer-relevant changes, its entry **MUST** say so.
 
 An entry:
 
@@ -67,6 +69,7 @@ An entry:
   - Which elements of the interface it affects, such as an endpoint, a field, a function or a configuration option.
   - Who it affects, if not every consumer.
   - How it affects them: what they can do, how something behaves now compared with before, or which problem is solved.
+- **MUST** reference the version it describes, for an installed interface.
 - **SHOULD** be specific:
   - Avoid vague or ambiguous words, such as "improved", "might" or "et cetera".
   - Give exact dates instead of relative ones, such as "for now" or "in 12 months".
@@ -74,9 +77,7 @@ An entry:
 - **SHOULD** be understandable without relying on other entries, for example without referring to "the previous entry" or "as announced earlier".
 - **SHOULD** describe the changes that require action before other changes, with the earliest deadline first.
 - **SHOULD** use the terms that consumers can find in the interface or its published documentation, and **SHOULD NOT** use internal names and abbreviations.
-- **SHOULD** reference the version it describes, for an installed interface.
 - **SHOULD** use the present tense for how things work after the changes, and the past tense for how they worked before.
-- **SHOULD** be written together with the changes it describes, and be reviewed and approved with them by a person who decides how the interface changes.
 
 ### 2.1 Changes that require action
 
@@ -127,7 +128,7 @@ Some security updates also require action, such as a newly added permission or a
 - [Breaking changes](#22-breaking-changes) and [deprecations](#23-deprecations).
 - Changes in behaviour, documented or not, such as the order of items in a list, the conditions under which an error is returned, how long a request can take before it times out, or how long responses are cached (see also [API Guidelines Appendix I](index.md#i-breaking-changes)).
 - Changes to prerequisites, such as a new minimum version of a runtime, of a dependency that consumers have to install, or of a browser.
-- Additions, such as new features, endpoints, fields, functions or configuration options. The entry **SHOULD** say what consumers can use them for, and for optional ones, what happens if consumers do not use them, such as the default value.
+- Additions, such as new features, endpoints, fields, functions or configuration options. The entry **SHOULD** say what consumers can use them for, and for optional ones, what happens if consumers do not use them.
 - Consumer-relevant bug fixes. The entry **SHOULD** say what triggered the bug and, if known, since when it was there, so consumers can tell whether it affected them.
 - Consumer-relevant [security updates](#24-security-updates).
 - Consumer-relevant changes to the system's own dependencies, build tooling, architecture or infrastructure.
@@ -144,7 +145,9 @@ Some security updates also require action, such as a newly added permission or a
 - Commit messages. These are written for repository contributors, not for consumers.
 - Reasons for a change that do not matter to consumers, such as "due to Spring Boot upgrade failure".
 
-### 2.7 Correcting a published entry
+### 2.7 Writing, reviewing and correcting entries
+
+An entry **SHOULD** be written together with the changes it describes, and be reviewed and approved with them by a person who decides how the interface changes. Until it is published, it **MAY** be changed freely.
 
 Consumers can read an entry in the changelog, or receive a copy of it, for example via email or RSS. An edit to a published entry does not change emails that have already been sent, and does not always change what an RSS reader shows. Even where the edit is visible, consumers who have already read the entry are unlikely to notice it.
 
@@ -154,8 +157,6 @@ A published entry:
 - **MAY** be corrected by editing, if its only errors cannot mislead a consumer, such as a typo or a broken link.
 
 A rollback is a release like any other. Its entry **SHOULD** say which changes were reverted, and link to the entries that described them.
-
-An entry that has not been published yet **MAY** be changed freely.
 
 ## 3. Formatting requirements
 
