@@ -5,8 +5,12 @@ on:
     branches:
       - main
 
+permissions: {}
+
 jobs:
   validate-pr:
+    permissions:
+      pull-requests: read
     uses: entur/gha-meta/.github/workflows/verify-pr.yml@v1
 
   test-rules:
