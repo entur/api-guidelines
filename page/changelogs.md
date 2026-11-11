@@ -25,7 +25,7 @@ has_toc: false
 
 ### 1.1 Audience and scope
 
-These guidelines are for developers, product owners, AI agents and others who write or review changelogs. They apply to changelogs whose consumers are technical, such as developers and AI agents, as long as the changelog is available to an audience other than its authors. Release notes for non-technical consumers, such as the users of a mobile app, are not covered yet.
+These guidelines are for developers, product owners, AI agents and others who write or review changelogs for technical readers. They do not apply to changelogs that only their own writers read, or to release notes for non-technical readers.
 
 ### 1.2 Purpose
 
@@ -46,7 +46,7 @@ For details on how to contribute to these guidelines, see the [contributing guid
 - A *release* is a set of changes that are made available to consumers together, such as a new SDK version, or API changes that are deployed or switched on with a feature flag.
 - A *hosted interface*, such as an API or a web interface, runs in the system that exposes it, so consumers get changes when they are released. An *installed interface*, such as an SDK or a library, runs in consumers' own environment, so they get changes by upgrading.
 - A *changelog* communicates how an interface changes to its consumers.
-- A changelog *entry* is a distinct section of a changelog that describes one or more releases.
+- A changelog *entry* is a distinct and identifiable section of a changelog that describes one or more releases.
 
 ### 1.5 Requirement levels
 
@@ -139,15 +139,16 @@ Some security updates also require action, such as a newly added permission or a
 ### 2.6 What to leave out
 
 - Internal changes, for example:
-  - Refactoring, tests and changes to private functions in a library. For REST APIs, a change to a specification with `audience` set to `private` (see [API Guidelines 2.4 Entur Metadata](index.md#24-entur-metadata)).
+  - Refactoring, tests and changes to private functions in a library.
+  - For REST APIs, changes to a specification with `audience` set to `private`, but not to one set to `internal`, which other teams at Entur use (see [API Guidelines 2.4 Entur Metadata](index.md#24-entur-metadata)).
   - Changes to the system's own dependencies, build tooling, architecture or infrastructure, including security updates, when they are not consumer-relevant.
 - Implementation details, such as the programming language, framework, library or database behind a change.
 - Commit messages. These are written for repository contributors, not for consumers.
 - Reasons for a change that do not matter to consumers, such as "due to Spring Boot upgrade failure".
 
-### 2.7 Writing, reviewing and correcting entries
+### 2.7 Reviewing and correcting entries
 
-An entry **SHOULD** be written together with the changes it describes, and be reviewed and approved with them by a person who decides how the interface changes. Until it is published, it **MAY** be changed freely.
+Before it is published, an entry **SHOULD** be reviewed and approved by a person who decides how the interface changes. Until it is published, it **MAY** be changed freely.
 
 Consumers can read an entry in the changelog, or receive a copy of it, for example via email or RSS. An edit to a published entry does not change emails that have already been sent, and does not always change what an RSS reader shows. Even where the edit is visible, consumers who have already read the entry are unlikely to notice it.
 
