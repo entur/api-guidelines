@@ -70,13 +70,14 @@ An entry:
   - Who it affects, if not every consumer.
   - How it affects them: what they can do, how something behaves now compared with before, or which problem is solved.
 - **MUST** reference the version it describes, for an installed interface.
-- **SHOULD** be specific:
-  - Avoid vague or ambiguous words, such as "improved", "might" or "et cetera".
-  - Give exact dates instead of relative ones, such as "for now" or "in 12 months".
 - **SHOULD** be concise, and leave out internal changes and anything else that consumers do not need. See [What to leave out](#26-what-to-leave-out).
-- **SHOULD** be understandable without relying on other entries, for example without referring to "the previous entry" or "as announced earlier".
+- **SHOULD** be specific:
+  - Without vague or ambiguous words, such as "improved", "might" or "et cetera".
+  - With exact dates instead of relative ones, such as "for now" or "in 12 months".
+- **SHOULD** be understandable on its own:
+  - With the terms that consumers can find in the interface or its published documentation, instead of internal names and abbreviations.
+  - Without relying on other entries, for example by referring to "the previous entry" or "as announced earlier".
 - **SHOULD** describe the changes that require action before other changes, with the earliest deadline first.
-- **SHOULD** use the terms that consumers can find in the interface or its published documentation, and **SHOULD NOT** use internal names and abbreviations.
 - **SHOULD** use the present tense for how things work after the changes, and the past tense for how they worked before.
 
 ### 2.1 Changes that require action
