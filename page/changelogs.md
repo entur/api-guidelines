@@ -73,6 +73,7 @@ An entry:
 - **SHOULD** be concise, and leave out internal changes and anything else that consumers do not need. See [What to leave out](#26-what-to-leave-out).
 - **SHOULD** be specific:
   - Without vague or ambiguous words, such as "improved", "might" or "et cetera".
+  - With exact values and conditions, instead of only saying that something changed, as in "upped the timeout", "stricter validation" or "more offers returned".
   - With exact dates instead of relative or open-ended timeframes, such as "in 12 months" or "for now".
 - **SHOULD** be understandable on its own:
   - With the terms that consumers can find in the interface or its published documentation, instead of internal names and abbreviations.
