@@ -43,11 +43,12 @@ For details on how to contribute to these guidelines, see the [contributing guid
 
 
 ### 1.4 Requirement Levels
-Throughout this document, these requirement levels are used:
-- **MUST**: This is an absolute requirement
-- **SHOULD**: There may be valid reasons to ignore this requirement, but implications must be understood and carefully weighed
-- **MAY**: This is optional
 
+The keywords **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT** and **MAY** have these meanings in this document:
+
+- **MUST** and **MUST NOT**: the requirement or prohibition always applies, with no valid reasons to deviate.
+- **SHOULD** and **SHOULD NOT**: there can be valid reasons to deviate, but only after the consequences are understood and weighed.
+- **MAY**: the item is allowed.
 
 ### 1.5 Linter Coverage
 Throughout this document, rules are marked with the following indicators:
@@ -716,7 +717,7 @@ There may be situations where a pure REST architecture is not the best solution.
 ## Appendix
 
 ## I. Breaking changes
-A breaking change in an API is a change that  "breaks" a clients integration with the API, without the client having made any changes on their end. The nature of breaking changes vary depending on the type of integration. For REST APIs, it is the OpenAPI specification that specifies the contract with the client. In practice, this means that if a client fetches the OpenAPI specification for a service and integrates with it, changes to the service that invalidates that specification, is considered breaking. In other words, changes should be _backwards compatible_ with regards to the specification.
+A breaking change in an API is a change that "breaks" a clients integration with the API, without the client having made any changes on their end. The nature of breaking changes vary depending on the type of integration. For REST APIs, it is the OpenAPI specification that specifies the contract with the client. In practice, this means that if a client fetches the OpenAPI specification for a service and integrates with it, changes to the service that invalidates that specification are considered breaking. In other words, changes should be _backwards compatible_ with regards to the specification.
 
 Examples of breaking changes:
 
