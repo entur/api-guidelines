@@ -78,7 +78,7 @@ An entry:
   - With exact values and conditions, instead of only saying that something changed, as in "upped the timeout", "stricter validation" or "more offers returned".
   - With exact dates and versions instead of relative or open-ended timeframes, such as "in 12 months", "for now" or "in a future version".
 - **SHOULD** give consumers the context they need:
-  - With what the **MUST**-level requirements call for contained in the entry itself. Anything else can either be in the entry or in what it links to.
+  - With what the **MUST**-level requirements call for contained in the entry itself. Anything else **MAY** either be in the entry or in what it links to.
   - With the terms used in the interface or its published documentation, instead of internal names and abbreviations.
   - Without relying on other entries, for example by referring to "the previous entry" or "as announced earlier".
 - **SHOULD** say when or in which version the behaviour that a fix corrects started, if known.
