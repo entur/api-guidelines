@@ -74,7 +74,7 @@ An entry:
 - **MUST** reference the version of the release it describes, for an installed interface.
 - **SHOULD** be concise, and leave out internal changes and anything else that consumers do not need. See [What to leave out](#24-what-to-leave-out).
 - **SHOULD** be specific:
-  - Without vague or ambiguous words, such as "improved", "might" or "et cetera".
+  - Without vague or ambiguous words, such as "some", "might", "better", "improved" or "et cetera".
   - With exact values and conditions, instead of only saying that something changed, as in "upped the timeout", "stricter validation" or "more offers returned".
   - With exact dates and versions instead of relative or open-ended timeframes, such as "in 12 months", "for now" or "in a future version".
 - **SHOULD** give consumers the context they need:
