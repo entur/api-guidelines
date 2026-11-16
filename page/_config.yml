@@ -8,6 +8,7 @@ theme: just-the-docs
 
 plugins:
   - jemoji
+  - jekyll-relative-links
 
 aux_links:
   "GitHub":
