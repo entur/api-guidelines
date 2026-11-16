@@ -8,6 +8,8 @@ has_toc: false
 
 # Changelog Guidelines
 
+{: .no_toc }
+
 ## Table of contents
 
 {: .no_toc }
@@ -46,7 +48,7 @@ For details on how to contribute to these guidelines, see the [contributing guid
 - A *release* is a set of changes that are made available to consumers together, such as a new SDK version, or API changes that are deployed or switched on with a feature flag.
 - A *hosted interface*, such as an API or a web interface, runs in the system that exposes it, so consumers get changes when they are released. An *installed interface*, such as an SDK or a library, runs in consumers' own environment, so they get changes by upgrading.
 - A *changelog* communicates how an interface changes to its consumers.
-- A changelog *entry* is a distinct and identifiable section of a changelog that describes one or more releases.
+- A changelog *entry* is a distinct and identifiable section of a changelog, which is published as a whole. An entry is *published* when it is made available to consumers.
 
 ### 1.5 Requirement levels
 
@@ -64,36 +66,40 @@ For an installed interface, each release **MUST** be described in an entry of it
 
 An entry:
 
-- **MUST** include every consumer-relevant change released since the previous entry. See [What to include](#25-what-to-include).
+- **MUST** include every consumer-relevant change in the releases it describes. See [What to include](#23-what-to-include).
 - **MUST** say, for each change:
   - Which elements of the interface it affects, such as an endpoint, a field, a function or a configuration option.
   - Who it affects, if not every consumer.
   - How it affects them: what they can do, how something behaves now compared with before, or which problem is solved.
-- **MUST** reference the version it describes, for an installed interface.
-- **SHOULD** be concise, and leave out internal changes and anything else that consumers do not need. See [What to leave out](#26-what-to-leave-out).
+- **MUST** reference the version of the release it describes, for an installed interface.
+- **SHOULD** be concise, and leave out internal changes and anything else that consumers do not need. See [What to leave out](#24-what-to-leave-out).
 - **SHOULD** be specific:
   - Without vague or ambiguous words, such as "improved", "might" or "et cetera".
   - With exact values and conditions, instead of only saying that something changed, as in "upped the timeout", "stricter validation" or "more offers returned".
-  - With exact dates instead of relative or open-ended timeframes, such as "in 12 months" or "for now".
-- **SHOULD** be understandable on its own:
-  - With the terms that consumers can find in the interface or its published documentation, instead of internal names and abbreviations.
+  - With exact dates and versions instead of relative or open-ended timeframes, such as "in 12 months", "for now" or "in a future version".
+- **SHOULD** give consumers the context they need:
+  - With what the **MUST**-level requirements call for contained in the entry itself. Anything else can either be in the entry or in what it links to.
+  - With the terms used in the interface or its published documentation, instead of internal names and abbreviations.
   - Without relying on other entries, for example by referring to "the previous entry" or "as announced earlier".
-- **SHOULD** describe the changes that require action before other changes, with the earliest deadline first.
+- **SHOULD** say when or in which version the behaviour that a fix corrects started, if known.
 - **SHOULD** use the present tense for how things work after the changes, and the past tense for how they worked before.
 
 ### 2.1 Changes that require action
 
-A change *requires action* if it can reasonably be expected that a consumer has to change something on their end, such as their code, configuration, runtime or workflow, to keep it working. The *deadline* of a change that requires action is when things stop working for a consumer who has not taken the required actions. A *backward-compatible change* is a change that does not require action by the time it is released.
+A change *requires action* if it can reasonably be expected that a consumer has to change something on their end, such as their code, configuration, runtime or workflow, to keep it working. The *deadline* of a change that requires action is when, or with which version, things stop working for a consumer who has not taken the required actions. Depending on its deadline, a change that requires action is either a [breaking change](#211-breaking-changes) or a [deprecation](#212-deprecations). A *backward-compatible change* is a change that does not require action by the time it is released.
+
+An entry **SHOULD** describe the changes that require action before other changes, with the earliest deadline first.
 
 Consumers need to find out what they have to do and by when, and how much work it is. For each change that requires action, an entry:
 
 - **MUST** say the required actions and the deadline.
-- **MUST** name the replacement, if there is one.
-- **MUST** link to the migration guide, if there is one. If there are many required actions, consider writing one.
-- **SHOULD** give consumers enough information to act without having to ask for more, in the entry itself or in the documentation it links to.
-- **SHOULD** say how consumers can verify the changes on their end, for example by testing in a test environment where the change to the interface is already released.
+- **MUST** name any replacements.
+- **MUST** link to the migration guide, if there is one.
+- **SHOULD** give consumers enough information to act without having to ask for more.
+- **SHOULD** say how consumers can check that they have taken the required actions, for example by testing in a test environment where the change is already available.
+- **MAY** summarise the required actions and the replacements, and leave the full lists to the migration guide, if there is one. For example, it can name the new version of an API, and leave the replacement of each field to the guide. If there are many required actions, consider writing a migration guide.
 
-### 2.2 Breaking changes
+#### 2.1.1 Breaking changes
 
 A *breaking change* is a change that requires action, with the release as its deadline. For REST APIs, see [API Guidelines Appendix I](index.md#i-breaking-changes).
 
@@ -105,40 +111,46 @@ In addition to the requirements in [2.1 Changes that require action](#21-changes
 - **MUST** say why the change could not wait for the full notice period, if it is made under an exception relating to security, regulatory compliance or external parties.
 - **SHOULD** link to the entry for the deprecation, if there is one.
 
-### 2.3 Deprecations
+#### 2.1.2 Deprecations
 
 A *deprecation* is a change that requires action, with a deadline after the release, such as a sunset date or a later version. A deprecation is backward compatible.
 
 In addition to the requirements in [2.1 Changes that require action](#21-changes-that-require-action), for each deprecation, an entry:
 
-- **MUST** give the deadline as the date in `x-sunset` for a REST API or endpoint, and otherwise as the version that removes the element, for example the next major version.
+- **MUST** give the date in [`x-sunset`](index.md#25-lifecycle) as the deadline, for a REST API or endpoint.
 - **SHOULD** be published without delay.
 
-### 2.4 Security updates
+### 2.2 Security updates
 
-For each consumer-relevant security update, an entry:
+A *security update* is a change that fixes a vulnerability or otherwise makes the system more secure.
 
-- **MUST** say which versions are affected by a fixed vulnerability, for an installed interface. Consumers are not safe until they upgrade.
-- **SHOULD** be published without delay, for an installed interface.
-- **SHOULD** describe the vulnerability, for an installed interface. Including its severity tells consumers how urgently they need to upgrade, and any CVE ID lets them match the fix to alerts from their own security tools.
-- **SHOULD NOT** describe any vulnerabilities, for a hosted interface. Consumers get the fix without doing anything, so they do not need the details, and such details could help someone exploit the same vulnerability elsewhere.
+For each consumer-relevant security update to an installed interface, an entry:
 
-Some security updates also require action, such as a newly added permission or authentication requirement, or a stricter rate limit. For those, [2.1 Changes that require action](#21-changes-that-require-action) applies too, and [2.2 Breaking changes](#22-breaking-changes) if the deadline is the release.
+- **MUST** say which versions are affected by a fixed vulnerability. Consumers are not safe until they upgrade.
+- **SHOULD** be published without delay.
+- **SHOULD** describe the security update before the other changes that do not require action.
+- **SHOULD** describe the vulnerability. Including its severity tells consumers how urgently they need to upgrade, and any CVE ID lets them match the fix to alerts from their own security tools.
 
-### 2.5 What to include
+For each consumer-relevant security update to a hosted interface, an entry **SHOULD NOT** describe any vulnerabilities. Consumers get the fix without doing anything, so they do not need the details, and such details could help someone exploit the same vulnerability elsewhere.
 
-- [Breaking changes](#22-breaking-changes) and [deprecations](#23-deprecations).
-- Changes in behaviour, documented or not, such as the order of items in a list, the conditions under which an error is returned, how long a request can take before it times out, or how long responses are cached (see also [API Guidelines Appendix I](index.md#i-breaking-changes)).
+Some security updates also require action, such as a newly added permission or authentication requirement, or a stricter rate limit. For those, [2.1 Changes that require action](#21-changes-that-require-action) applies too.
+
+### 2.3 What to include
+
+- [Breaking changes](#211-breaking-changes) and [deprecations](#212-deprecations).
 - Changes to prerequisites, such as a new minimum version of a runtime, of a dependency that consumers have to install, or of a browser.
-- Additions, such as new features, endpoints, fields, functions or configuration options. The entry **SHOULD** say what consumers can use them for, and for optional ones, what happens if consumers do not use them.
-- Consumer-relevant bug fixes. The entry **SHOULD** say what triggered the bug and, if known, since when it was there, so consumers can tell whether it affected them.
-- Consumer-relevant [security updates](#24-security-updates).
-- Consumer-relevant changes to the system's own dependencies, build tooling, architecture or infrastructure.
-- Consumer-relevant changes in the quality characteristics of an interface, such as performance, availability or the package size of an installed interface.
+- Additions, such as new features, endpoints, fields, functions or configuration options.
+- Changes to the lifecycle status of an interface or element, such as an API that moves from beta to stable. See [API Guidelines 2.5 Lifecycle](index.md#25-lifecycle).
+- When consumer-relevant:
+  - [Security updates](#22-security-updates).
+  - Bug fixes.
+  - Changes in behaviour, documented or not, such as the order of items in a list, the conditions under which an error is returned, how long a request can take before it times out, or how long responses are cached (see also [API Guidelines Appendix I](index.md#i-breaking-changes)).
+  - Changes to the system's own dependencies, build tooling, architecture or infrastructure.
+  - Changes in the quality characteristics of an interface, such as performance, availability or the package size of an installed interface.
 - The reason for a change, if it helps consumers understand the change or plan for it, such as why a feature is removed.
-- Links to published documentation, such as a migration guide or a reference page, for details that the entry does not need to repeat.
+- Links to published documentation, such as a migration guide or a reference page.
 
-### 2.6 What to leave out
+### 2.4 What to leave out
 
 - Internal changes, for example:
   - Refactoring, tests and changes to private functions in a library.
@@ -146,9 +158,10 @@ Some security updates also require action, such as a newly added permission or a
   - Changes to the system's own dependencies, build tooling, architecture or infrastructure, including security updates, when they are not consumer-relevant.
 - Implementation details, such as the programming language, framework, library or database behind a change.
 - Commit messages. These are written for repository contributors, not for consumers.
+- References that consumers cannot follow, such as ticket IDs and links to internal systems.
 - Reasons for a change that do not matter to consumers, such as "due to Spring Boot upgrade failure".
 
-### 2.7 Reviewing and correcting entries
+### 2.5 Reviewing and correcting entries
 
 Before it is published, an entry **SHOULD** be reviewed and approved by a person who decides how the interface changes. Until it is published, it **MAY** be changed freely.
 
@@ -157,6 +170,7 @@ Consumers can read an entry in the changelog, or receive a copy of it, for examp
 A published entry:
 
 - **MUST** be corrected if it can mislead a consumer, in a new entry that links to it. This includes an entry with a wrong or changed deadline, the wrong element, or a missing change or required action.
+- **SHOULD** get a note at the top that links to the correction, if it is corrected in a new entry.
 - **MAY** be corrected by editing, if its only errors cannot mislead a consumer, such as a typo or a broken link.
 
 A rollback is a release like any other. Its entry **SHOULD** say which changes were reverted, and link to the entries that described them.
