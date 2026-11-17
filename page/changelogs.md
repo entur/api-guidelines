@@ -152,9 +152,9 @@ Some security updates also require action, such as a newly added permission or a
 ### 2.4 What to leave out
 
 - Internal changes, for example:
-  - Refactoring, tests and changes to private functions in a library.
-  - For REST APIs, changes to a specification with `audience` set to `private`, but not to one set to `internal`, which other teams at Entur use (see [API Guidelines 2.4 Entur Metadata](index.md#24-entur-metadata)).
-  - Changes to the system's own dependencies, build tooling, architecture or infrastructure, including security updates, when they are not consumer-relevant.
+  - Refactoring, tests and changes to private functions in a library
+  - For REST APIs, changes to a specification with `audience` set to `private`, but not to one set to `internal`, which other teams at Entur use (see [API Guidelines 2.4 Entur Metadata](index.md#24-entur-metadata))
+  - Changes to the system's own dependencies, build tooling, architecture or infrastructure, including security updates, when they are not consumer-relevant
 - Implementation details, such as the programming language, framework, library or database behind a change
 - Commit messages - these are written for repository contributors, not for consumers
 - References that consumers cannot follow, such as ticket IDs and links to internal systems
