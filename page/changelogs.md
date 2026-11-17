@@ -92,7 +92,7 @@ An entry **SHOULD** describe the changes that require action before other change
 Consumers need to find out what they have to do and by when. For each change that requires action, an entry:
 
 - **MUST** say the required actions and the deadline.
-- **MUST** name any replacements.
+- **MUST** name any replacements, such as another endpoint that consumers can use instead.
 - **MUST** link to the migration guide, if there is one.
 - **SHOULD** give consumers enough information to act without having to ask for more.
 - **SHOULD** say how consumers can check that they have taken the required actions, for example by testing in a test environment where the change is already available.
