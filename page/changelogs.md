@@ -146,8 +146,8 @@ Some security updates also require action, such as a newly added permission or a
   - Changes in behaviour, documented or not, such as the order of items in a list, the conditions under which an error is returned, how long a request can take before it times out, or how long responses are cached (see also [API Guidelines Appendix I](index.md#i-breaking-changes))
   - Changes to the system's own dependencies, build tooling, architecture or infrastructure
   - Changes in the quality characteristics of an interface, such as performance, availability or the package size of an installed interface
-- The reason for a change, if it helps consumers understand the change or plan for it, such as why a feature is removed.
-- Links to published documentation, such as a migration guide or a reference page.
+- The reason for a change, if it helps consumers understand the change or plan for it, such as why a feature is removed
+- Links to published documentation, such as a migration guide or a reference page
 
 ### 2.4 What to leave out
 
