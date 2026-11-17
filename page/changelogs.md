@@ -62,7 +62,7 @@ The keywords **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT** and **MAY** have
 
 For a hosted interface, a release that has consumer-relevant changes **MUST** be described in an entry, and a release with no consumer-relevant changes **SHOULD NOT** be mentioned in an entry. An entry **MAY** describe several releases.
 
-For an installed interface, each release **MUST** be described in an entry of its own. If a release has no consumer-relevant changes, its entry **MUST** say so.
+For an installed interface, each release **MUST** be described in an entry of its own, which names the release's version. If a release has no consumer-relevant changes, its entry **MUST** say so.
 
 An entry:
 
@@ -71,7 +71,6 @@ An entry:
   - Which elements of the interface it affects, such as an endpoint, a field, a function or a configuration option.
   - Who it affects, if not every consumer.
   - How it affects them: what they can do, how something behaves now compared with before, or which problem is solved.
-- **MUST** reference the version of the release it describes, for an installed interface.
 - **SHOULD** be concise, and leave out internal changes and anything else that consumers do not need. See [What to leave out](#24-what-to-leave-out).
 - **SHOULD** be specific:
   - Without vague or ambiguous wording, such as "some", "might", "better", "improved" or "et cetera".
