@@ -31,9 +31,9 @@ These guidelines are for developers, product owners, AI agents and others who wr
 
 ### 1.2 Purpose
 
-- To standardise rules and best practices for changelogs.
-- To contribute to a consistent user experience for readers.
-- To help AI agents draft and review changelogs.
+- To standardise rules and best practices for changelogs
+- To contribute to a consistent user experience for readers
+- To help AI agents draft and review changelogs
 
 ### 1.3 Contributing
 
