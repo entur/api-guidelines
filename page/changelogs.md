@@ -89,7 +89,7 @@ A change *requires action* if it can reasonably be expected that a consumer has 
 
 An entry **SHOULD** describe the changes that require action before other changes, with the earliest deadline first.
 
-Consumers need to find out what they have to do and by when, and how much work it is. For each change that requires action, an entry:
+Consumers need to find out what they have to do and by when. For each change that requires action, an entry:
 
 - **MUST** say the required actions and the deadline.
 - **MUST** name any replacements.
