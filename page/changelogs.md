@@ -27,7 +27,7 @@ has_toc: false
 
 ### 1.1 Audience and scope
 
-These guidelines are for developers, product owners, AI agents and others who write or review changelogs for technical readers. They do not apply to changelogs that only their own writers read, or to release notes for non-technical readers.
+These guidelines are for developers, product owners, AI agents and others who write or review technical changelogs. They do not apply to changelogs that only their own writers read, or to release notes for non-technical readers.
 
 ### 1.2 Purpose
 
