@@ -43,7 +43,7 @@ For details on how to contribute to these guidelines, see the [contributing guid
 
 - A *change* is a modification to a system, such as adding a field, removing an endpoint, fixing a bug or refactoring code.
 - An *interface* is the surface a system exposes to others.
-- A *consumer* is a person or an AI agent who depends on an interface but does not decide how it changes.
+- A *consumer* is a person or an AI agent who uses an interface, or is responsible for maintaining a system that uses it, but is not responsible for the interface itself.
 - A *consumer-relevant change* is a change that can reasonably be expected to affect consumers. Any other change is an *internal change*.
 - A *release* is a set of changes that are made available to consumers together, such as a new SDK version, or API changes that are deployed or switched on with a feature flag.
 - A *hosted interface*, such as an API or a web interface, runs in the system that exposes it, so consumers get changes when they are released. An *installed interface*, such as an SDK or a library, runs in consumers' own environment, so they get changes by upgrading.
