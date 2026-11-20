@@ -27,7 +27,7 @@ has_toc: false
 
 ### 1.1 Audience and scope
 
-These guidelines are for developers, product owners, AI agents and others who write or review technical changelogs. They do not apply to changelogs that only their own writers read, or to release notes for non-technical readers.
+These guidelines are for developers, product owners, AI agents and others who write or review technical changelogs. They do not apply to changelogs for a team's own use, or to release notes for non-technical readers.
 
 ### 1.2 Purpose
 
@@ -72,14 +72,14 @@ An entry:
   - How it affects them: what they can do, how something behaves now compared with before, or which problem is solved.
 - **SHOULD** be concise, and leave out internal changes and anything else that consumers do not need. See [What to include](#24-what-to-include) and [What to leave out](#25-what-to-leave-out).
 - **SHOULD** be specific:
-  - Without vague or ambiguous wording, such as "some", "might" or "et cetera".
-  - With exact values and conditions, instead of only saying that something changed, as in "improved performance", "upped the timeout", "stricter validation" or "more offers returned".
-  - With exact dates and versions instead of relative or open-ended timeframes, such as "in 12 months", "for now" or "in a future version".
+  - Without vague or ambiguous wording, as in "some", "might" or "et cetera".
+  - With exact values and conditions. Avoid only saying that something changed, as in "improved performance", "upped the timeout", "stricter validation" or "more offers returned".
+  - With exact dates and versions. Avoid relative or open-ended timeframes, as in "in 12 months", "for now" or "in a future version".
 - **SHOULD** give consumers the context they need:
   - With the content required at the **MUST** level as part of the entry. Anything else **MAY** either be part of the entry or in what it links to.
   - With the terms used in the interface or its published documentation, instead of internal names and abbreviations.
   - Without relying on other entries, for example by referring to "the previous entry" or "as announced earlier".
-- **SHOULD** say when or in which version the behaviour that a fix corrects started, if known.
+- **SHOULD** say when or in which version a fixed bug was introduced, if known.
 - **SHOULD** use the past tense for how things worked before the changes, and the present tense for how they work after.
 
 ### 2.2 Changes that require action
