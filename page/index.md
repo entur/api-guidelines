@@ -43,11 +43,12 @@ For details on how to contribute to these guidelines, see the [contributing guid
 
 
 ### 1.4 Requirement Levels
-Throughout this document, these requirement levels are used:
-- **MUST**: This is an absolute requirement
-- **SHOULD**: There may be valid reasons to ignore this requirement, but implications must be understood and carefully weighed
-- **MAY**: This is optional
 
+The keywords **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT** and **MAY** have these meanings in this document:
+
+- **MUST** and **MUST NOT**: the requirement or prohibition always applies, with no valid reasons to deviate.
+- **SHOULD** and **SHOULD NOT**: there can be valid reasons to deviate, but only after the consequences are understood and weighed.
+- **MAY**: the item is allowed.
 
 ### 1.5 Linter Coverage
 Throughout this document, rules are marked with the following indicators:
@@ -365,14 +366,14 @@ The API is relied upon by consumers. Changes may happen, as long as they are not
 - :ballot_box_with_check: The field `x-stability-level` **MUST** have the value `stable` (or be empty)
 - :ballot_box_with_check: The field `deprecated`/`x-deprecated` **MUST** have the value `false` (or be empty)
 - :ballot_box_with_check: The field `x-sunset` **MUST** be empty
-- :ballot_box_with_check: You **MUST NOT** make [breaking changes](#I-breaking-changes)
+- :ballot_box_with_check: You **MUST NOT** make [breaking changes](#I-breaking-changes), except those that the terms of service section [API versioning, deprecation, and beta](https://developer.entur.no/terms-of-service#api-versioning-deprecation-and-beta) allows without a deprecation period
 
 #### 2.5.4 Deprecation
-The API is marked as deprecated and consumers are encouraged to move to a new version. Only critical changes will happen.
+The API is marked as deprecated and consumers are encouraged to move to a new version. Only security updates and critical fixes will happen.
 - :ballot_box_with_check: The field `x-stability-level` **MUST** have the value `stable` (or be empty)
 - :ballot_box_with_check: The field `deprecated`/`x-deprecated` **MUST** have the value `true`
 - :ballot_box_with_check: The field `x-sunset` **MUST** be filled with a date that follows Enturs [rules for deprecation](#II-deprecation-rules)
-- :ballot_box_with_check: You **MUST NOT** make [breaking changes](#I-breaking-changes)
+- :ballot_box_with_check: You **MUST NOT** make [breaking changes](#I-breaking-changes), except those that the terms of service section [API versioning, deprecation, and beta](https://developer.entur.no/terms-of-service#api-versioning-deprecation-and-beta) allows without a deprecation period
 
 #### 2.5.5 Sunsetting
 The API is removed.
@@ -716,7 +717,7 @@ There may be situations where a pure REST architecture is not the best solution.
 ## Appendix
 
 ## I. Breaking changes
-A breaking change in an API is a change that  "breaks" a clients integration with the API, without the client having made any changes on their end. The nature of breaking changes vary depending on the type of integration. For REST APIs, it is the OpenAPI specification that specifies the contract with the client. In practice, this means that if a client fetches the OpenAPI specification for a service and integrates with it, changes to the service that invalidates that specification, is considered breaking. In other words, changes should be _backwards compatible_ with regards to the specification.
+A breaking change is a change that can reasonably be expected to require consumers to change something on their end, such as their code or configuration, to keep their integration working once the change is released. For REST APIs, it is the OpenAPI specification that specifies the contract with the client. In practice, this means that if a client fetches the OpenAPI specification for a service and integrates with it, changes to the service that invalidates that specification are considered breaking. In other words, changes should be _backwards compatible_ with regards to the specification.
 
 Examples of breaking changes:
 
@@ -733,4 +734,4 @@ However, an OpenAPI specification will never be a complete description of the be
 These types of changes are harder to detect. They _should_ be avoided, but sometimes clients may make unreasonable assumptions that can't be taken into consideration. In the end, it is up to the API producer to judge whether a change should be considered breaking or not, and how to communicate the change to consumers. However, the amount of such breakages can be minimized through well-thought out and predictable API design that follows common guidelines.
 
 ## II. Deprecation rules
-At Entur, we should generally avoid making breaking changes. Instead, we should provide a deprecation period in which consumers of an API are given time to migrate to a new [version](#321-api-versioning). This period should be at least 12 months. The API producer is responsible for ensuring that their consumers are aware of the deprecation, but they can make this easier by following the [guidelines for marking deprecation](#254-deprecation).
+At Entur, we should generally avoid making breaking changes. Instead, we should provide a deprecation period in which consumers of an API are given time to migrate to a new [version](#321-api-versioning). The terms of service section [API versioning, deprecation, and beta](https://developer.entur.no/terms-of-service#api-versioning-deprecation-and-beta) specifies the length of this period, and when breaking changes are allowed without it. The API producer is responsible for ensuring that their consumers are aware of the deprecation, but they can make this easier by following the [guidelines for marking deprecation](#254-deprecation).
